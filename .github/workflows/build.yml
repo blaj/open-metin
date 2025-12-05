@@ -1,0 +1,52 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        module: [ authentication, game ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build ${{ matrix.module }}
+        run: ./gradlew :${{ matrix.module }}:build -x test
+
+      - name: Test ${{ matrix.module }}
+        run: ./gradlew :${{ matrix.module }}:test
+
+      - name: Upload ${{ matrix.module }} test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            ${{ matrix.module }}/build/reports/tests/test/
+            ${{ matrix.module }}/build/test-results/test/
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-boot-app
+          path: |
+            ${{ matrix.module }}/build/libs/*-SNAPSHOT.jar
+            !${{ matrix.module }}/build/libs/*-plain.jar
