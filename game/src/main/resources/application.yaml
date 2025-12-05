@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: openmetin-game
+
+  datasource:
+    url: jdbc:postgresql://localhost:10000/openmetin_game?sslmode=verify-full&sslrootcert=docker/conf/postgres/certs/ca.crt
+    username: openmetin_game_user
+    password: strongpassword
+
+  liquibase:
+    url: jdbc:postgresql://localhost:10000/openmetin_game?sslmode=verify-full&sslrootcert=docker/conf/postgres/certs/ca.crt
+    user: openmetin_game_liquibase_user
+    password: strongpassword
+    database-change-log-lock-table: database_changelog_lock
+    database-change-log-table: database_changelog
+    liquibase-schema: liquibase
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
+  cache:
+    type: redis
+
+  data:
+    redis:
+      url: rediss://strongpassword@localhost:10001/0
+      timeout: 2s
+      client-type: lettuce
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 16
+          max-idle: 8
+          min-idle: 0
+          max-wait: 2s
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          redis: DEBUG
+
+    io:
+      lettuce: DEBUG
+
+open-metin:
+  tcp:
+    host: 0.0.0.0
+    port: 14000
+    idle-seconds: 60

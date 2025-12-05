@@ -1,0 +1,25 @@
+﻿services:
+  database:
+    build:
+      context: ./docker/conf/postgres
+      dockerfile: Dockerfile
+    image: open-metin-postgres-ssl:latest
+    restart: unless-stopped
+    ports:
+      - "10000:5432"
+    volumes:
+      - ./database-init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+  redis:
+    image: redis:8.2.2-alpine
+    restart: unless-stopped
+    ports:
+      - "10001:6379"
+    volumes:
+      - ./docker/conf/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./docker/conf/redis/certs:/certs:ro
+    command: redis-server /usr/local/etc/redis/redis.conf

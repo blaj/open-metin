@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.31.xsd">
+  <changeSet author="AM" id="0.1.0.init-test">
+    <comment>Test command to check if liquibase configuration works</comment>
+    <createTable tableName="liquibase_test">
+      <column name="column1" type="TEXT">
+        <constraints nullable="true" primaryKey="false" unique="false"/>
+      </column>
+    </createTable>
+
+    <rollback>
+      <dropTable tableName="liquibase_test"/>
+    </rollback>
+
+    <sql>
+      GRANT INSERT, SELECT, UPDATE ON liquibase_test TO openmetin_authentication_user;
+    </sql>
+  </changeSet>
+
+  <changeSet author="AM" id="0.1.1.init-test-cleanup">
+    <comment>Cleanup test table</comment>
+
+    <dropTable tableName="liquibase_test"/>
+  </changeSet>
+</databaseChangeLog>
