@@ -11,6 +11,7 @@ import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.util.Optional;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class NettyServerService {
   private EventLoopGroup workerEventLoopGroup;
   private Channel serverChannel;
 
-  private volatile int boundPort = -1;
+  @Getter private volatile int boundPort = -1;
 
   public void start() {
     bossEventLoopGroup = new MultiThreadIoEventLoopGroup(NioIoHandler.newFactory());
