@@ -15,26 +15,26 @@ jobs:
         module: [ authentication, game ]
 
     steps:
-      - name: Checkout code
+      - name: Checkout code ♻️
         uses: actions/checkout@v4
 
-      - name: Set up JDK 25
+      - name: Set up JDK 25 🔧
         uses: actions/setup-java@v4
         with:
           java-version: '25'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew 🛂
         run: chmod +x gradlew
 
-      - name: Build ${{ matrix.module }}
+      - name: Build ${{ matrix.module }} 🔨
         run: ./gradlew :${{ matrix.module }}:build -x test
 
-      - name: Test ${{ matrix.module }}
+      - name: Test ${{ matrix.module }} 🧪
         run: ./gradlew :${{ matrix.module }}:test
 
-      - name: Upload ${{ matrix.module }} test results
+      - name: Upload ${{ matrix.module }} test results ✅
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -43,7 +43,7 @@ jobs:
             ${{ matrix.module }}/build/reports/tests/test/
             ${{ matrix.module }}/build/test-results/test/
 
-      - name: Upload JAR artifact
+      - name: Upload JAR artifact ✈️
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.module }}
@@ -54,31 +54,46 @@ jobs:
   coverage-report:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 25
+      - name: Set up JDK 25 🔧
         uses: actions/setup-java@v4
         with:
           java-version: '25'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew 🛂
         run: chmod +x gradlew
 
-      - name: Run all tests
+      - name: Run all tests 🧪
         run: ./gradlew test
 
-      - name: Generate aggregated coverage report
+      - name: Generate aggregated coverage report 🔨
         run: ./gradlew jacocoRootReport
 
-      - name: Upload aggregated coverage report
+      - name: Upload aggregated coverage report ✅
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-aggregated
           path: |
             build/reports/jacoco/jacocoRootReport/html/
             build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
+
+      - name: Generate JaCoCo Badge 📦
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+          badges-directory: build/reports/jacoco/test/html/badges
+
+      - name: Publish coverage report to GitHub Pages 🚀
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/reports/jacoco/test/html

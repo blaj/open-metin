@@ -44,7 +44,7 @@ subprojects {
         reports {
             xml.required.set(true)
             html.required.set(true)
-            csv.required.set(false)
+            csv.required.set(true)
         }
     }
 }
@@ -66,6 +66,6 @@ tasks.register<JacocoReport>("jacocoRootReport") {
     reports {
         xml.required.set(true)
         html.required.set(true)
-        csv.required.set(false)
+        csv.required.set(true)
     }
 }
