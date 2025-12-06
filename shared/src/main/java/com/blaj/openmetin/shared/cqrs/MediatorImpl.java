@@ -40,6 +40,7 @@ public class MediatorImpl implements Mediator {
 
     var pipeline =
         IntStream.iterate(behaviorList.size() - 1, i -> i >= 0, i -> i - 1)
+            .parallel()
             .mapToObj(i -> (PipelineBehavior<Request<R>, R>) behaviorList.get(i))
             .reduce(
                 terminal, (next, behavior) -> () -> behavior.handle(request, next), (a, b) -> a);
@@ -55,11 +56,13 @@ public class MediatorImpl implements Mediator {
             requestHandlerInterface ->
                 requestHandlerInterface.toClass().equals(RequestHandler.class))
         .findFirst()
-        .map(requestHandlerResolvableType -> requestHandlerResolvableType.getGeneric(0).toClass())
+        .map(requestHandlerResolvableType -> requestHandlerResolvableType.getGeneric(0))
+        .map(ResolvableType::toClass)
         .ifPresentOrElse(
             clazz -> requestHandlerMap.put(clazz, requestHandler),
-            () ->
-                new IllegalArgumentException(
-                    "Cannot infer request type for " + requestHandler.getClass()));
+            () -> {
+              throw new IllegalArgumentException(
+                  "Cannot infer request type for " + requestHandler.getClass());
+            });
   }
 }
