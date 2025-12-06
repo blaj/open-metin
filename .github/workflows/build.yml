@@ -58,7 +58,7 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout code ♻️
         uses: actions/checkout@v4
 
       - name: Set up JDK 25 🔧
@@ -84,12 +84,13 @@ jobs:
           path: |
             build/reports/jacoco/jacocoRootReport/html/
             build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
+            build/reports/jacoco/jacocoRootReport/jacocoRootReport.csv
 
       - name: Generate JaCoCo Badge 📦
         if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
         uses: cicirello/jacoco-badge-generator@v2
         with:
-          jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+          jacoco-csv-file: build/reports/jacoco/jacocoRootReport/jacocoRootReport.csv
           badges-directory: build/reports/jacoco/test/html/badges
 
       - name: Publish coverage report to GitHub Pages 🚀
