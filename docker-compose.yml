@@ -23,3 +23,17 @@
       - ./docker/conf/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - ./docker/conf/redis/certs:/certs:ro
     command: redis-server /usr/local/etc/redis/redis.conf
+
+  rabbitmq:
+    image: rabbitmq:4.0.5-management-alpine
+    restart: unless-stopped
+    ports:
+      - "10002:15671"
+      - "10003:5671"
+    volumes:
+      - ./docker/conf/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./docker/conf/rabbitmq/certs:/etc/rabbitmq/certs:ro
+    environment:
+      - RABBITMQ_CONFIG_FILE=/etc/rabbitmq/rabbitmq
+      - RABBITMQ_PROMETHEUS_RETURN_PER_OBJECT_METRICS=true
+      - RABBITMQ_PROMETHEUS_EXPORTER=true

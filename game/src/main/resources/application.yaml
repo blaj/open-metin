@@ -2,12 +2,17 @@ spring:
   application:
     name: openmetin-game
 
+  jpa:
+    hibernate:
+      ddl-auto: none
+
   datasource:
     url: jdbc:postgresql://localhost:10000/openmetin_game?sslmode=verify-full&sslrootcert=docker/conf/postgres/certs/ca.crt
     username: openmetin_game_user
     password: strongpassword
 
   liquibase:
+    enabled: true
     url: jdbc:postgresql://localhost:10000/openmetin_game?sslmode=verify-full&sslrootcert=docker/conf/postgres/certs/ca.crt
     user: openmetin_game_liquibase_user
     password: strongpassword
@@ -22,6 +27,9 @@ spring:
   data:
     redis:
       url: rediss://strongpassword@localhost:10001/0
+      ssl:
+        enabled: true
+        bundle: redis
       timeout: 2s
       client-type: lettuce
       lettuce:
@@ -32,18 +40,27 @@ spring:
           min-idle: 0
           max-wait: 2s
 
+  ssl:
+    bundle:
+      jks:
+        redis:
+          truststore:
+            location: classpath:truststore.jks
+            password: strongpassword
+            type: JKS
+
 logging:
   level:
-    org:
-      springframework:
-        data:
-          redis: DEBUG
-
-    io:
-      lettuce: DEBUG
+    org.springframework.data.redis: INFO
+    io.lettuce: WARN
+    liquibase: INFO
+    liquibase.changelog: INFO
+    liquibase.lockservice: WARN
+    org.springframework.boot.autoconfigure.liquibase: INFO
 
 open-metin:
+  channel-index: 1
   tcp:
     host: 0.0.0.0
-    port: 14000
+    port: 13000
     idle-seconds: 60

@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databaseChangeLog [
+  <!ENTITY auditColumns '
+    <column name="created_by" type="uuid"/>
+
+    <column name="created_at" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="updated_by" type="uuid"/>
+
+    <column name="updated_at" type="datetime"/>
+
+    <column name="deleted_by" type="uuid"/>
+
+    <column name="deleted_at" type="datetime"/>
+
+    <column name="deleted" type="boolean" defaultValue="false">
+      <constraints nullable="false"/>
+    </column>
+  '>
+  ]>
+
 <databaseChangeLog
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
@@ -25,5 +47,171 @@
     <comment>Cleanup test table</comment>
 
     <dropTable tableName="liquibase_test"/>
+  </changeSet>
+
+  <changeSet author="AM" id="0.2.0.create-character-schema">
+    <comment>Create character schema</comment>
+
+    <rollback>
+      DROP SCHEMA IF EXISTS character;
+    </rollback>
+
+    <sql>
+      CREATE SCHEMA character;
+
+      GRANT USAGE ON SCHEMA character TO openmetin_game_user;
+    </sql>
+  </changeSet>
+
+  <changeSet author="AM" id="0.2.1.create-character-table">
+    <comment>Create character table</comment>
+
+    <createTable schemaName="character" tableName="character">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints primaryKey="true"/>
+      </column>
+
+      <column name="name" type="VARCHAR(24)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="slot" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="body_part" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="hair_part" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="NEUTRAL" name="empire" type="VARCHAR(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="class_type" type="VARCHAR(20)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="1" name="level" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="experience" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="health" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="mana" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="stamina" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="st" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="ht" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="dx" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="iq" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="given_status_points" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="available_status_points" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="available_skill_points" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="gold" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="position_x" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="position_y" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="0" name="play_time" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="account_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      &auditColumns;
+    </createTable>
+
+    <rollback>
+      REVOKE USAGE, SELECT ON ALL SEQUENCES IN SCHEMA character FROM openmetin_game_user;
+      REVOKE INSERT, SELECT, UPDATE ON character.character FROM openmetin_game_user;
+      REVOKE USAGE ON SCHEMA character FROM openmetin_game_user;
+      DROP TABLE IF EXISTS character.character;
+    </rollback>
+
+    <sql>
+      GRANT USAGE ON SCHEMA character TO openmetin_game_user;
+      GRANT INSERT, SELECT, UPDATE ON character.character TO openmetin_game_user;
+      GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA character TO openmetin_game_user;
+    </sql>
+  </changeSet>
+
+  <changeSet author="AM" id="0.2.2.add-character-indexes">
+    <comment>Add indexes to character table</comment>
+
+    <rollback>
+      DROP INDEX IF EXISTS character.idx_character_account_id;
+      DROP INDEX IF EXISTS character.idx_character_name_unique;
+    </rollback>
+
+    <sql>
+      CREATE UNIQUE INDEX idx_character_name_unique
+      ON character.character(name)
+      WHERE deleted = false;
+
+      CREATE INDEX idx_character_account_id
+      ON character.character(account_id);
+    </sql>
+  </changeSet>
+
+  <changeSet author="AM" id="0.2.3.add-dummy-character">
+    <comment>Add dummy character</comment>
+
+    <rollback>
+      DELETE FROM character.character WHERE name = 'admin';
+    </rollback>
+
+    <sql>
+      INSERT INTO character.character(name, slot, body_part, hair_part, empire, class_type, level,
+      experience, health, mana, stamina, st, ht, dx, iq, given_status_points,
+      available_status_points, available_skill_points, gold, position_x, position_y, play_time,
+      account_id)
+      VALUES('admin', 0, 0, 0, 'SHINSOO', 'WARRIOR_MALE', 99, 0, 20000, 20000, 20000, 99, 99, 99,
+      99, 0, 0, 99, 1000000000, 958870, 272788, 10000, 1);
+    </sql>
   </changeSet>
 </databaseChangeLog>

@@ -1,0 +1,22 @@
+package com.blaj.openmetin.annotationprocessor.codec.strategy;
+
+import com.blaj.openmetin.annotationprocessor.codec.FieldContext;
+import com.blaj.openmetin.annotationprocessor.codec.FieldType;
+
+public class DoubleFieldCodecStrategy extends PrimitiveFieldCodecStrategy {
+
+  @Override
+  protected String getReadMethod() {
+    return "readDouble";
+  }
+
+  @Override
+  protected String getWriteMethod() {
+    return "writeDouble";
+  }
+
+  @Override
+  public boolean isSupported(FieldContext fieldContext) {
+    return fieldContext.fieldType() == FieldType.DOUBLE;
+  }
+}

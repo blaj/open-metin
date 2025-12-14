@@ -1,5 +1,7 @@
 rootProject.name = "openmetin"
 
-include("game")
-include("authentication")
+include("contracts")
+include("annotation-processor")
 include("shared")
+include("authentication")
+include("game")

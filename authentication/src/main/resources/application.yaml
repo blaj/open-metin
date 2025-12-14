@@ -2,6 +2,10 @@ spring:
   application:
     name: openmetin-authentication
 
+  threads:
+    virtual:
+      enabled: true
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -27,6 +31,9 @@ spring:
   data:
     redis:
       url: rediss://strongpassword@localhost:10001/0
+      ssl:
+        enabled: true
+        bundle: redis
       timeout: 2s
       client-type: lettuce
       lettuce:
@@ -37,17 +44,37 @@ spring:
           min-idle: 0
           max-wait: 2s
 
+  ssl:
+    bundle:
+      jks:
+        redis:
+          truststore:
+            location: classpath:truststore.jks
+            password: strongpassword
+            type: JKS
+
+  rabbitmq:
+    host: localhost
+    port: 10003
+    username: guest
+    password: guest
+    ssl:
+      enabled: true
+      trust-store: classpath:truststore.jks
+      trust-store-password: strongpassword
+      trust-store-type: JKS
+
 logging:
   level:
-    org.springframework.data.redis: DEBUG
-    io.lettuce: DEBUG
-    liquibase: DEBUG
-    liquibase.changelog: DEBUG
-    liquibase.lockservice: DEBUG
-    org.springframework.boot.autoconfigure.liquibase: DEBUG
+    org.springframework.data.redis: INFO
+    io.lettuce: WARN
+    liquibase: INFO
+    liquibase.changelog: INFO
+    liquibase.lockservice: WARN
+    org.springframework.boot.autoconfigure.liquibase: INFO
 
 open-metin:
   tcp:
     host: 0.0.0.0
-    port: 13001
+    port: 11000
     idle-seconds: 60
