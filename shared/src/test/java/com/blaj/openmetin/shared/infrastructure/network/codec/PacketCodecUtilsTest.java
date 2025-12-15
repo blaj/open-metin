@@ -56,7 +56,7 @@ public class PacketCodecUtilsTest {
     PacketCodecUtils.writeString(byteBuf, value);
 
     // then
-    assertThat(byteBuf.readShort()).isEqualTo((short) 5);
+    assertThat(byteBuf.readShortLE()).isEqualTo((short) 5);
     var bytes = new byte[5];
     byteBuf.readBytes(bytes);
     assertThat(new String(bytes, StandardCharsets.UTF_8)).isEqualTo(value);
@@ -78,7 +78,7 @@ public class PacketCodecUtilsTest {
   public void givenNonZeroLength_whenReadString_thenReadsString() {
     // given
     var value = "Hello";
-    byteBuf.writeShort(5);
+    byteBuf.writeShortLE(5);
     byteBuf.writeBytes(value.getBytes(StandardCharsets.UTF_8));
 
     // when
@@ -208,9 +208,9 @@ public class PacketCodecUtilsTest {
   @Test
   public void givenBuffer_whenReadFixedLongArray_thenReadsLongs() {
     // given
-    byteBuf.writeLong(100L);
-    byteBuf.writeLong(200L);
-    byteBuf.writeLong(300L);
+    byteBuf.writeLongLE(100L);
+    byteBuf.writeLongLE(200L);
+    byteBuf.writeLongLE(300L);
 
     // when
     var result = PacketCodecUtils.readFixedLongArray(byteBuf, 3);
@@ -228,11 +228,11 @@ public class PacketCodecUtilsTest {
     PacketCodecUtils.writeFixedLongArray(byteBuf, array, 5);
 
     // then
-    assertThat(byteBuf.readLong()).isEqualTo(100L);
-    assertThat(byteBuf.readLong()).isEqualTo(200L);
-    assertThat(byteBuf.readLong()).isZero();
-    assertThat(byteBuf.readLong()).isZero();
-    assertThat(byteBuf.readLong()).isZero();
+    assertThat(byteBuf.readLongLE()).isEqualTo(100L);
+    assertThat(byteBuf.readLongLE()).isEqualTo(200L);
+    assertThat(byteBuf.readLongLE()).isZero();
+    assertThat(byteBuf.readLongLE()).isZero();
+    assertThat(byteBuf.readLongLE()).isZero();
   }
 
   @Test
@@ -244,18 +244,18 @@ public class PacketCodecUtilsTest {
     PacketCodecUtils.writeFixedLongArray(byteBuf, array, 3);
 
     // then
-    assertThat(byteBuf.readLong()).isEqualTo(100L);
-    assertThat(byteBuf.readLong()).isEqualTo(200L);
-    assertThat(byteBuf.readLong()).isEqualTo(300L);
+    assertThat(byteBuf.readLongLE()).isEqualTo(100L);
+    assertThat(byteBuf.readLongLE()).isEqualTo(200L);
+    assertThat(byteBuf.readLongLE()).isEqualTo(300L);
     assertThat(byteBuf.readableBytes()).isZero();
   }
 
   @Test
   public void givenBuffer_whenReadFixedIntArray_thenReadsInts() {
     // given
-    byteBuf.writeInt(10);
-    byteBuf.writeInt(20);
-    byteBuf.writeInt(30);
+    byteBuf.writeIntLE(10);
+    byteBuf.writeIntLE(20);
+    byteBuf.writeIntLE(30);
 
     // when
     var result = PacketCodecUtils.readFixedIntArray(byteBuf, 3);
@@ -273,19 +273,19 @@ public class PacketCodecUtilsTest {
     PacketCodecUtils.writeFixedIntArray(byteBuf, array, 5);
 
     // then
-    assertThat(byteBuf.readInt()).isEqualTo(10);
-    assertThat(byteBuf.readInt()).isEqualTo(20);
-    assertThat(byteBuf.readInt()).isZero();
-    assertThat(byteBuf.readInt()).isZero();
-    assertThat(byteBuf.readInt()).isZero();
+    assertThat(byteBuf.readIntLE()).isEqualTo(10);
+    assertThat(byteBuf.readIntLE()).isEqualTo(20);
+    assertThat(byteBuf.readIntLE()).isZero();
+    assertThat(byteBuf.readIntLE()).isZero();
+    assertThat(byteBuf.readIntLE()).isZero();
   }
 
   @Test
   public void givenBuffer_whenReadFixedShortArray_thenReadsShorts() {
     // given
-    byteBuf.writeShort(1);
-    byteBuf.writeShort(2);
-    byteBuf.writeShort(3);
+    byteBuf.writeShortLE(1);
+    byteBuf.writeShortLE(2);
+    byteBuf.writeShortLE(3);
 
     // when
     var result = PacketCodecUtils.readFixedShortArray(byteBuf, 3);
@@ -303,18 +303,18 @@ public class PacketCodecUtilsTest {
     PacketCodecUtils.writeFixedShortArray(byteBuf, array, 5);
 
     // then
-    assertThat(byteBuf.readShort()).isEqualTo((short) 1);
-    assertThat(byteBuf.readShort()).isEqualTo((short) 2);
-    assertThat(byteBuf.readShort()).isZero();
-    assertThat(byteBuf.readShort()).isZero();
-    assertThat(byteBuf.readShort()).isZero();
+    assertThat(byteBuf.readShortLE()).isEqualTo((short) 1);
+    assertThat(byteBuf.readShortLE()).isEqualTo((short) 2);
+    assertThat(byteBuf.readShortLE()).isZero();
+    assertThat(byteBuf.readShortLE()).isZero();
+    assertThat(byteBuf.readShortLE()).isZero();
   }
 
   @Test
   public void givenBuffer_whenReadFixedUnsignedIntArray_thenReadsUnsignedInts() {
     // given
-    byteBuf.writeInt(-1); // 0xFFFFFFFF as unsigned = 4294967295L
-    byteBuf.writeInt(100);
+    byteBuf.writeIntLE(-1); // 0xFFFFFFFF as unsigned = 4294967295L
+    byteBuf.writeIntLE(100);
 
     // when
     var result = PacketCodecUtils.readFixedUnsignedIntArray(byteBuf, 2);
@@ -333,10 +333,10 @@ public class PacketCodecUtilsTest {
     PacketCodecUtils.writeFixedUnsignedIntArray(byteBuf, array, 4);
 
     // then
-    assertThat(byteBuf.readInt()).isEqualTo(-1); // 4294967295L as int
-    assertThat(byteBuf.readInt()).isEqualTo(100);
-    assertThat(byteBuf.readInt()).isZero();
-    assertThat(byteBuf.readInt()).isZero();
+    assertThat(byteBuf.readIntLE()).isEqualTo(-1); // 4294967295L as int
+    assertThat(byteBuf.readIntLE()).isEqualTo(100);
+    assertThat(byteBuf.readIntLE()).isZero();
+    assertThat(byteBuf.readIntLE()).isZero();
   }
 
   @Test

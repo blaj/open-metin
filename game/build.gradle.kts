@@ -33,5 +33,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
     testImplementation("org.awaitility:awaitility:4.3.0")
+    testImplementation("org.testcontainers:testcontainers:2.0.2")
+    testImplementation("com.redis:testcontainers-redis:2.2.4")
     testImplementation("com.h2database:h2")
 }

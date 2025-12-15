@@ -14,14 +14,14 @@ public final class PacketCodecUtils {
         .ifPresentOrElse(
             v -> {
               var bytes = v.getBytes(StandardCharsets.UTF_8);
-              out.writeShort(bytes.length);
+              out.writeShortLE(bytes.length);
               out.writeBytes(bytes);
             },
-            () -> out.writeShort(0));
+            () -> out.writeShortLE(0));
   }
 
   public static String readString(ByteBuf in) {
-    return Optional.of(in.readShort())
+    return Optional.of(in.readShortLE())
         .filter(length -> length > 0)
         .map(
             length -> {
@@ -85,43 +85,43 @@ public final class PacketCodecUtils {
   }
 
   public static long[] readFixedLongArray(ByteBuf in, int length) {
-    return IntStream.range(0, length).mapToLong(i -> in.readLong()).toArray();
+    return IntStream.range(0, length).mapToLong(i -> in.readLongLE()).toArray();
   }
 
   public static void writeFixedLongArray(ByteBuf out, long[] array, int length) {
     IntStream.range(0, length)
         .mapToLong(i -> i < array.length ? array[i] : 0)
-        .forEach(out::writeLong);
+        .forEach(out::writeLongLE);
   }
 
   public static int[] readFixedIntArray(ByteBuf in, int length) {
-    return IntStream.range(0, length).map(i -> in.readInt()).toArray();
+    return IntStream.range(0, length).map(i -> in.readIntLE()).toArray();
   }
 
   public static void writeFixedIntArray(ByteBuf out, int[] array, int length) {
-    IntStream.range(0, length).map(i -> i < array.length ? array[i] : 0).forEach(out::writeInt);
+    IntStream.range(0, length).map(i -> i < array.length ? array[i] : 0).forEach(out::writeIntLE);
   }
 
   public static short[] readFixedShortArray(ByteBuf in, int length) {
     var array = new short[length];
-    IntStream.range(0, length).forEach(i -> array[i] = in.readShort());
+    IntStream.range(0, length).forEach(i -> array[i] = in.readShortLE());
     return array;
   }
 
   public static void writeFixedShortArray(ByteBuf out, short[] array, int length) {
-    IntStream.range(0, length).map(i -> i < array.length ? array[i] : 0).forEach(out::writeShort);
+    IntStream.range(0, length).map(i -> i < array.length ? array[i] : 0).forEach(out::writeShortLE);
   }
 
   public static long[] readFixedUnsignedIntArray(ByteBuf in, int length) {
     return IntStream.range(0, length)
-        .mapToLong(i -> Integer.toUnsignedLong(in.readInt()))
+        .mapToLong(i -> Integer.toUnsignedLong(in.readIntLE()))
         .toArray();
   }
 
   public static void writeFixedUnsignedIntArray(ByteBuf out, long[] array, int length) {
     IntStream.range(0, length)
         .map(i -> (int) (i < array.length ? array[i] : 0))
-        .forEach(out::writeInt);
+        .forEach(out::writeIntLE);
   }
 
   public static String[] readFixedStringArray(ByteBuf in, int arrayLength, int stringLength) {

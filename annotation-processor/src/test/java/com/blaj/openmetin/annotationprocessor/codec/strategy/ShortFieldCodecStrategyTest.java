@@ -86,7 +86,7 @@ public class ShortFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readShort())"),
+            eq("$L.$L(in.readShortLE())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -115,7 +115,7 @@ public class ShortFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readShort())"),
+            eq("$L.$L(in.readShortLE())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -198,7 +198,7 @@ public class ShortFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeShort($L.$L())"),
+            eq("out.writeShortLE($L.$L())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }
@@ -227,7 +227,7 @@ public class ShortFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeShort($L.$L())"),
+            eq("out.writeShortLE($L.$L())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }

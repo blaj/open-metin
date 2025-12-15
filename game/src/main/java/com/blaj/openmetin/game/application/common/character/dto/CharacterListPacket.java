@@ -7,6 +7,7 @@ import com.blaj.openmetin.contracts.enums.PacketDirection;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.shared.common.model.Packet;
 import java.util.Arrays;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -16,6 +17,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
+@EqualsAndHashCode
 public class CharacterListPacket implements Packet {
 
   @PacketField(position = 0, arrayLength = 4)
@@ -45,6 +47,7 @@ public class CharacterListPacket implements Packet {
   @Getter
   @Setter
   @Accessors(chain = true)
+  @EqualsAndHashCode
   public static class SimpleCharacterPacket {
 
     @PacketField(position = 0, unsigned = true)

@@ -86,7 +86,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readInt())"),
+            eq("$L.$L(in.readIntLE())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -115,7 +115,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readInt())"),
+            eq("$L.$L(in.readIntLE())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -142,7 +142,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readShort() & 0xFFFF)"),
+            eq("$L.$L(in.readShortLE() & 0xFFFF)"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -171,7 +171,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readShort() & 0xFFFF)"),
+            eq("$L.$L(in.readShortLE() & 0xFFFF)"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -198,7 +198,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeInt($L.$L())"),
+            eq("out.writeIntLE($L.$L())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }
@@ -227,7 +227,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeInt($L.$L())"),
+            eq("out.writeIntLE($L.$L())"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }
@@ -254,7 +254,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeShort((short) ($L.$L() & 0xFFFF))"),
+            eq("out.writeShortLE((short) ($L.$L() & 0xFFFF))"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }
@@ -283,7 +283,7 @@ public class IntFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeShort((short) ($L.$L() & 0xFFFF))"),
+            eq("out.writeShortLE((short) ($L.$L() & 0xFFFF))"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }

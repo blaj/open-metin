@@ -22,10 +22,11 @@ public class LoginTokenRepositoryImplTest {
 
   private static final RedisContainer redis =
       new RedisContainer(RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG));
+
+  private LoginTokenRepositoryImpl loginTokenRepository;
   private ObjectMapper objectMapper;
   private RedisTemplate<String, Object> redisTemplate;
   private LettuceConnectionFactory connectionFactory;
-  private LoginTokenRepositoryImpl repository;
 
   @DynamicPropertySource
   static void redisProperties(DynamicPropertyRegistry registry) {
@@ -62,7 +63,7 @@ public class LoginTokenRepositoryImplTest {
     redisTemplate.setHashValueSerializer(new GenericJacksonJsonRedisSerializer(objectMapper));
     redisTemplate.afterPropertiesSet();
 
-    repository = new LoginTokenRepositoryImpl(redisTemplate, objectMapper);
+    loginTokenRepository = new LoginTokenRepositoryImpl(redisTemplate, objectMapper);
     redisTemplate.getConnectionFactory().getConnection().serverCommands().flushAll();
   }
 
@@ -78,8 +79,8 @@ public class LoginTokenRepositoryImplTest {
     var loginToken = new LoginToken();
 
     // when
-    repository.saveLoginToken(loginKey, loginToken);
-    var result = repository.getLoginToken(loginKey);
+    loginTokenRepository.saveLoginToken(loginKey, loginToken);
+    var result = loginTokenRepository.getLoginToken(loginKey);
 
     // then
     assertThat(result).isNotNull();
@@ -91,9 +92,9 @@ public class LoginTokenRepositoryImplTest {
     var accountId = 999L;
 
     // when
-    var attempt1 = repository.getAttempts(accountId);
-    var attempt2 = repository.getAttempts(accountId);
-    var attempt3 = repository.getAttempts(accountId);
+    var attempt1 = loginTokenRepository.getAttempts(accountId);
+    var attempt2 = loginTokenRepository.getAttempts(accountId);
+    var attempt3 = loginTokenRepository.getAttempts(accountId);
 
     // then
     assertThat(attempt1).isEqualTo(1L);
@@ -108,8 +109,8 @@ public class LoginTokenRepositoryImplTest {
     var loginKey = 12345L;
 
     // when
-    repository.saveLoginKey(accountId, loginKey);
-    var result = repository.getLoginKey(accountId);
+    loginTokenRepository.saveLoginKey(accountId, loginKey);
+    var result = loginTokenRepository.getLoginKey(accountId);
 
     // then
     assertThat(result).isEqualTo(loginKey);
@@ -122,8 +123,8 @@ public class LoginTokenRepositoryImplTest {
     var loginKey = 12345L;
 
     // when
-    repository.saveLoginKey(accountId, loginKey);
-    var exists = repository.loginKeyExists(accountId);
+    loginTokenRepository.saveLoginKey(accountId, loginKey);
+    var exists = loginTokenRepository.loginKeyExists(accountId);
 
     // then
     assertThat(exists).isTrue();
@@ -135,7 +136,7 @@ public class LoginTokenRepositoryImplTest {
     var accountId = 999L;
 
     // when
-    var exists = repository.loginKeyExists(accountId);
+    var exists = loginTokenRepository.loginKeyExists(accountId);
 
     // then
     assertThat(exists).isFalse();
@@ -146,25 +147,25 @@ public class LoginTokenRepositoryImplTest {
     // given
     var accountId = 999L;
     var loginKey = 12345L;
-    repository.saveLoginKey(accountId, loginKey);
+    loginTokenRepository.saveLoginKey(accountId, loginKey);
 
     // when
-    repository.deleteLoginKey(accountId);
+    loginTokenRepository.deleteLoginKey(accountId);
 
     // then
-    assertThat(repository.loginKeyExists(accountId)).isFalse();
+    assertThat(loginTokenRepository.loginKeyExists(accountId)).isFalse();
   }
 
   @Test
   public void givenAttempts_whenDelete_thenAttemptsReset() {
     // given
     var accountId = 999L;
-    repository.getAttempts(accountId);
-    repository.getAttempts(accountId);
+    loginTokenRepository.getAttempts(accountId);
+    loginTokenRepository.getAttempts(accountId);
 
     // when
-    repository.deleteAttempts(accountId);
-    var newAttempts = repository.getAttempts(accountId);
+    loginTokenRepository.deleteAttempts(accountId);
+    var newAttempts = loginTokenRepository.getAttempts(accountId);
 
     // then
     assertThat(newAttempts).isEqualTo(1L);

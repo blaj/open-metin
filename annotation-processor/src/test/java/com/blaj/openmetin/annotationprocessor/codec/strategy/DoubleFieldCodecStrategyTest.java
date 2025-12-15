@@ -188,7 +188,7 @@ public class DoubleFieldCodecStrategyTest {
     var readMethod = doubleFieldCodecStrategy.getReadMethod();
 
     // then
-    assertThat(readMethod).isEqualTo("readDouble");
+    assertThat(readMethod).isEqualTo("readDoubleLE");
   }
 
   @Test
@@ -199,7 +199,7 @@ public class DoubleFieldCodecStrategyTest {
     var writeMethod = doubleFieldCodecStrategy.getWriteMethod();
 
     // then
-    assertThat(writeMethod).isEqualTo("writeDouble");
+    assertThat(writeMethod).isEqualTo("writeDoubleLE");
   }
 
   private FieldContext createFieldContext(FieldType fieldType) {

@@ -5,12 +5,14 @@ import com.blaj.openmetin.game.application.common.character.mapper.SimpleCharact
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
 import com.blaj.openmetin.game.application.common.empire.EmpirePacket;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.shared.application.common.config.TcpConfig;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;
 import com.blaj.openmetin.shared.common.enums.Phase;
 import com.blaj.openmetin.shared.domain.repository.LoginTokenRepository;
 import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
+import com.blaj.openmetin.shared.infrastructure.network.utils.NetworkUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class TokenLoginCommandHandlerService implements RequestHandler<TokenLogi
   private final SessionManagerService sessionManagerService;
   private final SessionService sessionService;
   private final CharacterService characterService;
+  private final TcpConfig tcpConfig;
 
   @Override
   public Void handle(TokenLoginCommand request) {
@@ -56,9 +59,14 @@ public class TokenLoginCommandHandlerService implements RequestHandler<TokenLogi
     var characters = characterService.getCharacters(loginToken.getAccountId());
 
     characters.forEach(
-        characterDto ->
-            characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot()] =
-                SimpleCharacterPacketMapper.map(characterDto));
+        characterDto -> {
+          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot()] =
+              SimpleCharacterPacketMapper.map(characterDto);
+          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot()].setIp(
+              NetworkUtils.ipToInt(
+                  NetworkUtils.resolveAdvertisedAddress(
+                      tcpConfig.host(), NetworkUtils.getLocalAddress(session.getChannel()))));
+        });
 
     var empire = Empire.SHINSOO;
     if (!characters.isEmpty()) {

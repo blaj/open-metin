@@ -20,5 +20,5 @@ spring:
 open-metin:
   tcp:
     host: 0.0.0.0
-    port: 11000
+    port: 11001
     idle-seconds: 60

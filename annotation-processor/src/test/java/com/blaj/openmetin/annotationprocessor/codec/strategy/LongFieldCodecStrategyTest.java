@@ -85,7 +85,7 @@ public class LongFieldCodecStrategyTest {
 
     // then
     verify(methodSpecBuilder)
-        .addStatement(eq("$L.$L(in.readLong())"), eq("packet"), eq("setHeader"));
+        .addStatement(eq("$L.$L(in.readLongLE())"), eq("packet"), eq("setHeader"));
   }
 
   @ParameterizedTest
@@ -111,7 +111,7 @@ public class LongFieldCodecStrategyTest {
 
     // then
     verify(methodSpecBuilder)
-        .addStatement(eq("$L.$L(in.readLong())"), eq("element" + nestingDepth), eq("setHeader"));
+        .addStatement(eq("$L.$L(in.readLongLE())"), eq("element" + nestingDepth), eq("setHeader"));
   }
 
   @Test
@@ -136,7 +136,7 @@ public class LongFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readInt() & 0xFFFFFFFFL)"),
+            eq("$L.$L(in.readIntLE() & 0xFFFFFFFFL)"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -165,7 +165,7 @@ public class LongFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("$L.$L(in.readInt() & 0xFFFFFFFFL)"),
+            eq("$L.$L(in.readIntLE() & 0xFFFFFFFFL)"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getSetterName()));
   }
@@ -191,7 +191,7 @@ public class LongFieldCodecStrategyTest {
 
     // then
     verify(methodSpecBuilder)
-        .addStatement(eq("out.writeLong($L.$L())"), eq("packet"), eq("getHeader"));
+        .addStatement(eq("out.writeLongLE($L.$L())"), eq("packet"), eq("getHeader"));
   }
 
   @ParameterizedTest
@@ -217,7 +217,8 @@ public class LongFieldCodecStrategyTest {
 
     // then
     verify(methodSpecBuilder)
-        .addStatement(eq("out.writeLong($L.$L())"), eq("element" + nestingDepth), eq("getHeader"));
+        .addStatement(
+            eq("out.writeLongLE($L.$L())"), eq("element" + nestingDepth), eq("getHeader"));
   }
 
   @Test
@@ -242,7 +243,7 @@ public class LongFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeInt((int) ($L.$L() & 0xFFFFFFFFL))"),
+            eq("out.writeIntLE((int) ($L.$L() & 0xFFFFFFFFL))"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }
@@ -271,7 +272,7 @@ public class LongFieldCodecStrategyTest {
     // then
     verify(methodSpecBuilder)
         .addStatement(
-            eq("out.writeInt((int) ($L.$L() & 0xFFFFFFFFL))"),
+            eq("out.writeIntLE((int) ($L.$L() & 0xFFFFFFFFL))"),
             eq(fieldContext.getElementVariableName()),
             eq(fieldContext.getGetterName()));
   }

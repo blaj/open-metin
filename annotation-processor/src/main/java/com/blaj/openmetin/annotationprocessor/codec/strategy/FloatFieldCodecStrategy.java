@@ -7,12 +7,12 @@ public class FloatFieldCodecStrategy extends PrimitiveFieldCodecStrategy {
 
   @Override
   protected String getReadMethod() {
-    return "readFloat";
+    return "readFloatLE";
   }
 
   @Override
   protected String getWriteMethod() {
-    return "writeFloat";
+    return "writeFloatLE";
   }
 
   @Override

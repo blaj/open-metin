@@ -7,12 +7,12 @@ public class DoubleFieldCodecStrategy extends PrimitiveFieldCodecStrategy {
 
   @Override
   protected String getReadMethod() {
-    return "readDouble";
+    return "readDoubleLE";
   }
 
   @Override
   protected String getWriteMethod() {
-    return "writeDouble";
+    return "writeDoubleLE";
   }
 
   @Override

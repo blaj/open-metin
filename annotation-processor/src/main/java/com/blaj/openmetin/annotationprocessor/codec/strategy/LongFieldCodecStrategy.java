@@ -16,12 +16,12 @@ public class LongFieldCodecStrategy implements FieldCodecStrategy {
   public void generateDecodingMethod(MethodSpec.Builder method, FieldContext context) {
     if (context.isUnsigned()) {
       method.addStatement(
-          "$L.$L(in.readInt() & 0xFFFFFFFFL)",
+          "$L.$L(in.readIntLE() & 0xFFFFFFFFL)",
           context.getElementVariableName(),
           context.getSetterName());
     } else {
       method.addStatement(
-          "$L.$L(in.readLong())", context.getElementVariableName(), context.getSetterName());
+          "$L.$L(in.readLongLE())", context.getElementVariableName(), context.getSetterName());
     }
   }
 
@@ -29,12 +29,12 @@ public class LongFieldCodecStrategy implements FieldCodecStrategy {
   public void generateEncodingMethod(MethodSpec.Builder method, FieldContext context) {
     if (context.isUnsigned()) {
       method.addStatement(
-          "out.writeInt((int) ($L.$L() & 0xFFFFFFFFL))",
+          "out.writeIntLE((int) ($L.$L() & 0xFFFFFFFFL))",
           context.getElementVariableName(),
           context.getGetterName());
     } else {
       method.addStatement(
-          "out.writeLong($L.$L())", context.getElementVariableName(), context.getGetterName());
+          "out.writeLongLE($L.$L())", context.getElementVariableName(), context.getGetterName());
     }
   }
 }

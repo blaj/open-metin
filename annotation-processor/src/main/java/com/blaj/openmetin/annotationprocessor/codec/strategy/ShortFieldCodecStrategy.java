@@ -21,7 +21,7 @@ public class ShortFieldCodecStrategy implements FieldCodecStrategy {
           context.getSetterName());
     } else {
       method.addStatement(
-          "$L.$L(in.readShort())", context.getElementVariableName(), context.getSetterName());
+          "$L.$L(in.readShortLE())", context.getElementVariableName(), context.getSetterName());
     }
   }
 
@@ -34,7 +34,7 @@ public class ShortFieldCodecStrategy implements FieldCodecStrategy {
           context.getGetterName());
     } else {
       method.addStatement(
-          "out.writeShort($L.$L())", context.getElementVariableName(), context.getGetterName());
+          "out.writeShortLE($L.$L())", context.getElementVariableName(), context.getGetterName());
     }
   }
 }

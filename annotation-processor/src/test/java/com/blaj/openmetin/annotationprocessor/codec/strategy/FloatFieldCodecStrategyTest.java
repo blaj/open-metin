@@ -188,7 +188,7 @@ public class FloatFieldCodecStrategyTest {
     var readMethod = floatFieldCodecStrategy.getReadMethod();
 
     // then
-    assertThat(readMethod).isEqualTo("readFloat");
+    assertThat(readMethod).isEqualTo("readFloatLE");
   }
 
   @Test
@@ -199,7 +199,7 @@ public class FloatFieldCodecStrategyTest {
     var writeMethod = floatFieldCodecStrategy.getWriteMethod();
 
     // then
-    assertThat(writeMethod).isEqualTo("writeFloat");
+    assertThat(writeMethod).isEqualTo("writeFloatLE");
   }
 
   private FieldContext createFieldContext(FieldType fieldType) {

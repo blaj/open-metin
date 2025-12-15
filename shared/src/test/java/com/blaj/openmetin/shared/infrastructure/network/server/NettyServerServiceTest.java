@@ -6,6 +6,7 @@ import static org.awaitility.Awaitility.await;
 
 import com.blaj.openmetin.shared.infrastructure.network.properties.TcpProperties;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.time.Duration;
@@ -19,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class NettyServerServiceTest {
 
-  private static final String testHost = "localhost";
+  private static final InetAddress testHost = InetAddress.ofLiteral("localhost");
   private static final int testPort = 0; // Random available port
 
   private NettyServerService nettyServerService;

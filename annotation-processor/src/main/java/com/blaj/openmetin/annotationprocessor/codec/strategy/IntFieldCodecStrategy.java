@@ -16,12 +16,12 @@ public class IntFieldCodecStrategy implements FieldCodecStrategy {
   public void generateDecodingMethod(MethodSpec.Builder method, FieldContext context) {
     if (context.isUnsigned()) {
       method.addStatement(
-          "$L.$L(in.readShort() & 0xFFFF)",
+          "$L.$L(in.readShortLE() & 0xFFFF)",
           context.getElementVariableName(),
           context.getSetterName());
     } else {
       method.addStatement(
-          "$L.$L(in.readInt())", context.getElementVariableName(), context.getSetterName());
+          "$L.$L(in.readIntLE())", context.getElementVariableName(), context.getSetterName());
     }
   }
 
@@ -29,12 +29,12 @@ public class IntFieldCodecStrategy implements FieldCodecStrategy {
   public void generateEncodingMethod(MethodSpec.Builder method, FieldContext context) {
     if (context.isUnsigned()) {
       method.addStatement(
-          "out.writeShort((short) ($L.$L() & 0xFFFF))",
+          "out.writeShortLE((short) ($L.$L() & 0xFFFF))",
           context.getElementVariableName(),
           context.getGetterName());
     } else {
       method.addStatement(
-          "out.writeInt($L.$L())", context.getElementVariableName(), context.getGetterName());
+          "out.writeIntLE($L.$L())", context.getElementVariableName(), context.getGetterName());
     }
   }
 }
