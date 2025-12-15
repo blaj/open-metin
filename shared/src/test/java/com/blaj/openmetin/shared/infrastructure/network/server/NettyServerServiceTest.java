@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class NettyServerServiceTest {
 
-  private static final InetAddress testHost = InetAddress.ofLiteral("localhost");
+  private static final InetAddress testHost = InetAddress.ofLiteral("127.0.0.1");
   private static final int testPort = 0; // Random available port
 
   private NettyServerService nettyServerService;
