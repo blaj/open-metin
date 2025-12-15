@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: test
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  liquibase:
+    enabled: false
+
+  sql:
+    init:
+      platform: test
+
+open-metin:
+  channel-index: 1
+  tcp:
+    host: 0.0.0.0
+    port: 13001
+    idle-seconds: 60

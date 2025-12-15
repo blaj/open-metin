@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.infrastructure.config;
 
-import com.blaj.openmetin.shared.network.service.NettyServerService;
+import com.blaj.openmetin.shared.infrastructure.network.server.NettyServerService;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
