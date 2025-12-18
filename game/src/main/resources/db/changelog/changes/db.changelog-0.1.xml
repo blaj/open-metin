@@ -19,6 +19,26 @@
       <constraints nullable="false"/>
     </column>
   '>
+
+  <!ENTITY archiveColumns '
+    <column name="created_by" type="uuid"/>
+
+    <column name="created_at" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <constraints nullable="false"/>
+    </column>
+
+    <column name="updated_by" type="uuid"/>
+
+    <column name="updated_at" type="datetime"/>
+
+    <column name="archived_by" type="uuid"/>
+
+    <column name="archived_at" type="datetime"/>
+
+    <column name="archived" type="boolean" defaultValue="false">
+      <constraints nullable="false"/>
+    </column>
+  '>
   ]>
 
 <databaseChangeLog
@@ -213,5 +233,62 @@
       VALUES('admin', 0, 0, 0, 'SHINSOO', 'WARRIOR_MALE', 99, 0, 20000, 20000, 20000, 99, 99, 99,
       99, 0, 0, 99, 1000000000, 958870, 272788, 10000, 1);
     </sql>
+  </changeSet>
+
+  <changeSet author="AM" id="0.3.0.create-dictionary-schema">
+    <comment>Create dictionary schema</comment>
+
+    <rollback>
+      DROP SCHEMA IF EXISTS dictionary;
+    </rollback>
+
+    <sql>
+      CREATE SCHEMA dictionary;
+
+      GRANT USAGE ON SCHEMA dictionary TO openmetin_game_user;
+    </sql>
+  </changeSet>
+
+  <changeSet author="AM" id="0.3.1.create-banned-word-table">
+    <comment>Create banned_word table</comment>
+
+    <createTable schemaName="dictionary" tableName="banned_word">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints primaryKey="true"/>
+      </column>
+
+      <column name="word" type="varchar(50)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      &archiveColumns;
+    </createTable>
+
+    <rollback>
+      REVOKE USAGE, SELECT ON ALL SEQUENCES IN SCHEMA dictionary FROM openmetin_game_user;
+      REVOKE INSERT, SELECT, UPDATE ON dictionary.banned_word FROM openmetin_game_user;
+      REVOKE USAGE ON SCHEMA character FROM openmetin_game_user;
+      DROP TABLE IF EXISTS dictionary.banned_word;
+    </rollback>
+
+    <sql>
+      GRANT USAGE ON SCHEMA dictionary TO openmetin_game_user;
+      GRANT INSERT, SELECT, UPDATE ON dictionary.banned_word TO openmetin_game_user;
+      GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA dictionary TO openmetin_game_user;
+    </sql>
+  </changeSet>
+
+  <changeSet author="AM" id="0.4.0.add-base-part-to-character">
+    <addColumn schemaName="character" tableName="character">
+      <column defaultValue="0" name="base_part" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <comment>Add base part to character</comment>
+
+    <rollback>
+      <dropColumn columnName="base_part" schemaName="character" tableName="character"/>
+    </rollback>
   </changeSet>
 </databaseChangeLog>

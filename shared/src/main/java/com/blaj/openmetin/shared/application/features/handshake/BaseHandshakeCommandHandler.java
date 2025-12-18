@@ -11,11 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public abstract class BaseHandshakeCommandHandler
+public abstract class BaseHandshakeCommandHandler<T extends Session>
     implements RequestHandler<HandshakeCommand, Void> {
 
   private final SessionService sessionService;
-  private final SessionManagerService sessionManagerService;
+  private final SessionManagerService<T> sessionManagerService;
 
   @Override
   public Void handle(HandshakeCommand request) {

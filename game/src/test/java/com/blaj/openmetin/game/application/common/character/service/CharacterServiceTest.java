@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import com.blaj.openmetin.game.application.common.character.mapper.CharacterDtoMapper;
+import com.blaj.openmetin.game.application.common.empire.SelectEmpireService;
 import com.blaj.openmetin.game.domain.entity.Character;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
@@ -22,10 +23,11 @@ public class CharacterServiceTest {
   private CharacterService characterService;
 
   @Mock private CharacterRepository characterRepository;
+  @Mock private SelectEmpireService selectEmpireService;
 
   @BeforeEach
   public void beforeEach() {
-    characterService = new CharacterService(characterRepository);
+    characterService = new CharacterService(characterRepository, selectEmpireService);
   }
 
   @Test

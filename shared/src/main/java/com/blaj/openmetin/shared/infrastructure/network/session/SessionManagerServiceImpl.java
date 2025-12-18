@@ -2,24 +2,28 @@ package com.blaj.openmetin.shared.infrastructure.network.session;
 
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.model.Session;
+import com.blaj.openmetin.shared.common.service.SessionFactoryService;
 import io.netty.channel.Channel;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
-@Service
 @Slf4j
-public class SessionManagerServiceImpl implements SessionManagerService {
-  private final AtomicLong sessionIdGenerator = new AtomicLong(1);
-  private final Map<Long, Session> sessions = new ConcurrentHashMap<>();
-  private final Map<Integer, Session> sessionsByPid = new ConcurrentHashMap<>();
+@RequiredArgsConstructor
+public class SessionManagerServiceImpl<T extends Session> implements SessionManagerService<T> {
 
-  public Session createSession(Channel channel) {
+  private final AtomicLong sessionIdGenerator = new AtomicLong(1);
+  private final Map<Long, T> sessions = new ConcurrentHashMap<>();
+  private final Map<Integer, T> sessionsByPid = new ConcurrentHashMap<>();
+
+  private final SessionFactoryService<T> sessionFactoryService;
+
+  public T createSession(Channel channel) {
     var sessionId = sessionIdGenerator.getAndIncrement();
-    var session = new Session(sessionId, channel);
+    var session = sessionFactoryService.createSession(sessionId, channel);
 
     sessions.put(sessionId, session);
     log.debug("Created session {} for {}", sessionId, channel.remoteAddress());
@@ -28,17 +32,17 @@ public class SessionManagerServiceImpl implements SessionManagerService {
   }
 
   @Override
-  public Optional<Session> getSession(long sessionId) {
+  public Optional<T> getSession(long sessionId) {
     return Optional.ofNullable(sessions.get(sessionId));
   }
 
   @Override
-  public Optional<Session> getSessionByPid(int pid) {
+  public Optional<T> getSessionByPid(int pid) {
     return Optional.ofNullable(sessionsByPid.get(pid));
   }
 
   @Override
-  public Optional<Session> getSessionByAccountId(long accountId) {
+  public Optional<T> getSessionByAccountId(long accountId) {
     return sessions.values().stream()
         .filter(session -> session.getAccountId().equals(accountId))
         .findFirst();
@@ -65,7 +69,7 @@ public class SessionManagerServiceImpl implements SessionManagerService {
   }
 
   @Override
-  public Map<Long, Session> getAllSessions() {
+  public Map<Long, T> getAllSessions() {
     return Map.copyOf(sessions);
   }
 

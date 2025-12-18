@@ -5,6 +5,7 @@ import com.blaj.openmetin.contracts.annotation.PacketField;
 import com.blaj.openmetin.contracts.annotation.PacketHeader;
 import com.blaj.openmetin.contracts.enums.PacketDirection;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.shared.constants.CharacterConstants;
 import com.blaj.openmetin.shared.common.model.Packet;
 import java.util.Arrays;
 import lombok.EqualsAndHashCode;
@@ -41,7 +42,7 @@ public class CharacterListPacket implements Packet {
     }
 
     Arrays.fill(guildIds, 0);
-    Arrays.fill(guildNames, "");
+    Arrays.fill(guildNames, "\0".repeat(13));
   }
 
   @Getter
@@ -53,7 +54,7 @@ public class CharacterListPacket implements Packet {
     @PacketField(position = 0, unsigned = true)
     private long id = 0L;
 
-    @PacketField(position = 1, length = 25)
+    @PacketField(position = 1, length = CharacterConstants.CHARACTER_NAME_MAX_LENGTH)
     private String name = "";
 
     @PacketField(position = 2)
@@ -86,8 +87,8 @@ public class CharacterListPacket implements Packet {
     @PacketField(position = 11, unsigned = true)
     private int hairPart = 0;
 
-    @PacketField(position = 12, unsigned = true)
-    private long unknown = 0;
+    @PacketField(position = 12, arrayLength = 4)
+    private byte[] dummy = new byte[4];
 
     @PacketField(position = 13)
     private int positionX = 0;

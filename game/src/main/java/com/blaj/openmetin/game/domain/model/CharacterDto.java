@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.application.common.character.dto;
+package com.blaj.openmetin.game.domain.model;
 
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
@@ -30,6 +30,8 @@ public class CharacterDto {
   private Empire empire;
 
   private ClassType classType;
+
+  private Integer skillGroup = 0;
 
   private Integer level;
 

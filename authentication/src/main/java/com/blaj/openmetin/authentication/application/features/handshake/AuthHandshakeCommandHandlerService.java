@@ -9,12 +9,12 @@ import com.blaj.openmetin.shared.common.model.Session;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthHandshakeCommandHandlerService extends BaseHandshakeCommandHandler {
+public class AuthHandshakeCommandHandlerService extends BaseHandshakeCommandHandler<Session> {
 
   private final SessionService sessionService;
 
   public AuthHandshakeCommandHandlerService(
-      SessionService sessionService, SessionManagerService sessionManagerService) {
+      SessionService sessionService, SessionManagerService<Session> sessionManagerService) {
     super(sessionService, sessionManagerService);
     this.sessionService = sessionService;
   }

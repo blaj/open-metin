@@ -2,6 +2,7 @@ package com.blaj.openmetin.game.application.features.handshake;
 
 import com.blaj.openmetin.game.application.common.eventsystem.EventSystemService;
 import com.blaj.openmetin.game.application.common.ping.PingPacket;
+import com.blaj.openmetin.game.domain.model.GameSession;
 import com.blaj.openmetin.shared.application.features.handshake.BaseHandshakeCommandHandler;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
@@ -12,7 +13,7 @@ import java.time.Duration;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GameHandshakeCommandHandlerService extends BaseHandshakeCommandHandler {
+public class GameHandshakeCommandHandlerService extends BaseHandshakeCommandHandler<GameSession> {
 
   private static final Duration pingDuration = Duration.ofSeconds(5);
 
@@ -21,7 +22,7 @@ public class GameHandshakeCommandHandlerService extends BaseHandshakeCommandHand
 
   public GameHandshakeCommandHandlerService(
       SessionService sessionService,
-      SessionManagerService sessionManagerService,
+      SessionManagerService<GameSession> sessionManagerService,
       EventSystemService eventSystemService) {
     super(sessionService, sessionManagerService);
     this.sessionService = sessionService;

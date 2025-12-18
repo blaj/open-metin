@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.blaj.openmetin.annotationprocessor.codec.strategy.BooleanFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.ByteArrayFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.ByteFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.DoubleFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.EnumFieldCodecStrategy;
@@ -12,9 +13,10 @@ import com.blaj.openmetin.annotationprocessor.codec.strategy.IntFieldCodecStrate
 import com.blaj.openmetin.annotationprocessor.codec.strategy.LongArrayFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.LongFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.ObjectArrayFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.ObjectFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.ShortFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.StringArrayFieldCodecStrategy;
-import com.blaj.openmetin.annotationprocessor.codec.strategy.StringFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.utils.StringFieldCodecStrategy;
 import com.palantir.javapoet.ClassName;
 import java.util.stream.Stream;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -40,6 +42,7 @@ public class FieldCodecStrategyFactoryTest {
   private static Stream<Arguments> provideFieldTypeAndExpectedStrategy() {
     return Stream.of(
         Arguments.of(FieldType.BOOLEAN, BooleanFieldCodecStrategy.class),
+        Arguments.of(FieldType.BYTE_ARRAY, ByteArrayFieldCodecStrategy.class),
         Arguments.of(FieldType.BYTE, ByteFieldCodecStrategy.class),
         Arguments.of(FieldType.SHORT, ShortFieldCodecStrategy.class),
         Arguments.of(FieldType.INT, IntFieldCodecStrategy.class),
@@ -50,7 +53,8 @@ public class FieldCodecStrategyFactoryTest {
         Arguments.of(FieldType.LONG_ARRAY, LongArrayFieldCodecStrategy.class),
         Arguments.of(FieldType.STRING_ARRAY, StringArrayFieldCodecStrategy.class),
         Arguments.of(FieldType.ENUM, EnumFieldCodecStrategy.class),
-        Arguments.of(FieldType.OBJECT_ARRAY, ObjectArrayFieldCodecStrategy.class));
+        Arguments.of(FieldType.OBJECT_ARRAY, ObjectArrayFieldCodecStrategy.class),
+        Arguments.of(FieldType.OBJECT, ObjectFieldCodecStrategy.class));
   }
 
   @BeforeEach

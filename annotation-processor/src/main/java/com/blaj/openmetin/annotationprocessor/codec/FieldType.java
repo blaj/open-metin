@@ -19,6 +19,7 @@ public enum FieldType {
   STRING_ARRAY("String[]"),
 
   ENUM("enum"),
+  OBJECT("object"),
   OBJECT_ARRAY("object[]"),
   UNKNOWN("unknown");
 

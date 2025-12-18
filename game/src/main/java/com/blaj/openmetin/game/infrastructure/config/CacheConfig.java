@@ -1,6 +1,7 @@
 package com.blaj.openmetin.game.infrastructure.config;
 
-import com.blaj.openmetin.game.application.common.character.dto.CharacterDto;
+import com.blaj.openmetin.game.application.common.account.AccountDto;
+import com.blaj.openmetin.game.domain.model.CharacterDto;
 import java.time.Duration;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,6 @@ public class CacheConfig {
 
     var charactersListType =
         jsonMapper.getTypeFactory().constructCollectionType(List.class, CharacterDto.class);
-
     var charactersConfig =
         config
             .entryTtl(Duration.ofMinutes(30))
@@ -57,9 +57,18 @@ public class CacheConfig {
                 RedisSerializationContext.SerializationPair.fromSerializer(
                     new JacksonJsonRedisSerializer<>(jsonMapper, charactersListType)));
 
+    var accountDtoType = jsonMapper.getTypeFactory().constructType(AccountDto.class);
+    var accountsConfig =
+        config
+            .entryTtl(Duration.ofDays(7))
+            .serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(
+                    new JacksonJsonRedisSerializer<>(jsonMapper, accountDtoType)));
+
     return RedisCacheManager.builder(connectionFactory)
         .cacheDefaults(config)
         .withCacheConfiguration("characters", charactersConfig)
+        .withCacheConfiguration("accounts", accountsConfig)
         .build();
   }
 }
