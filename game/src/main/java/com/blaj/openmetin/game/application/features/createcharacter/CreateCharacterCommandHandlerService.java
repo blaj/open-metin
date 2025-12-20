@@ -12,6 +12,7 @@ import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;
 import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
 import com.blaj.openmetin.shared.infrastructure.network.utils.NetworkUtils;
+import jakarta.persistence.EntityNotFoundException;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,10 @@ public class CreateCharacterCommandHandlerService
 
   @Override
   public Void handle(CreateCharacterCommand request) {
-    var session = sessionManagerService.getSession(request.sessionId()).orElseThrow();
+    var session =
+        sessionManagerService
+            .getSession(request.sessionId())
+            .orElseThrow(() -> new EntityNotFoundException("Session not exists"));
 
     if (session.getAccountId() == null) {
       log.warn("Character create before authorization for session {}", session.getId());
