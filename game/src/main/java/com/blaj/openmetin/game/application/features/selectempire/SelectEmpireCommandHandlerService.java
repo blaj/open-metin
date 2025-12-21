@@ -5,6 +5,7 @@ import com.blaj.openmetin.game.application.common.empire.SelectEmpireService;
 import com.blaj.openmetin.game.domain.model.GameSession;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,10 @@ public class SelectEmpireCommandHandlerService
 
   @Override
   public Void handle(SelectEmpireCommand request) {
-    var session = sessionManagerService.getSession(request.sessionId()).orElseThrow();
+    var session =
+        sessionManagerService
+            .getSession(request.sessionId())
+            .orElseThrow(() -> new EntityNotFoundException("Session not exists"));
 
     if (session.getAccountId() == null) {
       log.warn("Empire select before authorization for session {}", session.getId());

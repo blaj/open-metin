@@ -24,12 +24,13 @@ public class LoginTokenRepositoryImplTest {
       new RedisContainer(RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG));
 
   private LoginTokenRepositoryImpl loginTokenRepository;
+
   private ObjectMapper objectMapper;
   private RedisTemplate<String, Object> redisTemplate;
   private LettuceConnectionFactory connectionFactory;
 
   @DynamicPropertySource
-  static void redisProperties(DynamicPropertyRegistry registry) {
+  public static void redisProperties(DynamicPropertyRegistry registry) {
     registry.add("spring.data.redis.host", redis::getHost);
     registry.add("spring.data.redis.port", redis::getFirstMappedPort);
   }

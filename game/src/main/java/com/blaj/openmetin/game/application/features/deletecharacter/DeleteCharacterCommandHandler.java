@@ -7,6 +7,7 @@ import com.blaj.openmetin.game.shared.constants.CharacterConstants;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;
 import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,10 @@ public class DeleteCharacterCommandHandler implements RequestHandler<DeleteChara
 
   @Override
   public Void handle(DeleteCharacterCommand request) {
-    var session = sessionManagerService.getSession(request.sessionId()).orElseThrow();
+    var session =
+        sessionManagerService
+            .getSession(request.sessionId())
+            .orElseThrow(() -> new EntityNotFoundException("Session not exists"));
 
     if (session.getAccountId() == null) {
       log.warn("Character create before authorization for session {}", session.getId());
@@ -32,7 +36,9 @@ public class DeleteCharacterCommandHandler implements RequestHandler<DeleteChara
     }
 
     var character =
-        characterService.getCharacter(session.getAccountId(), request.slot()).orElseThrow();
+        characterService
+            .getCharacter(session.getAccountId(), request.slot())
+            .orElseThrow(() -> new EntityNotFoundException("Character not exists"));
 
     if (character.getLevel() > CharacterConstants.CHARACTER_DELETE_LEVEL_LIMIT) {
       sessionService.sendPacketAsync(
