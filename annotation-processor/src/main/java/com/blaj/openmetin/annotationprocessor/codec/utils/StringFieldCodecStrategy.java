@@ -1,4 +1,4 @@
-package com.blaj.openmetin.annotationprocessor.codec.strategy;
+package com.blaj.openmetin.annotationprocessor.codec.utils;
 
 import com.blaj.openmetin.annotationprocessor.codec.FieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.FieldContext;

@@ -28,6 +28,10 @@ public class FieldTypeUtils {
       return FieldType.OBJECT_ARRAY;
     }
 
+    if (isObject(typeName, typeMirror)) {
+      return FieldType.OBJECT;
+    }
+
     return fromString(typeName);
   }
 
@@ -48,5 +52,21 @@ public class FieldTypeUtils {
   private static boolean isObjectArray(String typeName) {
     return typeName.endsWith("[]")
         && !Set.of("byte[]", "short[]", "int[]", "long[]", "String[]").contains(typeName);
+  }
+
+  private static boolean isObject(String typeName, TypeMirror typeMirror) {
+    if (typeName.endsWith("[]")) {
+      return false;
+    }
+
+    if (Set.of("byte", "short", "int", "long", "float", "double", "boolean").contains(typeName)) {
+      return false;
+    }
+
+    if (typeName.equals("String") || typeMirror.toString().equals("java.lang.String")) {
+      return false;
+    }
+
+    return true;
   }
 }

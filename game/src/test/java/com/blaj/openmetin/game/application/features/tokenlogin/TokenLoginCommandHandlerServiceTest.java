@@ -7,17 +7,17 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.never;
 
-import com.blaj.openmetin.game.application.common.character.dto.CharacterDto;
 import com.blaj.openmetin.game.application.common.character.dto.CharacterListPacket;
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
 import com.blaj.openmetin.game.application.common.empire.EmpirePacket;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.model.CharacterDto;
+import com.blaj.openmetin.game.domain.model.GameSession;
 import com.blaj.openmetin.shared.application.common.config.TcpConfig;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;
 import com.blaj.openmetin.shared.common.enums.Phase;
-import com.blaj.openmetin.shared.common.model.Session;
 import com.blaj.openmetin.shared.domain.entity.LoginToken;
 import com.blaj.openmetin.shared.domain.repository.LoginTokenRepository;
 import io.netty.channel.Channel;
@@ -38,7 +38,7 @@ public class TokenLoginCommandHandlerServiceTest {
   private TokenLoginCommandHandlerService tokenLoginCommandHandlerService;
 
   @Mock private LoginTokenRepository loginTokenRepository;
-  @Mock private SessionManagerService sessionManagerService;
+  @Mock private SessionManagerService<GameSession> sessionManagerService;
   @Mock private SessionService sessionService;
   @Mock private CharacterService characterService;
   @Mock private TcpConfig tcpConfig;
@@ -78,10 +78,10 @@ public class TokenLoginCommandHandlerServiceTest {
     // given
     var tokenLoginCommand =
         new TokenLoginCommand("username", 32523L, new long[] {12, 436, 765, 321}, 32L);
-    var session = new Session(tokenLoginCommand.sessionId(), channel);
+    var gameSession = new GameSession(tokenLoginCommand.sessionId(), channel);
 
     given(sessionManagerService.getSession(tokenLoginCommand.sessionId()))
-        .willReturn(Optional.of(session));
+        .willReturn(Optional.of(gameSession));
     given(loginTokenRepository.getLoginToken(tokenLoginCommand.key())).willReturn(null);
 
     // when
@@ -96,11 +96,11 @@ public class TokenLoginCommandHandlerServiceTest {
     // given
     var tokenLoginCommand =
         new TokenLoginCommand("username", 32523L, new long[] {12, 436, 765, 321}, 32L);
-    var session = new Session(tokenLoginCommand.sessionId(), channel);
+    var gameSession = new GameSession(tokenLoginCommand.sessionId(), channel);
     var loginToken = LoginToken.builder().username("nonMatching").build();
 
     given(sessionManagerService.getSession(tokenLoginCommand.sessionId()))
-        .willReturn(Optional.of(session));
+        .willReturn(Optional.of(gameSession));
     given(loginTokenRepository.getLoginToken(tokenLoginCommand.key())).willReturn(loginToken);
 
     // when
@@ -115,7 +115,7 @@ public class TokenLoginCommandHandlerServiceTest {
     // given
     var tokenLoginCommand =
         new TokenLoginCommand("username", 32523L, new long[] {12, 436, 765, 321}, 32L);
-    var session = new Session(tokenLoginCommand.sessionId(), channel);
+    var gameSession = new GameSession(tokenLoginCommand.sessionId(), channel);
     var loginToken =
         LoginToken.builder().username(tokenLoginCommand.username()).accountId(123L).build();
     var characterDto1 = characterDto(1L);
@@ -125,7 +125,7 @@ public class TokenLoginCommandHandlerServiceTest {
     given(channel.localAddress())
         .willReturn(InetSocketAddress.createUnresolved("localhost", 13000));
     given(sessionManagerService.getSession(tokenLoginCommand.sessionId()))
-        .willReturn(Optional.of(session));
+        .willReturn(Optional.of(gameSession));
     given(loginTokenRepository.getLoginToken(tokenLoginCommand.key())).willReturn(loginToken);
     given(characterService.getCharacters(loginToken.getAccountId()))
         .willReturn(List.of(characterDto1, characterDto2));
@@ -136,13 +136,14 @@ public class TokenLoginCommandHandlerServiceTest {
     // then
     then(sessionService)
         .should()
-        .sendPacketAsync(session.getId(), new EmpirePacket().setEmpire(characterDto1.getEmpire()));
+        .sendPacketAsync(
+            gameSession.getId(), new EmpirePacket().setEmpire(characterDto1.getEmpire()));
     then(sessionService)
         .should()
-        .sendPacketAsync(session.getId(), new PhasePacket().setPhase(Phase.SELECT_CHARACTER));
+        .sendPacketAsync(gameSession.getId(), new PhasePacket().setPhase(Phase.SELECT_CHARACTER));
     then(sessionService)
         .should()
-        .sendPacketAsync(eq(session.getId()), any(CharacterListPacket.class));
+        .sendPacketAsync(eq(gameSession.getId()), any(CharacterListPacket.class));
   }
 
   private CharacterDto characterDto(long id) {

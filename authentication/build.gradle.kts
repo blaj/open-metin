@@ -17,8 +17,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.apache.commons:commons-pool2")
     implementation("io.netty:netty-all:4.2.7.Final")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -32,6 +34,7 @@ dependencies {
     annotationProcessor(project(":annotation-processor"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
     testImplementation("org.awaitility:awaitility:4.3.0")
     testImplementation("com.h2database:h2")

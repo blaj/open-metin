@@ -20,10 +20,6 @@ public class ChannelInboundHandlerService extends SimpleChannelInboundHandler<Pa
   private final PacketHandlerFactoryService packetHandlerFactoryService;
   private final SessionManagerService sessionManagerService;
 
-  @Override
-  public void channelActive(ChannelHandlerContext channelHandlerContext) throws Exception {
-    super.channelActive(channelHandlerContext);
-  }
 
   @Override
   public void channelInactive(ChannelHandlerContext channelHandlerContext) throws Exception {

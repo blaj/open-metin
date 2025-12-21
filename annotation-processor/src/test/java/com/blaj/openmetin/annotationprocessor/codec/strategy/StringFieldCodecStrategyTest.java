@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import com.blaj.openmetin.annotationprocessor.codec.FieldContext;
 import com.blaj.openmetin.annotationprocessor.codec.FieldType;
+import com.blaj.openmetin.annotationprocessor.codec.utils.StringFieldCodecStrategy;
 import com.palantir.javapoet.ClassName;
 import com.palantir.javapoet.MethodSpec;
 import javax.annotation.processing.ProcessingEnvironment;

@@ -5,6 +5,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -26,7 +27,7 @@ public class NetworkUtils {
     }
 
     var bytes = address.getAddress();
-    return ByteBuffer.wrap(bytes).getInt();
+    return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
   }
 
   public static InetAddress getLocalAddress(Channel channel) {

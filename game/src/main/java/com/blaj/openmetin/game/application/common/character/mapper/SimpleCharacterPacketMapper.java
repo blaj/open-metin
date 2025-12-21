@@ -1,7 +1,7 @@
 package com.blaj.openmetin.game.application.common.character.mapper;
 
-import com.blaj.openmetin.game.application.common.character.dto.CharacterDto;
 import com.blaj.openmetin.game.application.common.character.dto.CharacterListPacket.SimpleCharacterPacket;
+import com.blaj.openmetin.game.domain.model.CharacterDto;
 import java.util.Optional;
 import lombok.experimental.UtilityClass;
 

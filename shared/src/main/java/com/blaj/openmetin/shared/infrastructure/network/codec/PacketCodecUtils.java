@@ -53,14 +53,9 @@ public final class PacketCodecUtils {
     in.readBytes(bytes);
 
     var actualLength =
-        IntStream.range(0, length)
-                .map(i -> length - 1 - i)
-                .filter(i -> bytes[i] != 0)
-                .findFirst()
-                .orElse(-1)
-            + 1;
+        IntStream.range(0, length).filter(i -> bytes[i] == 0).findFirst().orElse(length);
 
-    return new String(bytes, 0, actualLength, StandardCharsets.UTF_8);
+    return actualLength > 0 ? new String(bytes, 0, actualLength, StandardCharsets.UTF_8) : "";
   }
 
   public static void writeFixedByteArray(ByteBuf out, byte[] value, int length) {

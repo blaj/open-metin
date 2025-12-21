@@ -90,7 +90,7 @@ public class AuditingEntityRepositoryTest {
   }
 
   @Repository
-  interface TestEntityRepository extends AuditingEntityRepository<TestEntity> {}
+  public interface TestEntityRepository extends AuditingEntityRepository<TestEntity> {}
 
   @Entity
   @Getter
@@ -99,12 +99,12 @@ public class AuditingEntityRepositoryTest {
   @SuperBuilder
   @NoArgsConstructor
   @AllArgsConstructor
-  static class TestEntity extends AuditingEntity {
+  public static class TestEntity extends AuditingEntity {
     private String name;
   }
 
   @Configuration
   @EnableAutoConfiguration
   @EnableJpaRepositories(considerNestedRepositories = true)
-  static class TestConfig {}
+  public static class TestConfig {}
 }

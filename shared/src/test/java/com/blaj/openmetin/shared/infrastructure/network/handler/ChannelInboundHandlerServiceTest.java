@@ -2,8 +2,10 @@ package com.blaj.openmetin.shared.infrastructure.network.handler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.never;
 
 import com.blaj.openmetin.shared.common.abstractions.PacketHandlerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
@@ -26,7 +28,7 @@ public class ChannelInboundHandlerServiceTest {
   private ChannelInboundHandlerService channelInboundHandlerService;
 
   @Mock private PacketHandlerFactoryService packetHandlerFactoryService;
-  @Mock private SessionManagerService sessionManagerService;
+  @Mock private SessionManagerService<?> sessionManagerService;
   @Mock private ChannelHandlerContext channelHandlerContext;
   @Mock private Channel channel;
   @Mock private Attribute<Session> sessionAttribute;
@@ -41,6 +43,32 @@ public class ChannelInboundHandlerServiceTest {
     given(channelHandlerContext.channel()).willReturn(channel);
     given(channel.attr(SessionManagerService.sessionKey)).willReturn(sessionAttribute);
     given(sessionAttribute.get()).willReturn(session);
+  }
+
+  @Test
+  public void givenNonExistingSession_whenChannelInactive_thenDoNothing() throws Exception {
+    // given
+    given(sessionAttribute.get()).willReturn(null);
+
+    // when
+    channelInboundHandlerService.channelInactive(channelHandlerContext);
+
+    // then
+    then(sessionManagerService).should(never()).removeSession(anyLong());
+  }
+
+  @Test
+  public void givenValid_whenChannelInactive_thenRemoveSession() throws Exception {
+    // given
+    var sessionId = 123L;
+
+    given(session.getId()).willReturn(sessionId);
+
+    // when
+    channelInboundHandlerService.channelInactive(channelHandlerContext);
+
+    // then
+    then(sessionManagerService).should().removeSession(sessionId);
   }
 
   @Test
@@ -76,5 +104,5 @@ public class ChannelInboundHandlerServiceTest {
     then(packetHandlerService).should().handle(packet, session);
   }
 
-  static class TestPacket implements Packet {}
+  public static class TestPacket implements Packet {}
 }

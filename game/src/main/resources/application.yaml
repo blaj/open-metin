@@ -64,3 +64,12 @@ open-metin:
     host: 0.0.0.0
     port: 13000
     idle-seconds: 60
+
+  rest-client:
+    authentication-url: https://localhost:8080/api/v1
+    authentication-basic-auth-username: user
+    authentication-basic-auth-password: pass
+
+  trust-store:
+    path: classpath:truststore.jks
+    password: strongpassword

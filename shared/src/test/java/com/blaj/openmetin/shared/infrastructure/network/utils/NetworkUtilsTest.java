@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -83,7 +84,7 @@ public class NetworkUtilsTest {
     var result = NetworkUtils.ipToInt(ip);
 
     // then
-    assertThat(result).isEqualTo(-1062731420); // Signed int representation
+    assertThat(result).isEqualTo(1677830336); // 192.168.1.100 as Little Endian int
   }
 
   @Test
@@ -95,7 +96,7 @@ public class NetworkUtilsTest {
     var result = NetworkUtils.ipToInt(ip);
 
     // then
-    assertThat(result).isEqualTo(2130706433); // 127.0.0.1 as int
+    assertThat(result).isEqualTo(16777343); // 127.0.0.1 as Little Endian int
   }
 
   @Test
@@ -203,7 +204,7 @@ public class NetworkUtilsTest {
 
     // when
     var intValue = NetworkUtils.ipToInt(originalIp);
-    var bytes = ByteBuffer.allocate(4).putInt(intValue).array();
+    var bytes = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(intValue).array();
     var convertedBack = InetAddress.getByAddress(bytes);
 
     // then

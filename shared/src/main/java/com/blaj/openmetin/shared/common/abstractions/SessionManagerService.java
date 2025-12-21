@@ -6,22 +6,23 @@ import io.netty.util.AttributeKey;
 import java.util.Map;
 import java.util.Optional;
 
-public interface SessionManagerService {
+public interface SessionManagerService<T extends Session> {
+
   AttributeKey<Session> sessionKey = AttributeKey.valueOf("session");
 
-  Session createSession(Channel channel);
+  T createSession(Channel channel);
 
-  Optional<Session> getSession(long sessionId);
+  Optional<T> getSession(long sessionId);
 
-  Optional<Session> getSessionByPid(int pid);
+  Optional<T> getSessionByPid(int pid);
 
-  Optional<Session> getSessionByAccountId(long accountId);
+  Optional<T> getSessionByAccountId(long accountId);
 
   void linkSessionToPid(long sessionId, int pid);
 
   void removeSession(long sessionId);
 
-  Map<Long, Session> getAllSessions();
+  Map<Long, T> getAllSessions();
 
   int getSessionCount();
 }
