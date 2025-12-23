@@ -9,6 +9,7 @@ import com.blaj.openmetin.annotationprocessor.codec.strategy.ByteFieldCodecStrat
 import com.blaj.openmetin.annotationprocessor.codec.strategy.DoubleFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.EnumFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.FloatFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.IntArrayFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.IntFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.LongArrayFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.LongFieldCodecStrategy;
@@ -46,6 +47,7 @@ public class FieldCodecStrategyFactoryTest {
         Arguments.of(FieldType.BYTE, ByteFieldCodecStrategy.class),
         Arguments.of(FieldType.SHORT, ShortFieldCodecStrategy.class),
         Arguments.of(FieldType.INT, IntFieldCodecStrategy.class),
+        Arguments.of(FieldType.INT_ARRAY, IntArrayFieldCodecStrategy.class),
         Arguments.of(FieldType.LONG, LongFieldCodecStrategy.class),
         Arguments.of(FieldType.FLOAT, FloatFieldCodecStrategy.class),
         Arguments.of(FieldType.DOUBLE, DoubleFieldCodecStrategy.class),

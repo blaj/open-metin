@@ -19,14 +19,14 @@ import lombok.experimental.SuperBuilder;
 public abstract class BaseGameEntity {
 
   private long vid;
-
   private EntityState state;
-
   private int positionX;
-
   private int positionY;
-
   private Empire empire;
+  private short movementSpeed;
+  private short attackSpeed;
+  private long health;
+  private long mana;
 
   public abstract EntityType getType();
 }

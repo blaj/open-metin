@@ -5,6 +5,7 @@ import com.blaj.openmetin.shared.infrastructure.network.codec.MainByteToMessageD
 import com.blaj.openmetin.shared.infrastructure.network.codec.MainMessageToByteEncoderService;
 import com.blaj.openmetin.shared.infrastructure.network.codec.PacketCodecFactoryService;
 import com.blaj.openmetin.shared.infrastructure.network.handler.ChannelInboundHandlerService;
+import com.blaj.openmetin.shared.infrastructure.network.handler.GlobalExceptionHandlerService;
 import com.blaj.openmetin.shared.infrastructure.network.handler.HandshakeChannelInboundHandlerService;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -19,6 +20,7 @@ public class GameChannelInitializerService extends ChannelInitializer<SocketChan
   private final ChannelInboundHandlerService channelInboundHandlerService;
   private final SessionManagerService sessionManagerService;
   private final PacketCodecFactoryService packetCodecFactoryService;
+  private final GlobalExceptionHandlerService globalExceptionHandlerService;
 
   @Override
   protected void initChannel(SocketChannel socketChannel) throws Exception {
@@ -27,7 +29,8 @@ public class GameChannelInitializerService extends ChannelInitializer<SocketChan
         .addLast("encoder", new MainMessageToByteEncoderService(packetCodecFactoryService))
         .addLast("decoder", new MainByteToMessageDecoderService(packetCodecFactoryService))
         .addLast("handshakeHandler", handshakeChannelInboundHandlerService)
-        .addLast("handler", channelInboundHandlerService);
+        .addLast("handler", channelInboundHandlerService)
+        .addLast("globalExceptionHandler", globalExceptionHandlerService);
 
     var session = sessionManagerService.createSession(socketChannel);
     socketChannel.attr(SessionManagerService.sessionKey).set(session);

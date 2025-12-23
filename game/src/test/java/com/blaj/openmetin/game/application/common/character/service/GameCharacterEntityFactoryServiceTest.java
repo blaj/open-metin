@@ -2,6 +2,7 @@ package com.blaj.openmetin.game.application.common.character.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.blaj.openmetin.game.application.common.game.GameEntityVidAllocator;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.game.domain.model.CharacterDto;
 import com.blaj.openmetin.game.domain.model.GameSession;
@@ -17,11 +18,13 @@ public class GameCharacterEntityFactoryServiceTest {
 
   private GameCharacterEntityFactoryService gameCharacterEntityFactoryService;
 
+  @Mock private GameEntityVidAllocator gameEntityVidAllocator;
   @Mock private Channel channel;
 
   @BeforeEach
   public void beforeEach() {
-    gameCharacterEntityFactoryService = new GameCharacterEntityFactoryService();
+    gameCharacterEntityFactoryService =
+        new GameCharacterEntityFactoryService(gameEntityVidAllocator);
   }
 
   @Test

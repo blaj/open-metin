@@ -16,8 +16,8 @@ import lombok.experimental.SuperBuilder;
 public class GameCharacterEntity extends BaseGameEntity {
 
   private Session session;
-
   private CharacterDto characterDto;
+  private long defence;
 
   @Override
   public EntityType getType() {

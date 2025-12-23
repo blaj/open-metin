@@ -32,7 +32,7 @@ public class CharacterService {
 
   public Optional<CharacterDto> getCharacter(long accountId, short slot) {
     return getCharacters(accountId).stream()
-        .filter(characterDto -> characterDto.getSlot() == slot)
+        .filter(characterDto -> characterDto.getSlot().shortValue() == slot)
         .findFirst();
   }
 

@@ -33,6 +33,7 @@ public class CharacterDtoMapperTest {
             .hairPart(20)
             .empire(Empire.CHUNJO)
             .classType(ClassType.SHAMAN_FEMALE)
+            .skillGroup(543)
             .level(33)
             .experience(4312)
             .health(444L)
@@ -64,6 +65,7 @@ public class CharacterDtoMapperTest {
     assertThat(dto.getHairPart()).isEqualTo(character.getHairPart());
     assertThat(dto.getEmpire()).isEqualTo(character.getEmpire());
     assertThat(dto.getClassType()).isEqualTo(character.getClassType());
+    assertThat(dto.getSkillGroup()).isEqualTo(character.getSkillGroup());
     assertThat(dto.getLevel()).isEqualTo(character.getLevel());
     assertThat(dto.getExperience()).isEqualTo(character.getExperience());
     assertThat(dto.getHealth()).isEqualTo(character.getHealth());
@@ -73,6 +75,10 @@ public class CharacterDtoMapperTest {
     assertThat(dto.getHt()).isEqualTo(character.getHt());
     assertThat(dto.getDx()).isEqualTo(character.getDx());
     assertThat(dto.getIq()).isEqualTo(character.getIq());
+    assertThat(dto.getMinWeaponDamage()).isEqualTo(0);
+    assertThat(dto.getMaxWeaponDamage()).isEqualTo(0);
+    assertThat(dto.getMinAttackDamage()).isEqualTo(0);
+    assertThat(dto.getMaxAttackDamage()).isEqualTo(0);
     assertThat(dto.getGivenStatusPoints()).isEqualTo(character.getGivenStatusPoints());
     assertThat(dto.getAvailableStatusPoints()).isEqualTo(character.getAvailableStatusPoints());
     assertThat(dto.getAvailableSkillPoints()).isEqualTo(character.getAvailableSkillPoints());

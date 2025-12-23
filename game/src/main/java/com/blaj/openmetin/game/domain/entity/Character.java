@@ -56,6 +56,10 @@ public class Character extends AuditingEntity {
   private ClassType classType;
 
   @Builder.Default
+  @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
+  private Integer skillGroup = 0;
+
+  @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 1")
   private Integer level = 1;
 

@@ -291,4 +291,18 @@
       <dropColumn columnName="base_part" schemaName="character" tableName="character"/>
     </rollback>
   </changeSet>
+
+  <changeSet author="AM" id="0.5.0.add-skill-group-to-character">
+    <addColumn schemaName="character" tableName="character">
+      <column defaultValue="0" name="skill_group" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <comment>Add skill group to character</comment>
+
+    <rollback>
+      <dropColumn columnName="skill_group" schemaName="character" tableName="character"/>
+    </rollback>
+  </changeSet>
 </databaseChangeLog>

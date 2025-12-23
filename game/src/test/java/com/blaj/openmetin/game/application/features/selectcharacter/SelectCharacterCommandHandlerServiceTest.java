@@ -11,7 +11,9 @@ import com.blaj.openmetin.game.application.common.character.service.CharacterSer
 import com.blaj.openmetin.game.application.common.character.service.GameCharacterEntityCalculationService;
 import com.blaj.openmetin.game.application.common.character.service.GameCharacterEntityFactoryService;
 import com.blaj.openmetin.game.application.common.character.service.GameCharacterEntityLoaderService;
+import com.blaj.openmetin.game.application.common.character.utils.CharacterPointsUtils;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.PointType;
 import com.blaj.openmetin.game.domain.model.CharacterDto;
 import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
 import com.blaj.openmetin.game.domain.model.GameSession;
@@ -134,6 +136,16 @@ public class SelectCharacterCommandHandlerServiceTest {
             .positionX(32423)
             .positionY(43654)
             .skillGroup(2)
+            .experience(253453)
+            .maxHealth(52352L)
+            .maxMana(141534L)
+            .gold(4363)
+            .minWeaponDamage(215)
+            .maxWeaponDamage(5674)
+            .minAttackDamage(325)
+            .maxAttackDamage(3252)
+            .availableStatusPoints(52)
+            .availableSkillPoints(543)
             .build();
     var gameCharacterEntity =
         GameCharacterEntity.builder()
@@ -171,6 +183,12 @@ public class SelectCharacterCommandHandlerServiceTest {
                 .setPositionY(gameCharacterEntity.getPositionY())
                 .setEmpire(gameCharacterEntity.getEmpire())
                 .setSkillGroup(gameCharacterEntity.getCharacterDto().getSkillGroup().shortValue()));
-    then(sessionService).should().sendPacketAsync(sessionId, new CharacterPointsPacket());
+
+    var characterPointsPacket = new CharacterPointsPacket();
+    for (var i = 0; i < characterPointsPacket.getPoints().length; i++) {
+      characterPointsPacket.getPoints()[i] =
+          CharacterPointsUtils.getPointValue(gameCharacterEntity, PointType.fromValue(i));
+    }
+    then(sessionService).should().sendPacketAsync(sessionId, characterPointsPacket);
   }
 }

@@ -98,6 +98,32 @@ public class FieldTypeUtilsTest {
   }
 
   @Test
+  public void givenStringType_whenFromTypeMirror_thenReturnsString() {
+    // given
+    when(typeMirror.toString()).thenReturn("String");
+    when(typeChecker.implementsByteEnum(typeMirror)).thenReturn(false);
+
+    // when
+    var result = FieldTypeUtils.fromTypeMirror(typeMirror, typeChecker);
+
+    // then
+    assertThat(result).isEqualTo(FieldType.STRING);
+  }
+
+  @Test
+  public void givenFullyQualifiedStringType_whenFromTypeMirror_thenReturnsString() {
+    // given
+    when(typeMirror.toString()).thenReturn("java.lang.String");
+    when(typeChecker.implementsByteEnum(typeMirror)).thenReturn(false);
+
+    // when
+    var result = FieldTypeUtils.fromTypeMirror(typeMirror, typeChecker);
+
+    // then
+    assertThat(result).isEqualTo(FieldType.STRING);
+  }
+
+  @Test
   public void givenCustomObjectArray_whenFromTypeMirror_thenReturnsObjectArray() {
     // given
     when(typeMirror.toString()).thenReturn("com.example.CustomClass[]");
@@ -108,6 +134,19 @@ public class FieldTypeUtilsTest {
 
     // then
     assertThat(result).isEqualTo(FieldType.OBJECT_ARRAY);
+  }
+
+  @Test
+  public void givenCustomObject_whenFromTypeMirror_thenReturnsObject() {
+    // given
+    when(typeMirror.toString()).thenReturn("com.example.CustomClass");
+    when(typeChecker.implementsByteEnum(typeMirror)).thenReturn(false);
+
+    // when
+    var result = FieldTypeUtils.fromTypeMirror(typeMirror, typeChecker);
+
+    // then
+    assertThat(result).isEqualTo(FieldType.OBJECT);
   }
 
   @Test

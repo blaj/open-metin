@@ -1,11 +1,14 @@
 package com.blaj.openmetin.annotationprocessor.codec;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -71,12 +74,30 @@ public class CodecGeneratorTest {
   }
 
   @Test
+  public void givenEmptyHeaderDirection_whenGenerate_thenDoNothing() throws IOException {
+    // given
+    setupTypeElement("com.example", "HandshakePacket");
+    setupPacketHeader(0xFF, new PacketDirection[] {}, false);
+
+    when(typeElement.getEnclosedElements()).thenReturn(Collections.emptyList());
+
+    // when
+    codecGenerator.generate(typeElement);
+
+    // then
+    verify(fieldCodecStrategyFactory, never()).get(any());
+    verify(filer, never()).createSourceFile(anyString(), any(Element[].class));
+    verify(messager, never()).printMessage(any(), anyString());
+  }
+
+  @Test
   public void
       givenValidTypeElement_whenGenerate_thenGeneratesBothDecoderAndEncoderWithCorrectNames()
           throws IOException {
     // given
     setupTypeElement("com.example", "HandshakePacket");
-    setupPacketHeader(0xFF, PacketDirection.INCOMING, false);
+    setupPacketHeader(
+        0xFF, new PacketDirection[] {PacketDirection.INCOMING, PacketDirection.OUTGOING}, false);
 
     when(typeElement.getEnclosedElements()).thenReturn(Collections.emptyList());
 
@@ -102,7 +123,8 @@ public class CodecGeneratorTest {
       throws IOException {
     // given
     setupTypeElement("com.example", "TestPacket");
-    setupPacketHeader(0x01, PacketDirection.INCOMING, false);
+    setupPacketHeader(
+        0x01, new PacketDirection[] {PacketDirection.INCOMING, PacketDirection.OUTGOING}, false);
 
     var field1 = mock(VariableElement.class);
     var field2 = mock(VariableElement.class);
@@ -127,7 +149,8 @@ public class CodecGeneratorTest {
       throws IOException {
     // given
     setupTypeElement("com.example", "SequencePacket");
-    setupPacketHeader(0x20, PacketDirection.OUTGOING, true);
+    setupPacketHeader(
+        0x20, new PacketDirection[] {PacketDirection.INCOMING, PacketDirection.OUTGOING}, true);
 
     when(typeElement.getEnclosedElements()).thenReturn(Collections.emptyList());
 
@@ -144,7 +167,7 @@ public class CodecGeneratorTest {
       throws IOException {
     // given
     setupTypeElement("com.example", "TestPacket");
-    setupPacketHeader(0x01, PacketDirection.INCOMING, false);
+    setupPacketHeader(0x01, new PacketDirection[] {PacketDirection.INCOMING}, false);
 
     when(typeElement.getEnclosedElements()).thenReturn(Collections.emptyList());
 
@@ -152,12 +175,12 @@ public class CodecGeneratorTest {
         .when(filer)
         .createSourceFile(anyString(), any(Element[].class));
 
-    // when & then
-    org.junit.jupiter.api.Assertions.assertThrows(
-        IOException.class,
-        () -> {
-          codecGenerator.generate(typeElement);
-        });
+    // when
+    var thrownException =
+        assertThrows(IOException.class, () -> codecGenerator.generate(typeElement));
+
+    // then
+    assertThat(thrownException).hasMessage("Test exception");
   }
 
   private void setupTypeElement(String packageNameStr, String classNameStr) {
@@ -169,7 +192,7 @@ public class CodecGeneratorTest {
     when(packageName.toString()).thenReturn(packageNameStr);
   }
 
-  private void setupPacketHeader(int header, PacketDirection direction, boolean isSequence) {
+  private void setupPacketHeader(int header, PacketDirection[] direction, boolean isSequence) {
     when(typeElement.getAnnotation(PacketHeader.class)).thenReturn(packetHeader);
     when(packetHeader.header()).thenReturn(header);
     when(packetHeader.direction()).thenReturn(direction);
