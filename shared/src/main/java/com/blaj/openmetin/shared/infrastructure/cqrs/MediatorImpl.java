@@ -8,10 +8,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class MediatorImpl implements Mediator {
   private final Map<Class<?>, RequestHandler<?, ?>> requestHandlerMap = new ConcurrentHashMap<>();
@@ -35,7 +37,16 @@ public class MediatorImpl implements Mediator {
 
   @Override
   public <T> CompletableFuture<T> sendAsync(Request<T> request) {
-    return CompletableFuture.supplyAsync(() -> executeRequest(request), virtualThreadExecutor);
+    return CompletableFuture.supplyAsync(() -> executeRequest(request), virtualThreadExecutor)
+        .whenComplete(
+            (result, throwable) -> {
+              if (throwable != null) {
+                log.error(
+                    "Error executing async request: {}",
+                    request.getClass().getSimpleName(),
+                    throwable);
+              }
+            });
   }
 
   @SuppressWarnings("unchecked")

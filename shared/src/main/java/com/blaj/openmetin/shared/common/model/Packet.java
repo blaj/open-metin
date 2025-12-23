@@ -13,7 +13,7 @@ public interface Packet {
             () -> new IllegalStateException("Packet must be annotated with @PacketHeader"));
   }
 
-  default PacketDirection getDirection() {
+  default PacketDirection[] getDirection() {
     return Optional.ofNullable(getClass().getAnnotation(PacketHeader.class))
         .map(PacketHeader::direction)
         .orElseThrow(

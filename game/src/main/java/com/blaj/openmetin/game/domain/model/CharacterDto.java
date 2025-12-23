@@ -31,7 +31,7 @@ public class CharacterDto {
 
   private ClassType classType;
 
-  private Integer skillGroup = 0;
+  private Integer skillGroup;
 
   private Integer level;
 
@@ -43,6 +43,10 @@ public class CharacterDto {
 
   private Long stamina;
 
+  private Long maxHealth;
+
+  private Long maxMana;
+
   private Integer st;
 
   private Integer ht;
@@ -50,6 +54,14 @@ public class CharacterDto {
   private Integer dx;
 
   private Integer iq;
+
+  private Integer minWeaponDamage;
+
+  private Integer maxWeaponDamage;
+
+  private Integer minAttackDamage;
+
+  private Integer maxAttackDamage;
 
   private Integer givenStatusPoints;
 

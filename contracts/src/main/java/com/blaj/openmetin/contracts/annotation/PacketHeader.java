@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 public @interface PacketHeader {
   int header();
 
-  PacketDirection direction();
+  PacketDirection[] direction();
 
   boolean isSequence() default false;
 

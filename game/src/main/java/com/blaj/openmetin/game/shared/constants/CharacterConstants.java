@@ -10,4 +10,6 @@ public class CharacterConstants {
   public static final int MAX_CHARACTERS_PER_ACCOUNT = 4;
   public static final int CHARACTER_DELETE_LEVEL_LIMIT = 70;
   public static final int CHARACTER_POINTS_COUNT = 255;
+  public static final short DEFAULT_ATTACK_SPEED = 100;
+  public static final short DEFAULT_MOVEMENT_SPEED = 150;
 }

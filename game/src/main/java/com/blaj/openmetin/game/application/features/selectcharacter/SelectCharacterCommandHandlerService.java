@@ -6,6 +6,8 @@ import com.blaj.openmetin.game.application.common.character.service.CharacterSer
 import com.blaj.openmetin.game.application.common.character.service.GameCharacterEntityCalculationService;
 import com.blaj.openmetin.game.application.common.character.service.GameCharacterEntityFactoryService;
 import com.blaj.openmetin.game.application.common.character.service.GameCharacterEntityLoaderService;
+import com.blaj.openmetin.game.application.common.character.utils.CharacterPointsUtils;
+import com.blaj.openmetin.game.domain.enums.PointType;
 import com.blaj.openmetin.game.domain.model.GameSession;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
@@ -68,7 +70,13 @@ public class SelectCharacterCommandHandlerService
             .setEmpire(gameCharacterEntity.getEmpire())
             .setSkillGroup(gameCharacterEntity.getCharacterDto().getSkillGroup().shortValue()));
 
-    sessionService.sendPacketAsync(session.getId(), new CharacterPointsPacket());
+    var characterPointsPacket = new CharacterPointsPacket();
+    for (var i = 0; i < characterPointsPacket.getPoints().length; i++) {
+      characterPointsPacket.getPoints()[i] =
+          CharacterPointsUtils.getPointValue(gameCharacterEntity, PointType.fromValue(i));
+    }
+
+    sessionService.sendPacketAsync(session.getId(), characterPointsPacket);
 
     return null;
   }

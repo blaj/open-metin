@@ -6,6 +6,7 @@ import com.blaj.openmetin.annotationprocessor.codec.strategy.ByteFieldCodecStrat
 import com.blaj.openmetin.annotationprocessor.codec.strategy.DoubleFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.EnumFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.FloatFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.IntArrayFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.IntFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.LongArrayFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.LongFieldCodecStrategy;
@@ -30,6 +31,7 @@ public class FieldCodecStrategyFactory {
             new DoubleFieldCodecStrategy(),
             new EnumFieldCodecStrategy(processingEnvironment),
             new FloatFieldCodecStrategy(),
+            new IntArrayFieldCodecStrategy(),
             new IntFieldCodecStrategy(),
             new LongArrayFieldCodecStrategy(),
             new LongFieldCodecStrategy(),

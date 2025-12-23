@@ -12,6 +12,7 @@ import com.blaj.openmetin.shared.infrastructure.network.codec.MainByteToMessageD
 import com.blaj.openmetin.shared.infrastructure.network.codec.MainMessageToByteEncoderService;
 import com.blaj.openmetin.shared.infrastructure.network.codec.PacketCodecFactoryService;
 import com.blaj.openmetin.shared.infrastructure.network.handler.ChannelInboundHandlerService;
+import com.blaj.openmetin.shared.infrastructure.network.handler.GlobalExceptionHandlerService;
 import com.blaj.openmetin.shared.infrastructure.network.handler.HandshakeChannelInboundHandlerService;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -31,6 +32,7 @@ public class GameChannelInitializerServiceTest {
   @Mock private ChannelInboundHandlerService channelInboundHandlerService;
   @Mock private SessionManagerService sessionManagerService;
   @Mock private PacketCodecFactoryService packetCodecFactoryService;
+  @Mock private GlobalExceptionHandlerService globalExceptionHandlerService;
   @Mock private SocketChannel socketChannel;
   @Mock private ChannelPipeline pipeline;
   @Mock private Attribute<Session> sessionAttribute;
@@ -43,7 +45,8 @@ public class GameChannelInitializerServiceTest {
             handshakeChannelInboundHandlerService,
             channelInboundHandlerService,
             sessionManagerService,
-            packetCodecFactoryService);
+            packetCodecFactoryService,
+            globalExceptionHandlerService);
 
     given(socketChannel.pipeline()).willReturn(pipeline);
     given(pipeline.addLast(any(String.class), any())).willReturn(pipeline);
@@ -66,6 +69,9 @@ public class GameChannelInitializerServiceTest {
         .verify(pipeline)
         .addLast(eq("handshakeHandler"), eq(handshakeChannelInboundHandlerService));
     inOrder.verify(pipeline).addLast(eq("handler"), eq(channelInboundHandlerService));
+    inOrder
+        .verify(pipeline)
+        .addLast(eq("globalExceptionHandler"), eq(globalExceptionHandlerService));
   }
 
   @Test

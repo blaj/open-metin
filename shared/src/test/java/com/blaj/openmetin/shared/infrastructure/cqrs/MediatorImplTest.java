@@ -7,8 +7,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doAnswer;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Nested;
@@ -141,37 +143,19 @@ public class MediatorImplTest {
     }
   }
 
-  @Nested
-  public class SendAsyncTests {
-
-    @Test
-    public void givenValid_whenSendAsync_thenHandlerExecutes() {
-      // given
-      var handler = new FirstTestRequestHandler();
-      var mediator =
-          new MediatorImpl(List.of(handler), Collections.emptyList(), virtualThreadExecutor);
-      var request = new FirstTestRequest("test data");
-
-      doAnswer(
-              invocation -> {
-                var task = (Runnable) invocation.getArgument(0);
-                task.run();
-                return null;
-              })
-          .when(virtualThreadExecutor)
-          .execute(any(Runnable.class));
-
-      // when
-      var result = mediator.sendAsync(request);
-
-      // then
-      assertThat(result).isCompletedWithValue("handled: test data");
-    }
-  }
+  private record ThrowingExceptionTestRequest(String data) implements Request<Integer> {}
 
   private record FirstTestRequest(String data) implements Request<String> {}
 
   private record SecondTestRequest(Integer data) implements Request<Integer> {}
+
+  private static class ThrowingExceptionTestRequestHandler
+      implements RequestHandler<ThrowingExceptionTestRequest, Integer> {
+    @Override
+    public Integer handle(ThrowingExceptionTestRequest request) {
+      throw new RuntimeException("Handler error");
+    }
+  }
 
   private static class FirstTestRequestHandler implements RequestHandler<FirstTestRequest, String> {
 
@@ -196,6 +180,63 @@ public class MediatorImplTest {
     @Override
     public String handle(FirstTestRequest request, Supplier<String> next) {
       return "before-" + next.get() + "-after";
+    }
+  }
+
+  @Nested
+  public class SendAsyncTests {
+
+    @Test
+    public void givenHandlerThrowsException_whenSendAsync_thenLogsErrorAndCompletesExceptionally() {
+      // given
+      var handler = new ThrowingExceptionTestRequestHandler();
+      var mediator =
+          new MediatorImpl(List.of(handler), Collections.emptyList(), virtualThreadExecutor);
+      var request = new ThrowingExceptionTestRequest("test data");
+
+      doAnswer(
+              invocation -> {
+                var task = (Runnable) invocation.getArgument(0);
+                task.run();
+                return null;
+              })
+          .when(virtualThreadExecutor)
+          .execute(any(Runnable.class));
+
+      // when
+      var result = mediator.sendAsync(request);
+
+      // then
+      assertThat(result)
+          .isCompletedExceptionally()
+          .failsWithin(Duration.ofSeconds(1))
+          .withThrowableOfType(ExecutionException.class)
+          .withCauseInstanceOf(RuntimeException.class)
+          .withMessageContaining("Handler error");
+    }
+
+    @Test
+    public void givenValid_whenSendAsync_thenHandlerExecutes() {
+      // given
+      var handler = new FirstTestRequestHandler();
+      var mediator =
+          new MediatorImpl(List.of(handler), Collections.emptyList(), virtualThreadExecutor);
+      var request = new FirstTestRequest("test data");
+
+      doAnswer(
+              invocation -> {
+                var task = (Runnable) invocation.getArgument(0);
+                task.run();
+                return null;
+              })
+          .when(virtualThreadExecutor)
+          .execute(any(Runnable.class));
+
+      // when
+      var result = mediator.sendAsync(request);
+
+      // then
+      assertThat(result).isCompletedWithValue("handled: test data");
     }
   }
 }

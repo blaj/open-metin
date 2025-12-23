@@ -9,7 +9,11 @@ import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.ParameterizedTypeName;
 import com.palantir.javapoet.TypeSpec;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -71,6 +75,9 @@ public class CodecGenerator {
       PacketHeader header,
       List<FieldContext> fields)
       throws IOException {
+    if (!Set.of(header.direction()).contains(PacketDirection.INCOMING)) {
+      return;
+    }
 
     String decoderClassName = packetClassName + "DecoderService";
 
@@ -122,6 +129,10 @@ public class CodecGenerator {
       PacketHeader header,
       List<FieldContext> fields)
       throws IOException {
+    if (!Set.of(header.direction()).contains(PacketDirection.OUTGOING)) {
+      return;
+    }
+
     var encoderClassName = packetClassName + "EncoderService";
 
     var encodeMethodBuilder =
@@ -185,11 +196,33 @@ public class CodecGenerator {
   }
 
   private MethodSpec createGetDirectionMethod(PacketHeader header) {
-    return MethodSpec.methodBuilder("getDirection")
-        .addModifiers(Modifier.PUBLIC)
-        .addAnnotation(Override.class)
-        .returns(PacketDirection.class)
-        .addStatement("return $T.$L", PacketDirection.class, header.direction().name())
-        .build();
+    var returnType =
+        ParameterizedTypeName.get(ClassName.get(Set.class), ClassName.get(PacketDirection.class));
+
+    var methodBuilder =
+        MethodSpec.methodBuilder("getDirection")
+            .addModifiers(Modifier.PUBLIC)
+            .addAnnotation(Override.class)
+            .returns(returnType);
+
+    var directions = header.direction();
+
+    if (directions.length == 0) {
+      methodBuilder.addStatement(
+          "return $T.noneOf($T.class)", EnumSet.class, PacketDirection.class);
+    } else {
+      var enumValues =
+          Arrays.stream(directions).map(d -> "$T." + d.name()).collect(Collectors.joining(", "));
+
+      var args = new Object[directions.length + 1];
+      args[0] = EnumSet.class;
+      for (int i = 0; i < directions.length; i++) {
+        args[i + 1] = PacketDirection.class;
+      }
+
+      methodBuilder.addStatement("return $T.of(" + enumValues + ")", args);
+    }
+
+    return methodBuilder.build();
   }
 }
