@@ -18,6 +18,16 @@ public enum FieldType {
   LONG_ARRAY("long[]"),
   STRING_ARRAY("String[]"),
 
+  UBYTE("UByte"),
+  USHORT("UShort"),
+  UINTEGER("UInteger"),
+  ULONG("ULong"),
+
+  UBYTE_ARRAY("UByte[]"),
+  USHORT_ARRAY("UShort[]"),
+  UINTEGER_ARRAY("UInteger[]"),
+  ULONG_ARRAY("ULong[]"),
+
   ENUM("enum"),
   OBJECT("object"),
   OBJECT_ARRAY("object[]"),

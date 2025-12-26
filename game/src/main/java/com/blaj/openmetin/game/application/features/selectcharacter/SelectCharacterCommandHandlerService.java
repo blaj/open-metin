@@ -17,6 +17,8 @@ import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joou.UByte;
+import org.joou.UShort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -64,11 +66,13 @@ public class SelectCharacterCommandHandlerService
         new CharacterBasicDataPacket()
             .setVid(gameCharacterEntity.getVid())
             .setName(gameCharacterEntity.getCharacterDto().getName())
-            .setClassType(gameCharacterEntity.getCharacterDto().getClassType().getValue())
+            .setClassType(
+                UShort.valueOf(gameCharacterEntity.getCharacterDto().getClassType().getValue()))
             .setPositionX(gameCharacterEntity.getPositionX())
             .setPositionY(gameCharacterEntity.getPositionY())
             .setEmpire(gameCharacterEntity.getEmpire())
-            .setSkillGroup(gameCharacterEntity.getCharacterDto().getSkillGroup().shortValue()));
+            .setSkillGroup(
+                UByte.valueOf(gameCharacterEntity.getCharacterDto().getSkillGroup().byteValue())));
 
     var characterPointsPacket = new CharacterPointsPacket();
     for (var i = 0; i < characterPointsPacket.getPoints().length; i++) {

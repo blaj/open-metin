@@ -5,6 +5,7 @@ import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.joou.UInteger;
 
 @RequiredArgsConstructor
 @Getter
@@ -13,7 +14,7 @@ public class Session {
   private final long id;
   private final Channel channel;
 
-  private volatile Long handshake = null;
+  private volatile UInteger handshake = null;
   private volatile Long lastHandshakeTime = null;
   private volatile boolean handshaking = false;
   private volatile boolean authed = false;

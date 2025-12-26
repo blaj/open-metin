@@ -8,6 +8,7 @@ import com.blaj.openmetin.shared.common.model.Packet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UInteger;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x64, direction = PacketDirection.INCOMING)
@@ -16,9 +17,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MarkLoginPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private long handle;
+  @PacketField(position = 0)
+  private UInteger handle;
 
-  @PacketField(position = 1, unsigned = true)
-  private long randomKey;
+  @PacketField(position = 1)
+  private UInteger randomKey;
 }

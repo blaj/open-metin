@@ -12,7 +12,6 @@ public record FieldContext(
     int position,
     int length,
     int arrayLength,
-    boolean isUnsigned,
     int nestingDepth,
     ClassName parentClassName,
     ProcessingEnvironment processingEnvironment) {

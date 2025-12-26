@@ -24,6 +24,10 @@ public class FieldTypeUtils {
       return FieldType.ENUM;
     }
 
+    if (isJooqUnsignedType(typeMirror) || isJooqUnsignedArrayType(typeMirror)) {
+      return fromString(typeName);
+    }
+
     if (isObjectArray(typeName)) {
       return FieldType.OBJECT_ARRAY;
     }
@@ -45,13 +49,49 @@ public class FieldTypeUtils {
     return switch (fullName) {
       case "byte", "short", "int", "long", "float", "double", "boolean" -> fullName;
       case "java.lang.String" -> "String";
+      case "org.jooq.types.UByte" -> "UByte";
+      case "org.jooq.types.UShort" -> "UShort";
+      case "org.jooq.types.UInteger" -> "UInteger";
+      case "org.jooq.types.ULong" -> "ULong";
       default -> fullName.substring(fullName.lastIndexOf('.') + 1);
     };
   }
 
+  private static boolean isJooqUnsignedType(TypeMirror typeMirror) {
+    var fullName = typeMirror.toString();
+
+    return Set.of(
+            "org.joou.UByte",
+            "org.joou.UShort",
+            "org.joou.UInteger",
+            "org.joou.ULong")
+        .contains(fullName);
+  }
+
+  private static boolean isJooqUnsignedArrayType(TypeMirror typeMirror) {
+    var fullName = typeMirror.toString();
+
+    return Set.of(
+            "org.joou.UByte[]",
+            "org.joou.UShort[]",
+            "org.joou.UInteger[]",
+            "org.joou.ULong[]")
+        .contains(fullName);
+  }
+
   private static boolean isObjectArray(String typeName) {
     return typeName.endsWith("[]")
-        && !Set.of("byte[]", "short[]", "int[]", "long[]", "String[]").contains(typeName);
+        && !Set.of(
+                "byte[]",
+                "short[]",
+                "int[]",
+                "long[]",
+                "String[]",
+                "UByte[]",
+                "UShort[]",
+                "UInteger[]",
+                "ULong[]")
+            .contains(typeName);
   }
 
   private static boolean isObject(String typeName, TypeMirror typeMirror) {
@@ -64,6 +104,10 @@ public class FieldTypeUtils {
     }
 
     if (typeName.equals("String") || typeMirror.toString().equals("java.lang.String")) {
+      return false;
+    }
+
+    if (isJooqUnsignedType(typeMirror) || isJooqUnsignedArrayType(typeMirror)) {
       return false;
     }
 

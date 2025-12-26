@@ -14,27 +14,13 @@ public class ShortFieldCodecStrategy implements FieldCodecStrategy {
 
   @Override
   public void generateDecodingMethod(MethodSpec.Builder method, FieldContext context) {
-    if (context.isUnsigned()) {
-      method.addStatement(
-          "$L.$L((short) (in.readByte() & 0xFF))",
-          context.getElementVariableName(),
-          context.getSetterName());
-    } else {
-      method.addStatement(
-          "$L.$L(in.readShortLE())", context.getElementVariableName(), context.getSetterName());
-    }
+    method.addStatement(
+        "$L.$L(in.readShortLE())", context.getElementVariableName(), context.getSetterName());
   }
 
   @Override
   public void generateEncodingMethod(MethodSpec.Builder method, FieldContext context) {
-    if (context.isUnsigned()) {
-      method.addStatement(
-          "out.writeByte((byte) ($L.$L() & 0xFF))",
-          context.getElementVariableName(),
-          context.getGetterName());
-    } else {
-      method.addStatement(
-          "out.writeShortLE($L.$L())", context.getElementVariableName(), context.getGetterName());
-    }
+    method.addStatement(
+        "out.writeShortLE($L.$L())", context.getElementVariableName(), context.getGetterName());
   }
 }

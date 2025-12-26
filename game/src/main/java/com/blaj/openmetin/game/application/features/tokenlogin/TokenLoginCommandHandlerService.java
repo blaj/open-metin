@@ -17,6 +17,8 @@ import com.blaj.openmetin.shared.infrastructure.network.utils.NetworkUtils;
 import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joou.UInteger;
+import org.joou.UShort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -58,21 +60,21 @@ public class TokenLoginCommandHandlerService implements RequestHandler<TokenLogi
     }
 
     var characterListPacket = new CharacterListPacket();
-    characterListPacket.setHandle(session.getId());
-    characterListPacket.setRandomKey(RandomGenerator.getDefault().nextInt());
+    characterListPacket.setHandle(UInteger.valueOf(session.getId()));
+    characterListPacket.setRandomKey(UInteger.valueOf(RandomGenerator.getDefault().nextInt()));
 
     var characters = characterService.getCharacters(loginToken.getAccountId());
 
     characters.forEach(
         characterDto -> {
-          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot()] =
+          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot().byteValue()] =
               SimpleCharacterPacketMapper.map(characterDto);
-          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot()].setIp(
+          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot().byteValue()].setIp(
               NetworkUtils.ipToInt(
                   NetworkUtils.resolveAdvertisedAddress(
                       tcpConfig.host(), NetworkUtils.getLocalAddress(session.getChannel()))));
-          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot()].setPort(
-              tcpConfig.port());
+          characterListPacket.getSimpleCharacterPackets()[characterDto.getSlot().byteValue()]
+              .setPort(tcpConfig.port());
         });
 
     var empire = Empire.SHINSOO;

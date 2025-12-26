@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.joou.UInteger;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode
 public abstract class BaseGameEntity {
 
-  private long vid;
+  private UInteger vid;
   private EntityState state;
   private int positionX;
   private int positionY;

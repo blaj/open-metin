@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.joou.UByte;
+import org.joou.UShort;
 
 @Getter
 @Setter
@@ -19,9 +21,9 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class ServerStatus implements Serializable {
 
-  private int channelIndex;
+  private UByte channelIndex;
 
-  private int port;
+  private UShort port;
 
   private Status status;
 

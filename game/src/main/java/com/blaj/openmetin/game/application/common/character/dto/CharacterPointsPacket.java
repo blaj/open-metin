@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UInteger;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x10, direction = PacketDirection.OUTGOING)
@@ -20,10 +21,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class CharacterPointsPacket implements Packet {
 
-  @PacketField(
-      position = 0,
-      unsigned = true,
-      arrayLength = CharacterConstants.CHARACTER_POINTS_COUNT)
+  @PacketField(position = 0, arrayLength = CharacterConstants.CHARACTER_POINTS_COUNT)
   private long[] points = new long[CharacterConstants.CHARACTER_POINTS_COUNT];
 
   {

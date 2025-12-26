@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.UShort;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x01, direction = PacketDirection.OUTGOING)
@@ -18,8 +21,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class SpawnCharacterPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private long vid;
+  @PacketField(position = 0)
+  private UInteger vid;
 
   @PacketField(position = 1)
   private float angle;
@@ -33,21 +36,21 @@ public class SpawnCharacterPacket implements Packet {
   @PacketField(position = 4)
   private int positionZ;
 
-  @PacketField(position = 5, unsigned = true)
-  private short characterType;
+  @PacketField(position = 5)
+  private UByte characterType;
 
-  @PacketField(position = 6, unsigned = true)
-  private int classType;
+  @PacketField(position = 6)
+  private UShort classType;
 
-  @PacketField(position = 7, unsigned = true)
-  private short moveSpeed;
+  @PacketField(position = 7)
+  private UByte moveSpeed;
 
-  @PacketField(position = 8, unsigned = true)
-  private short attackSpeed;
+  @PacketField(position = 8)
+  private UByte attackSpeed;
 
-  @PacketField(position = 9, unsigned = true)
-  private short state;
+  @PacketField(position = 9)
+  private UByte state;
 
-  @PacketField(position = 10, arrayLength = 2, unsigned = true)
-  private long[] affects = new long[2];
+  @PacketField(position = 10, arrayLength = 2)
+  private UInteger[] affects = new UInteger[2];
 }

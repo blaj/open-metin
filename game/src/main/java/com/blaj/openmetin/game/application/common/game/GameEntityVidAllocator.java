@@ -1,8 +1,10 @@
 package com.blaj.openmetin.game.application.common.game;
 
+import org.joou.UInteger;
+
 public interface GameEntityVidAllocator {
 
-  int allocate();
+  UInteger allocate();
 
-  void release(int vid);
+  void release(UInteger vid);
 }

@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x05, direction = PacketDirection.INCOMING, isSequence = true)
@@ -18,8 +19,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class DeleteCharacterPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private short slot;
+  @PacketField(position = 0)
+  private UByte slot;
 
   @PacketField(position = 1, length = 8)
   private String deleteCode;

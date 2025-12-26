@@ -10,6 +10,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UInteger;
+import org.joou.UShort;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0xD2, direction = PacketDirection.OUTGOING)
@@ -19,8 +21,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class ServerStatusPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private long size;
+  @PacketField(position = 0)
+  private UInteger size;
 
   @PacketField(position = 1, arrayLength = 1)
   private ServerStatus[] statuses;
@@ -31,8 +33,8 @@ public class ServerStatusPacket implements Packet {
   @EqualsAndHashCode
   public static class ServerStatus {
 
-    @PacketField(position = 0, unsigned = true)
-    private int port;
+    @PacketField(position = 0)
+    private UShort port;
 
     @PacketField(position = 1)
     private Status status;

@@ -23,21 +23,12 @@ public class LongArrayFieldCodecStrategy implements FieldCodecStrategy {
       return;
     }
 
-    if (fieldContext.isUnsigned()) {
-      methodSpecBuilder.addStatement(
-          "$L.$L($T.readFixedUnsignedIntArray(in, $L))",
-          fieldContext.getElementVariableName(),
-          fieldContext.getSetterName(),
-          packetCodecUtilsClassName,
-          fieldContext.arrayLength());
-    } else {
-      methodSpecBuilder.addStatement(
-          "$L.$L($T.readFixedLongArray(in, $L))",
-          fieldContext.getElementVariableName(),
-          fieldContext.getSetterName(),
-          packetCodecUtilsClassName,
-          fieldContext.arrayLength());
-    }
+    methodSpecBuilder.addStatement(
+        "$L.$L($T.readFixedLongArray(in, $L))",
+        fieldContext.getElementVariableName(),
+        fieldContext.getSetterName(),
+        packetCodecUtilsClassName,
+        fieldContext.arrayLength());
   }
 
   @Override
@@ -47,20 +38,11 @@ public class LongArrayFieldCodecStrategy implements FieldCodecStrategy {
       return;
     }
 
-    if (fieldContext.isUnsigned()) {
-      methodSpecBuilder.addStatement(
-          "$T.writeFixedUnsignedIntArray(out, $L.$L(), $L)",
-          packetCodecUtilsClassName,
-          fieldContext.getElementVariableName(),
-          fieldContext.getGetterName(),
-          fieldContext.arrayLength());
-    } else {
-      methodSpecBuilder.addStatement(
-          "$T.writeFixedLongArray(out, $L.$L(), $L)",
-          packetCodecUtilsClassName,
-          fieldContext.getElementVariableName(),
-          fieldContext.getGetterName(),
-          fieldContext.arrayLength());
-    }
+    methodSpecBuilder.addStatement(
+        "$T.writeFixedLongArray(out, $L.$L(), $L)",
+        packetCodecUtilsClassName,
+        fieldContext.getElementVariableName(),
+        fieldContext.getGetterName(),
+        fieldContext.arrayLength());
   }
 }

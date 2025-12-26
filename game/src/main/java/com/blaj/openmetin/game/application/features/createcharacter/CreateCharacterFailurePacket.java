@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x09, direction = PacketDirection.OUTGOING)
@@ -18,6 +19,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class CreateCharacterFailurePacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private short error;
+  @PacketField(position = 0)
+  private UByte error;
 }

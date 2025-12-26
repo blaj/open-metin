@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x06, direction = PacketDirection.INCOMING, isSequence = true)
@@ -18,6 +19,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class SelectCharacterPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private short slot;
+  @PacketField(position = 0)
+  private UByte slot;
 }

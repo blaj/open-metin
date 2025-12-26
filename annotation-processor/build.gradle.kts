@@ -6,6 +6,7 @@ dependencies {
     implementation(project(":contracts"))
     implementation("com.google.auto.service:auto-service:1.1.1")
     implementation("com.palantir.javapoet:javapoet:0.9.0")
+    implementation("org.jooq:joou:0.9.5")
 
     annotationProcessor("com.google.auto.service:auto-service:1.1.1")
 

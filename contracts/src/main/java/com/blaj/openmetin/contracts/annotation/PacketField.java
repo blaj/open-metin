@@ -8,9 +8,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PacketField {
-  int position();
 
-  boolean unsigned() default false;
+  int position();
 
   int length() default -1;
 

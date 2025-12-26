@@ -5,6 +5,7 @@ import com.blaj.openmetin.shared.domain.repository.LoginTokenRepository;
 import java.time.Duration;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.joou.UInteger;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
@@ -25,17 +26,17 @@ public class LoginTokenRepositoryImpl implements LoginTokenRepository {
   private final ObjectMapper objectMapper;
 
   @Override
-  public void saveLoginToken(long loginKey, LoginToken loginToken) {
+  public void saveLoginToken(UInteger loginKey, LoginToken loginToken) {
     redisTemplate.opsForValue().set(loginTokenKey + loginKey, loginToken, loginTokenDuration);
   }
 
   @Override
-  public void saveLoginKey(long accountId, long loginKey) {
+  public void saveLoginKey(long accountId, UInteger loginKey) {
     redisTemplate.opsForValue().set(loginKeyKey + accountId, loginKey, loginKeyDuration);
   }
 
   @Override
-  public LoginToken getLoginToken(long loginKey) {
+  public LoginToken getLoginToken(UInteger loginKey) {
     return objectMapper.convertValue(
         redisTemplate.opsForValue().get(loginTokenKey + loginKey), LoginToken.class);
   }

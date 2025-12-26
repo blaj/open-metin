@@ -19,16 +19,16 @@ public class GameCharacterEntityCalculationService {
         .setMaxHealth(
             getMaxHp(
                 jobConfig,
-                gameCharacterEntity.getCharacterDto().getLevel(),
-                gameCharacterEntity.getCharacterDto().getHt()));
+                gameCharacterEntity.getCharacterDto().getLevel().intValue(),
+                gameCharacterEntity.getCharacterDto().getHt().intValue()));
 
     gameCharacterEntity
         .getCharacterDto()
         .setMaxMana(
             getMaxSp(
                 jobConfig,
-                gameCharacterEntity.getCharacterDto().getLevel(),
-                gameCharacterEntity.getCharacterDto().getIq()));
+                gameCharacterEntity.getCharacterDto().getLevel().intValue(),
+                gameCharacterEntity.getCharacterDto().getIq().intValue()));
 
     gameCharacterEntity.setDefence(
         getDefence(

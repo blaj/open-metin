@@ -1,14 +1,15 @@
 package com.blaj.openmetin.shared.domain.repository;
 
 import com.blaj.openmetin.shared.domain.entity.LoginToken;
+import org.joou.UInteger;
 
 public interface LoginTokenRepository {
 
-  void saveLoginToken(long loginKey, LoginToken loginToken);
+  void saveLoginToken(UInteger loginKey, LoginToken loginToken);
 
-  void saveLoginKey(long accountId, long loginKey);
+  void saveLoginKey(long accountId, UInteger loginKey);
 
-  LoginToken getLoginToken(long loginKey);
+  LoginToken getLoginToken(UInteger loginKey);
 
   Long getAttempts(long accountId);
 

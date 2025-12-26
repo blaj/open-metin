@@ -12,6 +12,7 @@ import com.blaj.openmetin.shared.domain.entity.IdEntity;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.joou.UByte;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,9 @@ public class CharacterService {
         .toList();
   }
 
-  public Optional<CharacterDto> getCharacter(long accountId, short slot) {
+  public Optional<CharacterDto> getCharacter(long accountId, UByte slot) {
     return getCharacters(accountId).stream()
-        .filter(characterDto -> characterDto.getSlot().shortValue() == slot)
+        .filter(characterDto -> characterDto.getSlot().equals(slot))
         .findFirst();
   }
 
@@ -41,7 +42,7 @@ public class CharacterService {
 
   @CacheEvict(value = "characters", key = "#accountId")
   public CharacterDto create(
-      long accountId, String name, ClassType classType, short shape, short slot) {
+      long accountId, String name, ClassType classType, UByte shape, UByte slot) {
     var empire =
         getCharacters(accountId).stream()
             .map(CharacterDto::getEmpire)
@@ -58,14 +59,14 @@ public class CharacterService {
             .empire(empire)
             .positionX(empireSpawnsConfig.x())
             .positionY(empireSpawnsConfig.y())
-            .st(jobConfig.st())
-            .ht(jobConfig.ht())
-            .dx(jobConfig.dx())
-            .iq(jobConfig.iq())
+            .st(UByte.valueOf(jobConfig.st()))
+            .ht(UByte.valueOf(jobConfig.ht()))
+            .dx(UByte.valueOf(jobConfig.dx()))
+            .iq(UByte.valueOf(jobConfig.iq()))
             .health((long) jobConfig.startHp())
             .mana((long) jobConfig.startSp())
-            .slot((int) slot)
-            .basePart((int) shape)
+            .slot(slot)
+            .basePart(shape)
             .accountId(accountId)
             .build();
 
@@ -73,7 +74,7 @@ public class CharacterService {
   }
 
   @CacheEvict(value = "characters", key = "#accountId")
-  public void delete(long accountId, short slot) {
+  public void delete(long accountId, UByte slot) {
     characterRepository
         .findByAccountIdAndSlot(accountId, slot)
         .map(IdEntity::getId)

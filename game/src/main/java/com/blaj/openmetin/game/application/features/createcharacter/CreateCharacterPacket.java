@@ -10,6 +10,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
+import org.joou.UShort;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x04, direction = PacketDirection.INCOMING, isSequence = true)
@@ -19,27 +21,27 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class CreateCharacterPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private short slot;
+  @PacketField(position = 0)
+  private UByte slot;
 
   @PacketField(position = 1, length = CharacterConstants.CHARACTER_NAME_MAX_LENGTH)
   private String name;
 
-  @PacketField(position = 2, unsigned = true)
-  private int classType;
+  @PacketField(position = 2)
+  private UShort classType;
 
-  @PacketField(position = 3, unsigned = true)
-  private short shape;
+  @PacketField(position = 3)
+  private UByte shape;
 
-  @PacketField(position = 4, unsigned = true)
-  private short st;
+  @PacketField(position = 4)
+  private UByte st;
 
-  @PacketField(position = 5, unsigned = true)
-  private short ht;
+  @PacketField(position = 5)
+  private UByte ht;
 
-  @PacketField(position = 6, unsigned = true)
-  private short dx;
+  @PacketField(position = 6)
+  private UByte dx;
 
-  @PacketField(position = 7, unsigned = true)
-  private short iq;
+  @PacketField(position = 7)
+  private UByte iq;
 }

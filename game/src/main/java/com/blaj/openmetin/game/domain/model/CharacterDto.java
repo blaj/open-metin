@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.UShort;
 
 @Data
 @NoArgsConstructor
@@ -21,19 +24,19 @@ public class CharacterDto {
 
   private String name;
 
-  private Integer slot;
+  private UByte slot;
 
-  private Integer bodyPart;
+  private UShort bodyPart;
 
-  private Integer hairPart;
+  private UShort hairPart;
 
   private Empire empire;
 
   private ClassType classType;
 
-  private Integer skillGroup;
+  private UByte skillGroup;
 
-  private Integer level;
+  private UByte level;
 
   private Integer experience;
 
@@ -47,13 +50,13 @@ public class CharacterDto {
 
   private Long maxMana;
 
-  private Integer st;
+  private UByte st;
 
-  private Integer ht;
+  private UByte ht;
 
-  private Integer dx;
+  private UByte dx;
 
-  private Integer iq;
+  private UByte iq;
 
   private Integer minWeaponDamage;
 
@@ -69,13 +72,13 @@ public class CharacterDto {
 
   private Integer availableSkillPoints;
 
-  private Integer gold;
+  private UInteger gold;
 
   private Integer positionX;
 
   private Integer positionY;
 
-  private Long playTime;
+  private UInteger playTime;
 
   private Long accountId;
 }

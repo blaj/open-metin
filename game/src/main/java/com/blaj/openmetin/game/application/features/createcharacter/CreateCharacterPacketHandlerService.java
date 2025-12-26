@@ -20,7 +20,7 @@ public class CreateCharacterPacketHandlerService
         new CreateCharacterCommand(
             packet.getSlot(),
             packet.getName(),
-            ClassType.fromValue(packet.getClassType()),
+            ClassType.fromValue(packet.getClassType().intValue()),
             packet.getShape(),
             session.getId()));
   }

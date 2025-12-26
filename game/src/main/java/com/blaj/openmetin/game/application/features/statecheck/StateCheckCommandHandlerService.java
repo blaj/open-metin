@@ -4,6 +4,8 @@ import com.blaj.openmetin.game.domain.repository.ServerStatusRepository;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;
 import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
 import lombok.RequiredArgsConstructor;
+import org.joou.UInteger;
+import org.joou.UShort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,7 +30,7 @@ public class StateCheckCommandHandlerService implements RequestHandler<StateChec
         request.sessionId(),
         new ServerStatusPacket()
             .setStatuses(serverStatusesToSend)
-            .setSize(serverStatusesToSend.length));
+            .setSize(UInteger.valueOf(serverStatusesToSend.length)));
 
     return null;
   }

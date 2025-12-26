@@ -8,6 +8,7 @@ import com.blaj.openmetin.shared.common.model.Packet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UInteger;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x6d, direction = PacketDirection.INCOMING, isSequence = true)
@@ -19,9 +20,9 @@ public class TokenLoginPacket implements Packet {
   @PacketField(position = 0, length = 31)
   private String username;
 
-  @PacketField(position = 1, unsigned = true)
-  private long key;
+  @PacketField(position = 1)
+  private UInteger key;
 
-  @PacketField(position = 2, arrayLength = 4, unsigned = true)
-  private long[] encryptKeys = new long[4];
+  @PacketField(position = 2, arrayLength = 4)
+  private UInteger[] encryptKeys = new UInteger[4];
 }

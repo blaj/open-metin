@@ -44,7 +44,7 @@ public class NettyServerService {
 
     serverChannel =
         serverBootstrap
-            .bind(tcpProperties.host(), tcpProperties.port())
+            .bind(tcpProperties.host(), tcpProperties.port().intValue())
             .syncUninterruptibly()
             .channel();
 

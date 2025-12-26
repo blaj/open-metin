@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.application.common.character.mapper;
 
-import com.blaj.openmetin.game.application.common.character.dto.CharacterListPacket.SimpleCharacterPacket;
+import com.blaj.openmetin.game.application.common.character.dto.SimpleCharacterPacket;
 import com.blaj.openmetin.game.domain.model.CharacterDto;
 import java.util.Optional;
 import lombok.experimental.UtilityClass;
@@ -16,12 +16,12 @@ public class SimpleCharacterPacketMapper {
                     .setId(chDto.getId())
                     .setName(chDto.getName())
                     .setClassType(chDto.getClassType())
-                    .setLevel(chDto.getLevel().shortValue())
+                    .setLevel(chDto.getLevel())
                     .setPlaytime(chDto.getPlayTime())
-                    .setSt(chDto.getSt().shortValue())
-                    .setHt(chDto.getHt().shortValue())
-                    .setDx(chDto.getDx().shortValue())
-                    .setIq(chDto.getIq().shortValue())
+                    .setSt(chDto.getSt())
+                    .setHt(chDto.getHt())
+                    .setDx(chDto.getDx())
+                    .setIq(chDto.getIq())
                     .setBodyPart(chDto.getBodyPart())
                     .setHairPart(chDto.getHairPart())
                     .setPositionX(chDto.getPositionX())

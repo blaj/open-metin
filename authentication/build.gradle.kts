@@ -21,6 +21,7 @@ dependencies {
     implementation("org.apache.commons:commons-pool2")
     implementation("io.netty:netty-all:4.2.7.Final")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+    implementation("org.jooq:joou:0.9.5")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 

@@ -8,6 +8,7 @@ import com.blaj.openmetin.shared.infrastructure.encryption.HandshakeUtils;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.joou.UInteger;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,7 +30,7 @@ public class HandshakeChannelInboundHandlerService extends ChannelInboundHandler
     var handshakePacket =
         new HandshakePacket()
             .setHandshake(handshake)
-            .setTime(DateTimeUtils.getUnixTime())
+            .setTime(UInteger.valueOf(DateTimeUtils.getUnixTime()))
             .setDelta(0);
 
     channelHandlerContext.writeAndFlush(handshakePacket);

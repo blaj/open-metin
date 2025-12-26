@@ -11,6 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.UShort;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x88, direction = PacketDirection.OUTGOING)
@@ -22,20 +25,20 @@ public class CharacterAdditionalDataPacket implements Packet {
 
   @PacketField(position = 6)
   public short rankPoints;
-  @PacketField(position = 7, unsigned = true)
-  public short pkMode;
-  @PacketField(position = 8, unsigned = true)
-  public long mountVnum;
-  @PacketField(position = 0, unsigned = true)
-  private long vid;
+  @PacketField(position = 7)
+  public UByte pkMode;
+  @PacketField(position = 8)
+  public UInteger mountVnum;
+  @PacketField(position = 0)
+  private UInteger vid;
   @PacketField(position = 1, length = CharacterConstants.CHARACTER_NAME_MAX_LENGTH)
   private String name;
-  @PacketField(position = 2, arrayLength = 4, unsigned = true)
-  private int[] parts = new int[4];
+  @PacketField(position = 2, arrayLength = 4)
+  private UShort[] parts = new UShort[4];
   @PacketField(position = 3)
   private Empire empire;
-  @PacketField(position = 4, unsigned = true)
-  private long guildId;
-  @PacketField(position = 5, unsigned = true)
-  private long level;
+  @PacketField(position = 4)
+  private UInteger guildId;
+  @PacketField(position = 5)
+  private UInteger level;
 }

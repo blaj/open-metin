@@ -16,6 +16,8 @@ import jakarta.persistence.EntityNotFoundException;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joou.UByte;
+import org.joou.UShort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -53,38 +55,38 @@ public class CreateCharacterCommandHandlerService
 
     if (!isNameValid(request.name())) {
       sessionService.sendPacketAsync(
-          request.sessionId(), new CreateCharacterFailurePacket().setError((short) 1));
+          request.sessionId(), new CreateCharacterFailurePacket().setError(UByte.valueOf(1)));
       return null;
     }
 
     if (bannedWordRepository.existsByWord(request.name())) {
       sessionService.sendPacketAsync(
-          request.sessionId(), new CreateCharacterFailurePacket().setError((short) 1));
+          request.sessionId(), new CreateCharacterFailurePacket().setError(UByte.valueOf(1)));
       return null;
     }
 
-    if (request.shape() > 1) {
+    if (request.shape().byteValue() > 1) {
       sessionService.sendPacketAsync(
-          request.sessionId(), new CreateCharacterFailurePacket().setError((short) 1));
+          request.sessionId(), new CreateCharacterFailurePacket().setError(UByte.valueOf(1)));
       return null;
     }
 
     if (characterRepository.existsByName(request.name())) {
       sessionService.sendPacketAsync(
-          request.sessionId(), new CreateCharacterFailurePacket().setError((short) 0));
+          request.sessionId(), new CreateCharacterFailurePacket().setError(UByte.valueOf(0)));
       return null;
     }
 
     if (characterRepository.existsBySlotAndAccountId(request.slot(), session.getAccountId())) {
       sessionService.sendPacketAsync(
-          request.sessionId(), new CreateCharacterFailurePacket().setError((short) 0));
+          request.sessionId(), new CreateCharacterFailurePacket().setError(UByte.valueOf(0)));
       return null;
     }
 
     if (characterRepository.countByAccountId(session.getAccountId())
         >= CharacterConstants.MAX_CHARACTERS_PER_ACCOUNT) {
       sessionService.sendPacketAsync(
-          request.sessionId(), new CreateCharacterFailurePacket().setError((short) 0));
+          request.sessionId(), new CreateCharacterFailurePacket().setError(UByte.valueOf(0)));
       return null;
     }
 
@@ -92,7 +94,7 @@ public class CreateCharacterCommandHandlerService
         session.getAccountId(),
         Duration.ofSeconds(CharacterConstants.INTERVAL_BETWEEN_CHARACTER_CREATE_IN_SECONDS))) {
       sessionService.sendPacketAsync(
-          request.sessionId(), new CreateCharacterFailurePacket().setError((short) 1));
+          request.sessionId(), new CreateCharacterFailurePacket().setError(UByte.valueOf(1)));
       return null;
     }
 

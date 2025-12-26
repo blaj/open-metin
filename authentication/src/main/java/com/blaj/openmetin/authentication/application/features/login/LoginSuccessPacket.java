@@ -8,6 +8,7 @@ import com.blaj.openmetin.shared.common.model.Packet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UInteger;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x96, direction = PacketDirection.OUTGOING)
@@ -16,8 +17,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class LoginSuccessPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private long key;
+  @PacketField(position = 0)
+  private UInteger key;
 
   @PacketField(position = 1)
   private byte result;

@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x0B, direction = PacketDirection.OUTGOING)
@@ -18,6 +19,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class DeleteCharacterFailurePacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private short type;
+  @PacketField(position = 0)
+  private UByte type;
 }

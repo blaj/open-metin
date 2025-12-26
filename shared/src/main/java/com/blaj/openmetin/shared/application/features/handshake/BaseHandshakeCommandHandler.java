@@ -8,6 +8,7 @@ import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joou.UInteger;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,14 +40,14 @@ public abstract class BaseHandshakeCommandHandler<T extends Session>
               }
 
               var currentTime = DateTimeUtils.getUnixTime();
-              var difference = currentTime - (request.time() + request.delta());
+              var difference = currentTime - (request.time().longValue() + request.delta());
 
               if (difference >= 0 && difference <= 50) {
                 log.info("Handshake done");
                 session.setHandshaking(false);
                 onSuccessHandshake(session);
               } else {
-                var newDelta = (currentTime - request.time()) / 2;
+                var newDelta = (currentTime - request.time().longValue()) / 2;
 
                 if (newDelta < 0) {
                   newDelta =
@@ -60,7 +61,7 @@ public abstract class BaseHandshakeCommandHandler<T extends Session>
                     request.sessionId(),
                     new HandshakePacket()
                         .setHandshake(request.handshake())
-                        .setTime(currentTime)
+                        .setTime(UInteger.valueOf(currentTime))
                         .setDelta((int) newDelta));
               }
             });

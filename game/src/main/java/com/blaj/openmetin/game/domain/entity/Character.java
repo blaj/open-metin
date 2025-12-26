@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.UShort;
 
 @Entity
 @Table(schema = "character", name = "character")
@@ -32,19 +35,19 @@ public class Character extends AuditingEntity {
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
-  private Integer slot = 0;
+  private UByte slot = UByte.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
-  private Integer basePart = 0;
+  private UByte basePart = UByte.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
-  private Integer bodyPart = 0;
+  private UShort bodyPart = UShort.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
-  private Integer hairPart = 0;
+  private UShort hairPart = UShort.valueOf(0);
 
   @Builder.Default
   @Enumerated(EnumType.STRING)
@@ -57,11 +60,11 @@ public class Character extends AuditingEntity {
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
-  private Integer skillGroup = 0;
+  private UByte skillGroup = UByte.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 1")
-  private Integer level = 1;
+  private UByte level = UByte.valueOf(1);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
@@ -81,19 +84,19 @@ public class Character extends AuditingEntity {
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
-  private Integer st = 0;
+  private UByte st = UByte.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
-  private Integer ht = 0;
+  private UByte ht = UByte.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
-  private Integer dx = 0;
+  private UByte dx = UByte.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
-  private Integer iq = 0;
+  private UByte iq = UByte.valueOf(0);
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
@@ -109,7 +112,7 @@ public class Character extends AuditingEntity {
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
-  private Integer gold = 0;
+  private UInteger gold = UInteger.valueOf(0);
 
   @Column(name = "position_x", nullable = false, columnDefinition = "INTEGER")
   private Integer positionX;
@@ -119,7 +122,7 @@ public class Character extends AuditingEntity {
 
   @Builder.Default
   @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
-  private Long playTime = 0L;
+  private UInteger playTime = UInteger.valueOf(0);
 
   @Column(nullable = false, columnDefinition = "BIGINT")
   private Long accountId;

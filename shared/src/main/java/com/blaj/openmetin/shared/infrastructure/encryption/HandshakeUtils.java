@@ -1,14 +1,20 @@
 package com.blaj.openmetin.shared.infrastructure.encryption;
 
 import java.security.SecureRandom;
+import lombok.experimental.UtilityClass;
+import org.joou.UInteger;
 
+@UtilityClass
 public class HandshakeUtils {
+
   private static final SecureRandom secureRandom = new SecureRandom();
 
-  public static long generateUInt32() {
+  public static UInteger generateUInt32() {
     var r1 = secureRandom.nextInt(1 << 30);
     var r2 = secureRandom.nextInt(1 << 2);
-    return (((long) r1 << 2) | r2) & 0xFFFFFFFFL;
+    var value = (((long) r1 << 2) | r2) & 0xFFFFFFFFL;
+
+    return UInteger.valueOf(value);
   }
 
   public static boolean percentageCheck(long percentage) {
@@ -23,12 +29,15 @@ public class HandshakeUtils {
     return secureRandom.nextInt(fromInclusive, toExclusive);
   }
 
-  public static long generateUInt32(long fromInclusive, long toExclusive) {
-    if (fromInclusive >= toExclusive) {
+  public static UInteger generateUInt32(UInteger fromInclusive, UInteger toExclusive) {
+    if (fromInclusive.compareTo(toExclusive) >= 0) {
       throw new IllegalArgumentException("fromInclusive must be smaller than toExclusive");
     }
 
-    var range = toExclusive - fromInclusive - 1;
+    var from = fromInclusive.longValue();
+    var to = toExclusive.longValue();
+
+    var range = to - from - 1;
     if (range == 0) {
       return fromInclusive;
     }
@@ -45,6 +54,6 @@ public class HandshakeUtils {
       result = mask & (secureRandom.nextInt() & 0xFFFFFFFFL);
     } while (result > range);
 
-    return result + fromInclusive;
+    return UInteger.valueOf(result + from);
   }
 }

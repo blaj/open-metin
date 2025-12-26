@@ -4,17 +4,18 @@ import com.blaj.openmetin.game.domain.entity.Character;
 import com.blaj.openmetin.shared.domain.repository.AuditingEntityRepository;
 import java.util.List;
 import java.util.Optional;
+import org.joou.UByte;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CharacterRepository extends AuditingEntityRepository<Character> {
   List<Character> findAllByAccountId(long accountId);
 
-  Optional<Character> findByAccountIdAndSlot(long accountId, int slot);
+  Optional<Character> findByAccountIdAndSlot(long accountId, UByte slot);
 
   boolean existsByName(String name);
 
-  boolean existsBySlotAndAccountId(int slot, long accountId);
+  boolean existsBySlotAndAccountId(UByte slot, long accountId);
 
   int countByAccountId(long accountId);
 }

@@ -40,7 +40,6 @@ public class FieldContextUtils {
                               annotation.position(),
                               annotation.length(),
                               annotation.arrayLength(),
-                              annotation.unsigned(),
                               nestingDepth,
                               parentClass,
                               processingEnvironment);

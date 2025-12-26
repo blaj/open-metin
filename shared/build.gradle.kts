@@ -14,6 +14,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-json")
     implementation("io.netty:netty-all:4.2.7.Final")
+    implementation("org.jooq:joou:0.9.5")
 
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
 

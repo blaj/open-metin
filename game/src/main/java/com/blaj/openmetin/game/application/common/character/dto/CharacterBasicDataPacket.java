@@ -11,6 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.UShort;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x71, direction = PacketDirection.OUTGOING)
@@ -20,11 +23,11 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class CharacterBasicDataPacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private long vid;
+  @PacketField(position = 0)
+  private UInteger vid;
 
-  @PacketField(position = 1, unsigned = true)
-  private int classType;
+  @PacketField(position = 1)
+  private UShort classType;
 
   @PacketField(position = 2, length = CharacterConstants.CHARACTER_NAME_MAX_LENGTH)
   private String name;
@@ -41,6 +44,6 @@ public class CharacterBasicDataPacket implements Packet {
   @PacketField(position = 6)
   private Empire empire;
 
-  @PacketField(position = 7, unsigned = true)
-  private short skillGroup;
+  @PacketField(position = 7)
+  private UByte skillGroup;
 }

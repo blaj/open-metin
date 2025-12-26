@@ -9,7 +9,7 @@ public class ByteFieldCodecStrategy implements FieldCodecStrategy {
 
   @Override
   public boolean isSupported(FieldContext fieldContext) {
-    return fieldContext.fieldType() == FieldType.BYTE && !fieldContext.isUnsigned();
+    return fieldContext.fieldType() == FieldType.BYTE;
   }
 
   @Override

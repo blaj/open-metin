@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UInteger;
 
 @GeneratePacketCodec
 @PacketHeader(header = 0x6a, direction = PacketDirection.OUTGOING)
@@ -18,6 +19,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 public class GameTimePacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private long serverTime;
+  @PacketField(position = 0)
+  private UInteger serverTime;
 }

@@ -14,27 +14,13 @@ public class IntFieldCodecStrategy implements FieldCodecStrategy {
 
   @Override
   public void generateDecodingMethod(MethodSpec.Builder method, FieldContext context) {
-    if (context.isUnsigned()) {
-      method.addStatement(
-          "$L.$L(in.readShortLE() & 0xFFFF)",
-          context.getElementVariableName(),
-          context.getSetterName());
-    } else {
-      method.addStatement(
-          "$L.$L(in.readIntLE())", context.getElementVariableName(), context.getSetterName());
-    }
+    method.addStatement(
+        "$L.$L(in.readIntLE())", context.getElementVariableName(), context.getSetterName());
   }
 
   @Override
   public void generateEncodingMethod(MethodSpec.Builder method, FieldContext context) {
-    if (context.isUnsigned()) {
-      method.addStatement(
-          "out.writeShortLE((short) ($L.$L() & 0xFFFF))",
-          context.getElementVariableName(),
-          context.getGetterName());
-    } else {
-      method.addStatement(
-          "out.writeIntLE($L.$L())", context.getElementVariableName(), context.getGetterName());
-    }
+    method.addStatement(
+        "out.writeIntLE($L.$L())", context.getElementVariableName(), context.getGetterName());
   }
 }

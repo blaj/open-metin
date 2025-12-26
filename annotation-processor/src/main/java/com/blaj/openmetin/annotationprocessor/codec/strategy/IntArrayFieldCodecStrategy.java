@@ -23,13 +23,7 @@ public class IntArrayFieldCodecStrategy implements FieldCodecStrategy {
     methodSpecBuilder.addStatement("int[] $L = new int[$L]", arrayVarName, context.arrayLength());
 
     methodSpecBuilder.beginControlFlow("for (int i = 0; i < $L; i++)", context.arrayLength());
-
-    if (context.isUnsigned()) {
-      methodSpecBuilder.addStatement("$L[i] = in.readShortLE() & 0xFFFF", arrayVarName);
-    } else {
-      methodSpecBuilder.addStatement("$L[i] = in.readIntLE()", arrayVarName);
-    }
-
+    methodSpecBuilder.addStatement("$L[i] = in.readIntLE()", arrayVarName);
     methodSpecBuilder.endControlFlow();
 
     methodSpecBuilder.addStatement(
@@ -43,17 +37,8 @@ public class IntArrayFieldCodecStrategy implements FieldCodecStrategy {
     }
 
     methodSpecBuilder.beginControlFlow("for (int i = 0; i < $L; i++)", context.arrayLength());
-
-    if (context.isUnsigned()) {
-      methodSpecBuilder.addStatement(
-          "out.writeShortLE((short) ($L.$L()[i] & 0xFFFF))",
-          context.getElementVariableName(),
-          context.getGetterName());
-    } else {
-      methodSpecBuilder.addStatement(
-          "out.writeIntLE($L.$L()[i])", context.getElementVariableName(), context.getGetterName());
-    }
-
+    methodSpecBuilder.addStatement(
+        "out.writeIntLE($L.$L()[i])", context.getElementVariableName(), context.getGetterName());
     methodSpecBuilder.endControlFlow();
   }
 }

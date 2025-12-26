@@ -8,6 +8,7 @@ import com.blaj.openmetin.shared.common.model.Packet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.joou.UInteger;
 
 @GeneratePacketCodec
 @PacketHeader(
@@ -18,11 +19,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class HandshakePacket implements Packet {
 
-  @PacketField(position = 0, unsigned = true)
-  private long handshake;
+  @PacketField(position = 0)
+  private UInteger handshake;
 
-  @PacketField(position = 1, unsigned = true)
-  private long time;
+  @PacketField(position = 1)
+  private UInteger time;
 
   @PacketField(position = 2)
   private int delta;

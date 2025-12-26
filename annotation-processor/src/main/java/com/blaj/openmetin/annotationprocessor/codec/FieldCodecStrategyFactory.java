@@ -14,6 +14,14 @@ import com.blaj.openmetin.annotationprocessor.codec.strategy.ObjectArrayFieldCod
 import com.blaj.openmetin.annotationprocessor.codec.strategy.ObjectFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.ShortFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.strategy.StringArrayFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.UByteArrayFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.UByteFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.UIntegerArrayFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.UIntegerFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.ULongArrayFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.ULongFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.UShortArrayFieldCodecStrategy;
+import com.blaj.openmetin.annotationprocessor.codec.strategy.UShortFieldCodecStrategy;
 import com.blaj.openmetin.annotationprocessor.codec.utils.StringFieldCodecStrategy;
 import java.util.List;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -39,7 +47,15 @@ public class FieldCodecStrategyFactory {
             new ObjectFieldCodecStrategy(processingEnvironment, this),
             new ShortFieldCodecStrategy(),
             new StringArrayFieldCodecStrategy(),
-            new StringFieldCodecStrategy());
+            new StringFieldCodecStrategy(),
+            new UByteArrayFieldCodecStrategy(),
+            new UByteFieldCodecStrategy(),
+            new UIntegerArrayFieldCodecStrategy(),
+            new UIntegerFieldCodecStrategy(),
+            new ULongArrayFieldCodecStrategy(),
+            new ULongFieldCodecStrategy(),
+            new UShortFieldCodecStrategy(),
+            new UShortArrayFieldCodecStrategy());
   }
 
   public FieldCodecStrategy get(FieldContext fieldContext) {

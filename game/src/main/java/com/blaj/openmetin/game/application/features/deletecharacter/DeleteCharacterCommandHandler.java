@@ -10,6 +10,7 @@ import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joou.UByte;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -40,9 +41,9 @@ public class DeleteCharacterCommandHandler implements RequestHandler<DeleteChara
             .getCharacter(session.getAccountId(), request.slot())
             .orElseThrow(() -> new EntityNotFoundException("Character not exists"));
 
-    if (character.getLevel() > CharacterConstants.CHARACTER_DELETE_LEVEL_LIMIT) {
+    if (character.getLevel().longValue() > CharacterConstants.CHARACTER_DELETE_LEVEL_LIMIT) {
       sessionService.sendPacketAsync(
-          session.getId(), new DeleteCharacterFailurePacket().setType((short) 1));
+          session.getId(), new DeleteCharacterFailurePacket().setType(UByte.valueOf(1)));
       return null;
     }
 
@@ -58,7 +59,7 @@ public class DeleteCharacterCommandHandler implements RequestHandler<DeleteChara
 
     if (!account.deleteCode().equals(deleteCodeFromRequest)) {
       sessionService.sendPacketAsync(
-          session.getId(), new DeleteCharacterFailurePacket().setType((short) 1));
+          session.getId(), new DeleteCharacterFailurePacket().setType(UByte.valueOf(1)));
       return null;
     }
 

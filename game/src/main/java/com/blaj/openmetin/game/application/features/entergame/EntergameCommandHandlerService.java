@@ -13,6 +13,9 @@ import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.UShort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -41,9 +44,11 @@ public class EntergameCommandHandlerService implements RequestHandler<EntergameC
 
     sessionService.sendPacketAsync(session.getId(), new PhasePacket().setPhase(session.getPhase()));
     sessionService.sendPacketAsync(
-        session.getId(), new GameTimePacket().setServerTime(DateTimeUtils.getUnixTime()));
+        session.getId(),
+        new GameTimePacket().setServerTime(UInteger.valueOf(DateTimeUtils.getUnixTime())));
     sessionService.sendPacketAsync(
-        session.getId(), new ChannelPacket().setChannelNo(channelPropertiesConfig.channelIndex()));
+        session.getId(),
+        new ChannelPacket().setChannelNo(channelPropertiesConfig.channelIndex()));
 
     var gameCharacterEntity = session.getGameCharacterEntity();
 
@@ -55,25 +60,30 @@ public class EntergameCommandHandlerService implements RequestHandler<EntergameC
             .setPositionX(gameCharacterEntity.getPositionX())
             .setPositionY(gameCharacterEntity.getPositionY())
             .setPositionZ(0)
-            .setCharacterType((short) gameCharacterEntity.getType().ordinal())
-            .setClassType(gameCharacterEntity.getCharacterDto().getClassType().getValue())
-            .setMoveSpeed(gameCharacterEntity.getMovementSpeed())
-            .setAttackSpeed(gameCharacterEntity.getAttackSpeed())
-            .setState((short) 0)
-            .setAffects(new long[2]));
+            .setCharacterType(UByte.valueOf(gameCharacterEntity.getType().ordinal()))
+            .setClassType(
+                UShort.valueOf(gameCharacterEntity.getCharacterDto().getClassType().getValue()))
+            .setMoveSpeed(UByte.valueOf(gameCharacterEntity.getMovementSpeed()))
+            .setAttackSpeed(UByte.valueOf(gameCharacterEntity.getAttackSpeed()))
+            .setState(UByte.valueOf(0))
+            .setAffects(new UInteger[2]));
 
     sessionService.sendPacketAsync(
         session.getId(),
         new CharacterAdditionalDataPacket()
             .setVid(gameCharacterEntity.getVid())
             .setName(gameCharacterEntity.getCharacterDto().getName())
-            .setParts(new int[] {0, 0, 1001, 1001}) // TODO: change after inventory implement
+            .setParts(
+                new UShort[] {
+                  UShort.valueOf(0), UShort.valueOf(0), UShort.valueOf(1001), UShort.valueOf(1001)
+                }) // TODO: change after inventory implement
             .setEmpire(gameCharacterEntity.getEmpire())
-            .setGuildId(0) // TODO: change after guild implement
-            .setLevel(gameCharacterEntity.getCharacterDto().getLevel())
+            .setGuildId(UInteger.valueOf(0)) // TODO: change after guild implement
+            .setLevel(
+                UInteger.valueOf(gameCharacterEntity.getCharacterDto().getLevel().byteValue()))
             .setRankPoints((short) 0) // TODO
-            .setPkMode((short) 0) // TODO
-            .setMountVnum(0)); // TODO: change after mount system implement
+            .setPkMode(UByte.valueOf(0)) // TODO
+            .setMountVnum(UInteger.valueOf(0))); // TODO: change after mount system implement
 
     return null;
   }
