@@ -17,6 +17,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-restclient")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.16.1")
+    implementation("io.micrometer:micrometer-tracing-bridge-otel:1.6.1")
+    implementation("com.github.loki4j:loki-logback-appender:2.0.2")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.57.0")
     implementation("org.apache.commons:commons-pool2")
     implementation("io.netty:netty-all:4.2.7.Final")
 

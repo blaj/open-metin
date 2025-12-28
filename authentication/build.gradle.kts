@@ -18,6 +18,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.apache.commons:commons-pool2")
     implementation("io.netty:netty-all:4.2.7.Final")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")

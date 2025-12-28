@@ -35,7 +35,8 @@ public class WebSecurityConfig {
         .authorizeHttpRequests(
             requests -> {
               requests
-                  .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+                  .requestMatchers(
+                      "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/actuator/**")
                   .permitAll();
               requests.requestMatchers("/me", "/api/**").authenticated();
               requests.anyRequest().denyAll();

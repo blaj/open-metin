@@ -49,6 +49,35 @@ spring:
             password: strongpassword
             type: JKS
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+
+    prometheus:
+      enabled: true
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+
+  tracing:
+    sampling:
+      probability: 1.0
+
+  otlp:
+    tracing:
+      endpoint: http://localhost:10008/v1/traces
+
 logging:
   level:
     org.springframework.data.redis: INFO
@@ -58,8 +87,12 @@ logging:
     liquibase.lockservice: WARN
     org.springframework.boot.autoconfigure.liquibase: INFO
 
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
 open-metin:
   channel-index: 1
+
   tcp:
     host: 0.0.0.0
     port: 13000
