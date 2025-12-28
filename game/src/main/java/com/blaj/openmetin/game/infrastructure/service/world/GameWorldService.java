@@ -1,23 +1,28 @@
 package com.blaj.openmetin.game.infrastructure.service.world;
 
+import com.blaj.openmetin.game.application.common.game.GameWorldSpawnEntityService;
+import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import com.blaj.openmetin.game.domain.model.spatial.Grid;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.infrastructure.service.map.AtlasMapProviderService;
 import com.blaj.openmetin.game.infrastructure.service.map.MapAttributeProviderService;
 import com.blaj.openmetin.game.infrastructure.service.map.SpawnPointFileLoaderService;
 import java.util.HashMap;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GameWorldService {
+public class GameWorldService implements GameWorldSpawnEntityService {
 
   private final AtlasMapProviderService atlasMapProviderService;
   private final MapAttributeProviderService attributeProviderService;
   private final SpawnPointFileLoaderService spawnPointFileLoaderService;
 
+  private final java.util.Map<String, GameCharacterEntity> gameCharacterEntities = new HashMap<>();
   private final Grid<Map> mapDataGrid = new Grid<>(Map.class, 0, 0);
   @Getter private final java.util.Map<String, Map> maps = new HashMap<>();
 
@@ -56,5 +61,36 @@ public class GameWorldService {
             }
           }
         });
+  }
+
+  public Optional<Map> getMap(int x, int y) {
+    var gridX = x / Map.MAP_UNIT;
+    var gridY = y / Map.MAP_UNIT;
+
+    return mapDataGrid.get(gridX, gridY);
+  }
+
+  public void spawnEntity(BaseGameEntity baseGameEntity) {
+    var map = getMap(baseGameEntity.getPositionX(), baseGameEntity.getPositionY()).orElse(null);
+
+    if (map == null) {
+      return;
+    }
+
+    if (baseGameEntity instanceof GameCharacterEntity) {
+      addGameCharacterEntity((GameCharacterEntity) baseGameEntity);
+    }
+
+    map.getPendingSpawns().add(baseGameEntity);
+  }
+
+  private void addGameCharacterEntity(GameCharacterEntity gameCharacterEntity) {
+    var name = gameCharacterEntity.getCharacterDto().getName();
+
+    if (gameCharacterEntities.containsKey(name)) {
+      gameCharacterEntities.replace(name, gameCharacterEntity);
+    } else {
+      gameCharacterEntities.put(name, gameCharacterEntity);
+    }
   }
 }
