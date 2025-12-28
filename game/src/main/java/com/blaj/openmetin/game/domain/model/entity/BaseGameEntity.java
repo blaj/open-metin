@@ -3,6 +3,7 @@ package com.blaj.openmetin.game.domain.model.entity;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
 import com.blaj.openmetin.game.domain.enums.entity.EntityState;
 import com.blaj.openmetin.game.domain.enums.entity.EntityType;
+import com.blaj.openmetin.game.domain.model.spatial.QuadTree;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,9 @@ public abstract class BaseGameEntity {
   private short attackSpeed;
   private long health;
   private long mana;
+  private QuadTree lastQuadTree;
+  private int lastPositionX;
+  private int lastPositionY;
 
   private final Set<BaseGameEntity> nearbyEntities = ConcurrentHashMap.newKeySet();
 

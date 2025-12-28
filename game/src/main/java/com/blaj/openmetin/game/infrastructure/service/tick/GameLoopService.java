@@ -18,7 +18,7 @@ public class GameLoopService implements SmartLifecycle {
   private static final int TPS_LOG_INTERVAL = 60;
 
   private final GameLoopProperties gameLoopProperties;
-  private final EntityUpdateService entityUpdateService;
+  private final MapUpdateService mapUpdateService;
 
   private final AtomicBoolean isRunning = new AtomicBoolean(false);
 
@@ -115,7 +115,7 @@ public class GameLoopService implements SmartLifecycle {
   }
 
   private void tick() {
-    entityUpdateService.updateAll();
+    mapUpdateService.update();
   }
 
   private void logTicksPerSecond() {

@@ -62,8 +62,4 @@ public class GameEntityMovementService {
 
     baseGameEntity.setMovementDuration(movementDuration);
   }
-
-  public void update() {
-
-  }
 }
