@@ -19,6 +19,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-restclient")
     implementation("org.apache.commons:commons-pool2")
     implementation("io.netty:netty-all:4.2.7.Final")
+    implementation("org.anarres.lzo:lzo-core:1.0.6")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 

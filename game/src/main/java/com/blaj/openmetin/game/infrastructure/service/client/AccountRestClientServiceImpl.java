@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.infrastructure.service;
+package com.blaj.openmetin.game.infrastructure.service.client;
 
 import com.blaj.openmetin.game.application.common.account.AccountDto;
 import com.blaj.openmetin.game.application.common.account.AccountRestClientService;

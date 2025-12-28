@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.domain.enums;
+package com.blaj.openmetin.game.domain.enums.character;
 
 import com.blaj.openmetin.contracts.enums.ByteEnum;
 import com.blaj.openmetin.game.domain.config.JobConfig;

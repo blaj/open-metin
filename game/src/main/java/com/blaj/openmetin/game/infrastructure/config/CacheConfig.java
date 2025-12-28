@@ -1,7 +1,7 @@
 package com.blaj.openmetin.game.infrastructure.config;
 
 import com.blaj.openmetin.game.application.common.account.AccountDto;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import java.time.Duration;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

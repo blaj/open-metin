@@ -2,7 +2,7 @@ package com.blaj.openmetin.game.application.features.handshake;
 
 import com.blaj.openmetin.game.application.common.eventsystem.EventSystemService;
 import com.blaj.openmetin.game.application.common.ping.PingPacket;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.features.handshake.BaseHandshakeCommandHandler;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;

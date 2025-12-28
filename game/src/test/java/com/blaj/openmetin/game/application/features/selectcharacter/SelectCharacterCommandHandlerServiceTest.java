@@ -13,10 +13,10 @@ import com.blaj.openmetin.game.application.common.character.service.GameCharacte
 import com.blaj.openmetin.game.application.common.character.service.GameCharacterEntityLoaderService;
 import com.blaj.openmetin.game.application.common.character.utils.CharacterPointsUtils;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
-import com.blaj.openmetin.game.domain.enums.PointType;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
-import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.enums.character.PointType;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;

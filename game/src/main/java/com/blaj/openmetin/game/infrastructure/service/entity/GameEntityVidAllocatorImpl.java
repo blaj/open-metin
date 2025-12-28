@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.infrastructure.service;
+package com.blaj.openmetin.game.infrastructure.service.entity;
 
 import com.blaj.openmetin.game.application.common.game.GameEntityVidAllocator;
 import java.util.concurrent.ConcurrentLinkedQueue;

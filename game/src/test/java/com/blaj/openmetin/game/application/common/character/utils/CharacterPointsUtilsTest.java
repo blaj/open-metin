@@ -2,9 +2,9 @@ package com.blaj.openmetin.game.application.common.character.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.blaj.openmetin.game.domain.enums.PointType;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
-import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.enums.character.PointType;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.domain.model;
+package com.blaj.openmetin.game.domain.model.map;
 
 public record Coordinates(int x, int y) {
 

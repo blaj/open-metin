@@ -1,7 +1,7 @@
 package com.blaj.openmetin.game.domain.entity;
 
 import com.blaj.openmetin.contracts.enums.ByteEnum;
-import com.blaj.openmetin.game.domain.enums.JobType;
+import com.blaj.openmetin.game.domain.enums.character.JobType;
 import com.blaj.openmetin.shared.domain.entity.AuditingEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

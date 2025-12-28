@@ -1,5 +1,6 @@
-package com.blaj.openmetin.game.domain.model;
+package com.blaj.openmetin.game.domain.model.session;
 
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import com.blaj.openmetin.shared.common.model.Session;
 import io.netty.channel.Channel;
 import lombok.Getter;

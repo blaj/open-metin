@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.domain.config;
 
-import com.blaj.openmetin.game.domain.enums.JobType;
+import com.blaj.openmetin.game.domain.enums.character.JobType;
 import java.util.Map;
 import lombok.experimental.UtilityClass;
 

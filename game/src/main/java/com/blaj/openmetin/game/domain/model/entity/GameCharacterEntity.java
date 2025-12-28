@@ -1,6 +1,7 @@
-package com.blaj.openmetin.game.domain.model;
+package com.blaj.openmetin.game.domain.model.entity;
 
-import com.blaj.openmetin.game.domain.enums.EntityType;
+import com.blaj.openmetin.game.domain.enums.entity.EntityType;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.shared.common.model.Session;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -9,8 +9,8 @@ import com.blaj.openmetin.game.application.common.character.service.CharacterSer
 import com.blaj.openmetin.game.application.common.empire.SelectEmpireService;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import io.netty.channel.Channel;
 import jakarta.persistence.EntityNotFoundException;

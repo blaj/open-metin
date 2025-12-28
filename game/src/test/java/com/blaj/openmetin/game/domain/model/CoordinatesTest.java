@@ -3,6 +3,7 @@ package com.blaj.openmetin.game.domain.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import org.junit.jupiter.api.Test;
 
 public class CoordinatesTest {

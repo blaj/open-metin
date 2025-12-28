@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.domain.model;
+package com.blaj.openmetin.game.domain.model.character;
 
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;

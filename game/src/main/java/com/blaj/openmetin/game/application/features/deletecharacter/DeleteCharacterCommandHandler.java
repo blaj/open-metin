@@ -2,7 +2,7 @@ package com.blaj.openmetin.game.application.features.deletecharacter;
 
 import com.blaj.openmetin.game.application.common.account.AccountRestClientService;
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.game.shared.constants.CharacterConstants;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;

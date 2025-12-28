@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.domain.enums;
+package com.blaj.openmetin.game.domain.enums.entity;
 
 public enum EntityType {
   MONSTER,

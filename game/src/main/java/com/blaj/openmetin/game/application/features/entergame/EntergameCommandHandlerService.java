@@ -3,7 +3,7 @@ package com.blaj.openmetin.game.application.features.entergame;
 import com.blaj.openmetin.game.application.common.character.dto.CharacterAdditionalDataPacket;
 import com.blaj.openmetin.game.application.common.character.dto.SpawnCharacterPacket;
 import com.blaj.openmetin.game.application.common.config.ChannelPropertiesConfig;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;

@@ -1,9 +1,9 @@
 package com.blaj.openmetin.game.application.common.character.service;
 
 import com.blaj.openmetin.game.application.common.game.GameEntityVidAllocator;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
-import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,7 @@ public class GameCharacterEntityFactoryService {
         .empire(characterDto.getEmpire())
         .positionX(characterDto.getPositionX())
         .positionY(characterDto.getPositionY())
+        .entityClass(characterDto.getClassType().getValue())
         .build();
   }
 }

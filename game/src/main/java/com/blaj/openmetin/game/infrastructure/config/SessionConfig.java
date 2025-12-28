@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.infrastructure.config;
 
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.common.service.SessionFactoryService;
 import com.blaj.openmetin.shared.infrastructure.network.session.SessionManagerServiceImpl;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.application.common.character.service;
 
-import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -11,8 +11,8 @@ import com.blaj.openmetin.game.application.common.character.dto.CharacterListPac
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
 import com.blaj.openmetin.game.application.common.empire.EmpirePacket;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.common.config.TcpConfig;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;

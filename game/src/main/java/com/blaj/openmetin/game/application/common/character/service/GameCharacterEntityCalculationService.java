@@ -2,8 +2,8 @@ package com.blaj.openmetin.game.application.common.character.service;
 
 import com.blaj.openmetin.game.application.common.character.utils.CharacterPointsUtils;
 import com.blaj.openmetin.game.domain.config.JobConfig;
-import com.blaj.openmetin.game.domain.enums.PointType;
-import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.enums.character.PointType;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import com.blaj.openmetin.game.shared.constants.CharacterConstants;
 import org.springframework.stereotype.Service;
 
