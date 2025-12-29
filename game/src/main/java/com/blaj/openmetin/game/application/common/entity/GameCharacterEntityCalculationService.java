@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.application.common.character.service;
+package com.blaj.openmetin.game.application.common.entity;
 
 import com.blaj.openmetin.game.application.common.character.utils.CharacterPointsUtils;
 import com.blaj.openmetin.game.domain.config.JobConfig;

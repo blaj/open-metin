@@ -31,14 +31,4 @@ public class AnimationCacheService {
         .flatMap(typeMap -> Optional.ofNullable(typeMap.get(animationType)))
         .flatMap(subTypeMap -> Optional.ofNullable(subTypeMap.get(animationSubType)));
   }
-
-  public void clear() {
-    animations.clear();
-  }
-
-  public int size() {
-    return animations.values().stream()
-        .mapToInt(typeMap -> typeMap.values().stream().mapToInt(Map::size).sum())
-        .sum();
-  }
 }

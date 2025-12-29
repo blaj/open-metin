@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.application.common.character.service;
+package com.blaj.openmetin.game.application.common.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

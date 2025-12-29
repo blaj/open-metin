@@ -2,7 +2,9 @@ package com.blaj.openmetin.game.domain.enums.character;
 
 import com.blaj.openmetin.contracts.enums.ByteEnum;
 import java.util.Arrays;
+import lombok.Getter;
 
+@Getter
 public enum PointType implements ByteEnum {
   LEVEL((byte) 1),
   EXPERIENCE((byte) 3),
@@ -96,10 +98,5 @@ public enum PointType implements ByteEnum {
         .filter(pointType -> pointType.getValue() == value)
         .findFirst()
         .orElse(null);
-  }
-
-  @Override
-  public byte getValue() {
-    return value;
   }
 }

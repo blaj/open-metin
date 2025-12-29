@@ -3,9 +3,11 @@ package com.blaj.openmetin.game.domain.model.entity;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
 import com.blaj.openmetin.game.domain.enums.entity.EntityState;
 import com.blaj.openmetin.game.domain.enums.entity.EntityType;
+import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.spatial.QuadTree;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,15 +20,20 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class BaseGameEntity {
+  @EqualsAndHashCode.Include private long vid;
 
-  private long vid;
   private EntityState state;
   private long entityClass;
   private float rotation;
+
+  @Setter(AccessLevel.NONE)
   private int positionX;
+
+  @Setter(AccessLevel.NONE)
   private int positionY;
+
   private int startPositionX;
   private int startPositionY;
   private int targetPositionX;
@@ -40,12 +47,23 @@ public abstract class BaseGameEntity {
   private long health;
   private long mana;
   private QuadTree lastQuadTree;
+  private Map map;
   private int lastPositionX;
   private int lastPositionY;
 
   private final Set<BaseGameEntity> nearbyEntities = ConcurrentHashMap.newKeySet();
 
   public abstract EntityType getType();
+
+  public void setPositionX(int positionX) {
+    this.positionChanged = this.positionChanged || this.positionX != positionX;
+    this.positionX = positionX;
+  }
+
+  public void setPositionY(int positionY) {
+    this.positionChanged = this.positionChanged || this.positionY != positionY;
+    this.positionY = positionY;
+  }
 
   public void addNearbyEntity(BaseGameEntity entity) {
     nearbyEntities.add(entity);

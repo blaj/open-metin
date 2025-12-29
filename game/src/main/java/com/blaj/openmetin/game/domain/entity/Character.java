@@ -124,6 +124,7 @@ public class Character extends AuditingEntity {
   @Column(nullable = false, columnDefinition = "BIGINT")
   private Long accountId;
 
+  @Getter
   public enum Empire implements ByteEnum {
     NEUTRAL((byte) 0),
     SHINSOO((byte) 1),
@@ -134,11 +135,6 @@ public class Character extends AuditingEntity {
 
     Empire(byte value) {
       this.value = value;
-    }
-
-    @Override
-    public byte getValue() {
-      return value;
     }
   }
 

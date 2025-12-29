@@ -1,8 +1,7 @@
 package com.blaj.openmetin.game.application.features.entergame;
 
-import com.blaj.openmetin.game.application.common.character.dto.CharacterAdditionalDataPacket;
-import com.blaj.openmetin.game.application.common.character.dto.SpawnCharacterPacket;
 import com.blaj.openmetin.game.application.common.config.ChannelPropertiesConfig;
+import com.blaj.openmetin.game.application.common.entity.EntityVisibilityService;
 import com.blaj.openmetin.game.application.common.game.GameWorldSpawnEntityService;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
@@ -23,6 +22,7 @@ public class EntergameCommandHandlerService implements RequestHandler<EntergameC
 
   private final SessionManagerService<GameSession> sessionManagerService;
   private final SessionService sessionService;
+  private final EntityVisibilityService entityVisibilityService;
   private final GameWorldSpawnEntityService gameWorldSpawnEntityService;
   private final ChannelPropertiesConfig channelPropertiesConfig;
 
@@ -49,34 +49,7 @@ public class EntergameCommandHandlerService implements RequestHandler<EntergameC
 
     var gameCharacterEntity = session.getGameCharacterEntity();
 
-    sessionService.sendPacketAsync(
-        session.getId(),
-        new SpawnCharacterPacket()
-            .setVid(gameCharacterEntity.getVid())
-            .setAngle(0)
-            .setPositionX(gameCharacterEntity.getPositionX())
-            .setPositionY(gameCharacterEntity.getPositionY())
-            .setPositionZ(0)
-            .setCharacterType((short) gameCharacterEntity.getType().ordinal())
-            .setClassType(gameCharacterEntity.getCharacterDto().getClassType().getValue())
-            .setMoveSpeed(gameCharacterEntity.getMovementSpeed())
-            .setAttackSpeed(gameCharacterEntity.getAttackSpeed())
-            .setState((short) 0)
-            .setAffects(new long[2]));
-
-    sessionService.sendPacketAsync(
-        session.getId(),
-        new CharacterAdditionalDataPacket()
-            .setVid(gameCharacterEntity.getVid())
-            .setName(gameCharacterEntity.getCharacterDto().getName())
-            .setParts(new int[] {0, 0, 1001, 1001}) // TODO: change after inventory implement
-            .setEmpire(gameCharacterEntity.getEmpire())
-            .setGuildId(0) // TODO: change after guild implement
-            .setLevel(gameCharacterEntity.getCharacterDto().getLevel())
-            .setRankPoints((short) 0) // TODO
-            .setPkMode((short) 0) // TODO
-            .setMountVnum(0)); // TODO: change after mount system implement
-
+    entityVisibilityService.showEntityToPlayer(gameCharacterEntity, session.getId());
     gameWorldSpawnEntityService.spawnEntity(gameCharacterEntity);
 
     return null;

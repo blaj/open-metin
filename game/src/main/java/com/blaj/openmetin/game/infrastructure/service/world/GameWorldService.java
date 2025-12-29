@@ -3,8 +3,8 @@ package com.blaj.openmetin.game.infrastructure.service.world;
 import com.blaj.openmetin.game.application.common.game.GameWorldSpawnEntityService;
 import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
-import com.blaj.openmetin.game.domain.model.spatial.Grid;
 import com.blaj.openmetin.game.domain.model.map.Map;
+import com.blaj.openmetin.game.domain.model.spatial.Grid;
 import com.blaj.openmetin.game.infrastructure.service.map.AtlasMapProviderService;
 import com.blaj.openmetin.game.infrastructure.service.map.MapAttributeProviderService;
 import com.blaj.openmetin.game.infrastructure.service.map.SpawnPointFileLoaderService;
@@ -12,8 +12,10 @@ import java.util.HashMap;
 import java.util.Optional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GameWorldService implements GameWorldSpawnEntityService {
@@ -28,6 +30,11 @@ public class GameWorldService implements GameWorldSpawnEntityService {
 
   public void loadMaps() {
     var allMaps = atlasMapProviderService.getAll();
+
+    if (allMaps.isEmpty()) {
+      log.warn("No maps found, skipping map grid initialization");
+      return;
+    }
 
     allMaps.forEach(
         map ->
@@ -47,7 +54,7 @@ public class GameWorldService implements GameWorldSpawnEntityService {
             .orElse(0);
     var maxY =
         allMaps.stream()
-            .mapToInt(map -> map.getCoordinates().y() * map.getHeight() * Map.MAP_UNIT)
+            .mapToInt(map -> map.getCoordinates().y() + map.getHeight() * Map.MAP_UNIT)
             .max()
             .orElse(0);
 

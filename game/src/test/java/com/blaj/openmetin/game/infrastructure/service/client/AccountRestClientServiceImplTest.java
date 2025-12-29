@@ -1,11 +1,10 @@
-package com.blaj.openmetin.game.infrastructure.service;
+package com.blaj.openmetin.game.infrastructure.service.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 import com.blaj.openmetin.game.application.common.account.AccountDto;
-import com.blaj.openmetin.game.infrastructure.service.client.AccountRestClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,12 +24,12 @@ public class AccountRestClientServiceImplTest {
   @Mock private RestClient.ResponseSpec responseSpec;
 
   @BeforeEach
-  void beforeEach() {
+  public void beforeEach() {
     accountRestClientService = new AccountRestClientServiceImpl(restClient);
   }
 
   @Test
-  void givenRestClientThrowsException_whenGetAccountCached_thenReturnNull() {
+  public void givenRestClientThrowsException_whenGetAccountCached_thenReturnNull() {
     // given
     var accountId = 456L;
     var exception =
@@ -54,7 +53,7 @@ public class AccountRestClientServiceImplTest {
   }
 
   @Test
-  void givenServerError_whenGetAccountCached_thenReturnNull() {
+  public void givenServerError_whenGetAccountCached_thenReturnNull() {
     // given
     var accountId = 789L;
     var exception =
@@ -74,7 +73,7 @@ public class AccountRestClientServiceImplTest {
   }
 
   @Test
-  void givenNonExistentAccount_whenGetAccountCached_thenReturnNull() {
+  public void givenNonExistentAccount_whenGetAccountCached_thenReturnNull() {
     // given
     var accountId = 999L;
     var exception =
@@ -93,7 +92,7 @@ public class AccountRestClientServiceImplTest {
   }
 
   @Test
-  void givenValid_whenGetAccountCached_thenReturnAccountDto() {
+  public void givenValid_whenGetAccountCached_thenReturnAccountDto() {
     // given
     var accountId = 123L;
     var expectedAccount = new AccountDto(accountId, "username", "mail@mail.com", "1234567");

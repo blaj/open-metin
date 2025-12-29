@@ -12,7 +12,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @GeneratePacketCodec
-@PacketHeader(header = 0x03, direction = PacketDirection.INCOMING, isSequence = true)
+@PacketHeader(header = 0x03, direction = PacketDirection.OUTGOING, isSequence = true)
 @Getter
 @Setter
 @Accessors(chain = true)

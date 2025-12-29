@@ -1,8 +1,8 @@
 package com.blaj.openmetin.game.domain.enums.map;
 
-import java.util.EnumSet;
-import java.util.Set;
+import lombok.Getter;
 
+@Getter
 public enum MapAttribute {
   NONE(0),
   BLOCK(1 << 0),
@@ -19,33 +19,7 @@ public enum MapAttribute {
     this.value = value;
   }
 
-  public int getValue() {
-    return value;
-  }
-
   public static boolean hasFlag(int attributes, MapAttribute flag) {
     return (attributes & flag.value) != 0;
-  }
-
-  public static Set<MapAttribute> fromInt(int value) {
-    var flags = EnumSet.noneOf(MapAttribute.class);
-
-    for (var flag : values()) {
-      if (flag != NONE && (value & flag.value) != 0) {
-        flags.add(flag);
-      }
-    }
-
-    return flags;
-  }
-
-  public static int combine(MapAttribute... flags) {
-    var result = 0;
-
-    for (var flag : flags) {
-      result |= flag.value;
-    }
-
-    return result;
   }
 }

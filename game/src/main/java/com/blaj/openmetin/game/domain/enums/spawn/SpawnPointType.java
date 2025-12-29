@@ -1,5 +1,9 @@
 package com.blaj.openmetin.game.domain.enums.spawn;
 
+import java.util.Arrays;
+import lombok.Getter;
+
+@Getter
 public enum SpawnPointType {
   GROUP('g'),
   MONSTER('m'),
@@ -13,25 +17,10 @@ public enum SpawnPointType {
     this.code = code;
   }
 
-  public char getCode() {
-    return code;
-  }
-
   public static SpawnPointType fromCode(char code) {
-    for (var type : values()) {
-      if (type.code == code) {
-        return type;
-      }
-    }
-
-    throw new IllegalArgumentException("Unknown spawn point type code: " + code);
-  }
-
-  public static SpawnPointType fromCode(String code) {
-    if (code == null || code.isEmpty()) {
-      throw new IllegalArgumentException("Spawn point type code cannot be empty");
-    }
-
-    return fromCode(code.charAt(0));
+    return Arrays.stream(values())
+        .filter(spawnPointType -> spawnPointType.code == code)
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Unknown spawn point type code: " + code));
   }
 }

@@ -1,8 +1,7 @@
-package com.blaj.openmetin.game.infrastructure.service;
+package com.blaj.openmetin.game.infrastructure.service.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.blaj.openmetin.game.infrastructure.service.entity.GameEntityVidAllocatorImpl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;

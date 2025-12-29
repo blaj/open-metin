@@ -38,7 +38,7 @@ public class NettyServerServiceTest {
   }
 
   @Test
-  void givenValidConfiguration_whenStart_thenServerBindsToPort() {
+  public void givenValidConfiguration_whenStart_thenServerBindsToPort() {
     // given
     var tcpProperties = new TcpProperties(testHost, testPort, 60);
     nettyServerService = new NettyServerService(tcpProperties, gameChannelInitializerService);
@@ -60,7 +60,7 @@ public class NettyServerServiceTest {
   }
 
   @Test
-  void givenStartedServer_whenStop_thenServerStopsGracefully() {
+  public void givenStartedServer_whenStop_thenServerStopsGracefully() {
     // given
     var tcpProperties = new TcpProperties(testHost, testPort, 60);
     nettyServerService = new NettyServerService(tcpProperties, gameChannelInitializerService);
@@ -87,7 +87,7 @@ public class NettyServerServiceTest {
   }
 
   @Test
-  void givenNotStartedServer_whenStop_thenNoExceptionThrown() {
+  public void givenNotStartedServer_whenStop_thenNoExceptionThrown() {
     // given
     var tcpProperties = new TcpProperties(testHost, testPort, 60);
     nettyServerService = new NettyServerService(tcpProperties, gameChannelInitializerService);

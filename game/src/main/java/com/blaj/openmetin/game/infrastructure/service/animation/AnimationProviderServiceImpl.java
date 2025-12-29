@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.infrastructure.service.animation;
 
-import com.blaj.openmetin.game.application.common.character.service.AnimationProviderService;
+import com.blaj.openmetin.game.application.common.animation.AnimationProviderService;
 import com.blaj.openmetin.game.domain.enums.animation.AnimationSubType;
 import com.blaj.openmetin.game.domain.enums.animation.AnimationType;
 import com.blaj.openmetin.game.domain.model.animation.Animation;

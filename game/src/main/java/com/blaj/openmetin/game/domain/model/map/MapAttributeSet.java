@@ -2,28 +2,16 @@ package com.blaj.openmetin.game.domain.model.map;
 
 import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
 
-public class MapAttributeSet {
+public record MapAttributeSet(
+    int sectreesWidth,
+    int sectreesHeight,
+    Coordinates baseCoordinates,
+    MapAttributeSectree[][] mapAttributeSectrees) {
 
   public static final int SECTREE_SIZE = 6400; // 64m x 64m
   public static final int CELL_SIZE = 50; // 50cm x 50cm
   public static final int CELLS_PER_AXIS = SECTREE_SIZE / CELL_SIZE;
   public static final int CELLS_PER_SECTREE = CELLS_PER_AXIS * CELLS_PER_AXIS;
-
-  private final int sectreesWidth;
-  private final int sectreesHeight;
-  private final Coordinates baseCoordinates;
-  private final MapAttributeSectree[][] mapAttributeSectrees;
-
-  public MapAttributeSet(
-      int sectreesWidth,
-      int sectreesHeight,
-      Coordinates baseCoordinates,
-      MapAttributeSectree[][] mapAttributeSectrees) {
-    this.sectreesWidth = sectreesWidth;
-    this.sectreesHeight = sectreesHeight;
-    this.baseCoordinates = baseCoordinates;
-    this.mapAttributeSectrees = mapAttributeSectrees;
-  }
 
   public int getAttributesAt(Coordinates coordinates) {
     var location = tryLocate(coordinates);

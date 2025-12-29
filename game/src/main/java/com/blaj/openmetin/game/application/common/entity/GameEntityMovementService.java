@@ -1,5 +1,6 @@
-package com.blaj.openmetin.game.application.common.character.service;
+package com.blaj.openmetin.game.application.common.entity;
 
+import com.blaj.openmetin.game.application.common.animation.AnimationProviderService;
 import com.blaj.openmetin.game.domain.enums.animation.AnimationSubType;
 import com.blaj.openmetin.game.domain.enums.animation.AnimationType;
 import com.blaj.openmetin.game.domain.enums.entity.EntityState;
@@ -61,5 +62,10 @@ public class GameEntityMovementService {
             .orElse(0L);
 
     baseGameEntity.setMovementDuration(movementDuration);
+  }
+
+  public void wait(BaseGameEntity baseGameEntity, int x, int y) {
+    baseGameEntity.setPositionX(x);
+    baseGameEntity.setPositionY(y);
   }
 }

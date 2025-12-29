@@ -1,7 +1,9 @@
 package com.blaj.openmetin.shared.common.enums;
 
 import com.blaj.openmetin.contracts.enums.ByteEnum;
+import lombok.Getter;
 
+@Getter
 public enum Phase implements ByteEnum {
   HANDSHAKE((byte) 1),
   LOGIN((byte) 2),
@@ -14,10 +16,5 @@ public enum Phase implements ByteEnum {
 
   Phase(byte value) {
     this.value = value;
-  }
-
-  @Override
-  public byte getValue() {
-    return value;
   }
 }

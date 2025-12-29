@@ -1,7 +1,9 @@
 package com.blaj.openmetin.game.domain.enums.spawn;
 
 import com.blaj.openmetin.contracts.enums.ByteEnum;
+import lombok.Getter;
 
+@Getter
 public enum SpawnPointDirection implements ByteEnum {
   RANDOM((byte) 0),
   SOUTH((byte) 1),
@@ -17,9 +19,5 @@ public enum SpawnPointDirection implements ByteEnum {
 
   SpawnPointDirection(byte value) {
     this.value = value;
-  }
-
-  public byte getValue() {
-    return value;
   }
 }

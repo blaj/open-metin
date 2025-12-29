@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.application.common.character.service;
+package com.blaj.openmetin.game.application.common.entity;
 
 import com.blaj.openmetin.game.application.common.game.GameEntityVidAllocator;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;

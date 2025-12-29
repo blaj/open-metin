@@ -38,7 +38,7 @@ public class Grid<T> {
 
   public Optional<T> get(int x, int y) {
     try {
-      return Optional.of(grid[x][y]);
+      return Optional.ofNullable(grid[x][y]);
     } catch (ArrayIndexOutOfBoundsException _) {
       return Optional.empty();
     }
@@ -80,6 +80,7 @@ public class Grid<T> {
         }
       }
     }
+
     return true;
   }
 }

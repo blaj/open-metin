@@ -1,15 +1,14 @@
-package com.blaj.openmetin.game.domain.model;
+package com.blaj.openmetin.game.domain.model.map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import org.junit.jupiter.api.Test;
 
 public class CoordinatesTest {
 
   @Test
-  void givenNegativeX_whenCreating_thenThrowsException() {
+  public void givenNegativeX_whenCreating_thenThrowsException() {
     // given
 
     // when
@@ -21,7 +20,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenNegativeY_whenCreating_thenThrowsException() {
+  public void givenNegativeY_whenCreating_thenThrowsException() {
     // given
 
     // when
@@ -33,7 +32,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenValidCoordinates_whenCreating_thenCreatesSuccessfully() {
+  public void givenValidCoordinates_whenCreating_thenCreatesSuccessfully() {
     // given
 
     // when
@@ -45,7 +44,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenCoordinates_whenToString_thenReturnsFormattedString() {
+  public void givenCoordinates_whenToString_thenReturnsFormattedString() {
     // given
     var coordinates = new Coordinates(10, 20);
 
@@ -57,7 +56,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenCoordinates_whenMultiply_thenReturnsMultipliedCoordinates() {
+  public void givenCoordinates_whenMultiply_thenReturnsMultipliedCoordinates() {
     // given
     var coordinates = new Coordinates(10, 20);
 
@@ -70,7 +69,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenCoordinates_whenMultiplyByZero_thenReturnsZeroCoordinates() {
+  public void givenCoordinates_whenMultiplyByZero_thenReturnsZeroCoordinates() {
     // given
     var coordinates = new Coordinates(10, 20);
 
@@ -83,7 +82,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenCoordinates_whenMultiplyOverflow_thenThrowsException() {
+  public void givenCoordinates_whenMultiplyOverflow_thenThrowsException() {
     // given
     var coordinates = new Coordinates(Integer.MAX_VALUE, 1);
 
@@ -94,7 +93,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenTwoCoordinates_whenAdd_thenReturnsSum() {
+  public void givenTwoCoordinates_whenAdd_thenReturnsSum() {
     // given
     var first = new Coordinates(10, 20);
     var second = new Coordinates(5, 15);
@@ -108,7 +107,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenTwoCoordinates_whenAddOverflow_thenThrowsException() {
+  public void givenTwoCoordinates_whenAddOverflow_thenThrowsException() {
     // given
     var first = new Coordinates(Integer.MAX_VALUE, 1);
     var second = new Coordinates(1, 1);
@@ -120,7 +119,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenCoordinatesAndDeltas_whenAdd_thenReturnsSum() {
+  public void givenCoordinatesAndDeltas_whenAdd_thenReturnsSum() {
     // given
     var coordinates = new Coordinates(10, 20);
 
@@ -133,7 +132,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenCoordinatesAndDeltas_whenAddOverflow_thenThrowsException() {
+  public void givenCoordinatesAndDeltas_whenAddOverflow_thenThrowsException() {
     // given
     var coordinates = new Coordinates(Integer.MAX_VALUE, 1);
 
@@ -144,7 +143,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenTwoCoordinates_whenSubtract_thenReturnsDifference() {
+  public void givenTwoCoordinates_whenSubtract_thenReturnsDifference() {
     // given
     var first = new Coordinates(20, 30);
     var second = new Coordinates(5, 10);
@@ -158,7 +157,7 @@ public class CoordinatesTest {
   }
 
   @Test
-  void givenTwoCoordinates_whenSubtractResultsInNegative_thenThrowsException() {
+  public void givenTwoCoordinates_whenSubtractResultsInNegative_thenThrowsException() {
     // given
     var first = new Coordinates(5, 10);
     var second = new Coordinates(10, 5);

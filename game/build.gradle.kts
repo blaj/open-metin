@@ -17,6 +17,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-restclient")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.16.1")
     implementation("org.apache.commons:commons-pool2")
     implementation("io.netty:netty-all:4.2.7.Final")
     implementation("org.anarres.lzo:lzo-core:1.0.6")
@@ -33,9 +36,11 @@ dependencies {
     annotationProcessor(project(":annotation-processor"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
     testImplementation("org.awaitility:awaitility:4.3.0")
     testImplementation("org.testcontainers:testcontainers:2.0.2")
     testImplementation("com.redis:testcontainers-redis:2.2.4")
     testImplementation("com.h2database:h2")
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 }

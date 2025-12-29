@@ -58,6 +58,7 @@ public class LzoDecompressorService {
           compressed.length,
           expectedSize,
           e);
+
       throw new IOException("LZO decompression failed", e);
     }
   }

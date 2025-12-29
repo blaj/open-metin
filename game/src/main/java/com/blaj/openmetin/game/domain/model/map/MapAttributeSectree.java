@@ -4,8 +4,8 @@ import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
 
 public record MapAttributeSectree(int[] cellAttributes) {
 
-  private static final int CELLS_PER_AXIS = 128; // SECTREE_SIZE / CELL_SIZE = 6400 / 50
-  private static final int CELLS_PER_SECTREE = CELLS_PER_AXIS * CELLS_PER_AXIS;
+  public static final int CELLS_PER_AXIS = 128; // SECTREE_SIZE / CELL_SIZE = 6400 / 50
+  public static final int CELLS_PER_SECTREE = CELLS_PER_AXIS * CELLS_PER_AXIS;
 
   public static final MapAttributeSectree EMPTY =
       new MapAttributeSectree(new int[CELLS_PER_SECTREE]);

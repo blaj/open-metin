@@ -81,7 +81,7 @@ public class CharacterPointsUtilsTest {
 
   @ParameterizedTest(name = "{0} should return {1}")
   @MethodSource("providePointTypeTestCases")
-  void givenValidCharacterEntity_whenGettingPointValue_thenReturnsCorrectValue(
+  public void givenValidCharacterEntity_whenGettingPointValue_thenReturnsCorrectValue(
       PointType pointType, long expectedValue) {
     // given
     var characterDto =

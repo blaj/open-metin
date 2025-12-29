@@ -2,7 +2,6 @@ package com.blaj.openmetin.game.infrastructure.service.animation;
 
 import com.blaj.openmetin.game.domain.model.animation.Animation;
 import com.blaj.openmetin.game.infrastructure.exception.AnimationParseException;
-import com.blaj.openmetin.game.infrastructure.properties.DataPathProperties;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -10,16 +9,12 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class AnimationFileLoaderService {
-
-  private final DataPathProperties dataPathProperties;
 
   public Optional<Animation> loadAnimation(Path animationPath) {
     if (!Files.exists(animationPath)) {

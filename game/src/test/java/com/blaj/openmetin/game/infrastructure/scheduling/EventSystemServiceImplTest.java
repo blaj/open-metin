@@ -36,7 +36,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenCallback_whenScheduleEvent_thenEventIsScheduled() {
+  public void givenCallback_whenScheduleEvent_thenEventIsScheduled() {
     // given
     Supplier<Duration> callback = () -> Duration.ofSeconds(30);
     var initialDelay = Duration.ofSeconds(10);
@@ -54,7 +54,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenMultipleCallbacks_whenScheduleEvent_thenEventIdsAreIncremented() {
+  public void givenMultipleCallbacks_whenScheduleEvent_thenEventIdsAreIncremented() {
     // given
     Supplier<Duration> callback1 = () -> Duration.ofSeconds(10);
     Supplier<Duration> callback2 = () -> Duration.ofSeconds(20);
@@ -72,7 +72,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenScheduledEvent_whenCancelEvent_thenEventIsRemoved() {
+  public void givenScheduledEvent_whenCancelEvent_thenEventIsRemoved() {
     // given
     Supplier<Duration> callback = () -> Duration.ofSeconds(30);
 
@@ -90,7 +90,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenNonExistentEvent_whenCancelEvent_thenNoException() {
+  public void givenNonExistentEvent_whenCancelEvent_thenNoException() {
     // when
     eventSystemService.cancelEvent(999L);
 
@@ -101,7 +101,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenNoEvents_whenGetPendingEventsCount_thenReturnZero() {
+  public void givenNoEvents_whenGetPendingEventsCount_thenReturnZero() {
     // when
     int count = eventSystemService.getPendingEventsCount();
 
@@ -110,7 +110,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenCallbackReturnsZero_whenExecuteEvent_thenEventIsRemoved() {
+  public void givenCallbackReturnsZero_whenExecuteEvent_thenEventIsRemoved() {
     // given
     Supplier<Duration> callback = () -> Duration.ZERO;
 
@@ -128,7 +128,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenCallbackReturnsNull_whenExecuteEvent_thenEventIsRemoved() {
+  public void givenCallbackReturnsNull_whenExecuteEvent_thenEventIsRemoved() {
     // given
     Supplier<Duration> callback = () -> null;
 
@@ -146,7 +146,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenCallbackReturnsNonZero_whenExecuteEvent_thenEventIsRescheduled() {
+  public void givenCallbackReturnsNonZero_whenExecuteEvent_thenEventIsRescheduled() {
     // given
     Supplier<Duration> callback = () -> Duration.ofSeconds(30);
 
@@ -166,7 +166,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenCallbackThrowsException_whenExecuteEvent_thenEventIsRemoved() {
+  public void givenCallbackThrowsException_whenExecuteEvent_thenEventIsRemoved() {
     // given
     Supplier<Duration> callback =
         () -> {
@@ -187,7 +187,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenScheduledEvent_whenScheduleEventWithInitialDelay_thenCorrectInstantIsUsed() {
+  public void givenScheduledEvent_whenScheduleEventWithInitialDelay_thenCorrectInstantIsUsed() {
     // given
     Supplier<Duration> callback = () -> Duration.ofSeconds(30);
     var initialDelay = Duration.ofSeconds(10);
@@ -209,7 +209,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenCallbackReturnsNonZero_whenReschedule_thenNewDelayIsUsed() {
+  public void givenCallbackReturnsNonZero_whenReschedule_thenNewDelayIsUsed() {
     // given
     Duration nextDelay = Duration.ofSeconds(45);
     Supplier<Duration> callback = () -> nextDelay;
@@ -234,7 +234,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenEventCancelledBeforeReschedule_whenExecuteEvent_thenEventIsNotRescheduled() {
+  public void givenEventCancelledBeforeReschedule_whenExecuteEvent_thenEventIsNotRescheduled() {
     // given
     Supplier<Duration> callback = () -> Duration.ofSeconds(30);
 
@@ -254,7 +254,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenMultipleEvents_whenCancelOneEvent_thenOtherEventsRemain() {
+  public void givenMultipleEvents_whenCancelOneEvent_thenOtherEventsRemain() {
     // given
     Supplier<Duration> callback1 = () -> Duration.ofSeconds(10);
     Supplier<Duration> callback2 = () -> Duration.ofSeconds(20);
@@ -274,7 +274,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenScheduledEvent_whenCancelSameEventTwice_thenNoException() {
+  public void givenScheduledEvent_whenCancelSameEventTwice_thenNoException() {
     // given
     Supplier<Duration> callback = () -> Duration.ofSeconds(30);
 
@@ -293,7 +293,7 @@ public class EventSystemServiceImplTest {
   }
 
   @Test
-  void givenZeroInitialDelay_whenScheduleEvent_thenEventIsScheduledImmediately() {
+  public void givenZeroInitialDelay_whenScheduleEvent_thenEventIsScheduledImmediately() {
     // given
     Supplier<Duration> callback = () -> Duration.ofSeconds(30);
     var initialDelay = Duration.ZERO;

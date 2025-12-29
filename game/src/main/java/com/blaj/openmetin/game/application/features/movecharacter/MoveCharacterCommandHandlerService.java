@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.application.features.movecharacter;
 
-import com.blaj.openmetin.game.application.common.character.service.GameEntityMovementService;
+import com.blaj.openmetin.game.application.common.entity.GameEntityMovementService;
 import com.blaj.openmetin.game.domain.enums.character.CharacterMovementType;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
@@ -32,7 +32,7 @@ public class MoveCharacterCommandHandlerService
             .orElseThrow(() -> new EntityNotFoundException("Session not exists"));
 
     if (session.getGameCharacterEntity() == null) {
-      log.error("Game character not exists.");
+      log.error("Game character not exists");
       session.getChannel().close();
       return null;
     }
@@ -51,8 +51,11 @@ public class MoveCharacterCommandHandlerService
           request.positionX(),
           request.positionY(),
           DateTimeUtils.getUnixTime());
-    } else {
+    }
 
+    if (request.movementType() == CharacterMovementType.WAIT) {
+      gameEntityMovementService.wait(
+          session.getGameCharacterEntity(), request.positionX(), request.positionY());
     }
 
     var moveCharacterBroadcastPacket =

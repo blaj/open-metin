@@ -113,6 +113,22 @@ public class QuadTree {
     }
   }
 
+  public void updatePosition(BaseGameEntity entity) {
+    if (entity.getLastQuadTree() == null) {
+      insert(entity);
+
+      return;
+    }
+
+    var lastQuadTree = entity.getLastQuadTree();
+
+    if (!lastQuadTree.getRectangle().contains(entity.getPositionX(), entity.getPositionY())) {
+      lastQuadTree.remove(entity);
+
+      insert(entity);
+    }
+  }
+
   private boolean circleIntersects(int x, int y, int radius) {
     var halfWidth = width / 2;
     var halfHeight = height / 2;
@@ -174,21 +190,5 @@ public class QuadTree {
     }
 
     entities.clear();
-  }
-
-  public void updatePosition(BaseGameEntity entity) {
-    if (entity.getLastQuadTree() == null) {
-      insert(entity);
-
-      return;
-    }
-
-    var lastQuadTree = entity.getLastQuadTree();
-
-    if (!lastQuadTree.getRectangle().contains(entity.getPositionX(), entity.getPositionY())) {
-      lastQuadTree.remove(entity);
-
-      insert(entity);
-    }
   }
 }
