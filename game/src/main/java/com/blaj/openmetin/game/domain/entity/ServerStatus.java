@@ -25,6 +25,7 @@ public class ServerStatus implements Serializable {
 
   private Status status;
 
+  @Getter
   public enum Status implements ByteEnum {
     UNKNOWN((byte) 0),
     NORMAL((byte) 1),
@@ -35,11 +36,6 @@ public class ServerStatus implements Serializable {
 
     Status(byte value) {
       this.value = value;
-    }
-
-    @Override
-    public byte getValue() {
-      return value;
     }
   }
 }

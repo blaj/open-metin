@@ -21,7 +21,7 @@ public class NetworkUtilsTest {
   @Mock private Channel channel;
 
   @Test
-  void givenAnyLocalAddress_whenResolveAdvertisedAddress_thenReturnConnectionLocalAddress()
+  public void givenAnyLocalAddress_whenResolveAdvertisedAddress_thenReturnConnectionLocalAddress()
       throws UnknownHostException {
     // given
     var anyAddress = InetAddress.getByName("0.0.0.0");
@@ -35,8 +35,9 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenIPv6AnyLocalAddress_whenResolveAdvertisedAddress_thenReturnConnectionLocalAddress()
-      throws UnknownHostException {
+  public void
+      givenIPv6AnyLocalAddress_whenResolveAdvertisedAddress_thenReturnConnectionLocalAddress()
+          throws UnknownHostException {
     // given
     var anyAddress = InetAddress.getByName("::");
     var connectionLocalAddress = InetAddress.getByName("192.168.1.10");
@@ -49,7 +50,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenSpecificAddress_whenResolveAdvertisedAddress_thenReturnSpecificAddress()
+  public void givenSpecificAddress_whenResolveAdvertisedAddress_thenReturnSpecificAddress()
       throws UnknownHostException {
     // given
     var specificAddress = InetAddress.getByName("10.0.0.5");
@@ -63,7 +64,8 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenPublicIP_whenResolveAdvertisedAddress_thenReturnPublicIP() throws UnknownHostException {
+  public void givenPublicIP_whenResolveAdvertisedAddress_thenReturnPublicIP()
+      throws UnknownHostException {
     // given
     var publicIp = InetAddress.getByName("8.8.8.8");
     var localAddress = InetAddress.getByName("192.168.1.10");
@@ -76,7 +78,8 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenIPv4Address_whenIpToInt_thenReturnIntRepresentation() throws UnknownHostException {
+  public void givenIPv4Address_whenIpToInt_thenReturnIntRepresentation()
+      throws UnknownHostException {
     // given
     var ip = InetAddress.getByName("192.168.1.100");
 
@@ -88,7 +91,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenLoopbackAddress_whenIpToInt_thenReturnCorrectInt() throws UnknownHostException {
+  public void givenLoopbackAddress_whenIpToInt_thenReturnCorrectInt() throws UnknownHostException {
     // given
     var ip = InetAddress.getByName("127.0.0.1");
 
@@ -100,7 +103,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenZeroAddress_whenIpToInt_thenReturnZero() throws UnknownHostException {
+  public void givenZeroAddress_whenIpToInt_thenReturnZero() throws UnknownHostException {
     // given
     var ip = InetAddress.getByName("0.0.0.0");
 
@@ -112,7 +115,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenMaxIPv4Address_whenIpToInt_thenReturnNegativeOne() throws UnknownHostException {
+  public void givenMaxIPv4Address_whenIpToInt_thenReturnNegativeOne() throws UnknownHostException {
     // given
     var ip = InetAddress.getByName("255.255.255.255");
 
@@ -124,7 +127,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenIPv6Address_whenIpToInt_thenThrowException() throws UnknownHostException {
+  public void givenIPv6Address_whenIpToInt_thenThrowException() throws UnknownHostException {
     // given
     var ipv6 = InetAddress.getByName("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
 
@@ -137,7 +140,8 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenIPv6LoopbackAddress_whenIpToInt_thenThrowException() throws UnknownHostException {
+  public void givenIPv6LoopbackAddress_whenIpToInt_thenThrowException()
+      throws UnknownHostException {
     // given
     var ipv6 = InetAddress.getByName("::1");
 
@@ -150,7 +154,8 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenChannel_whenGetLocalAddress_thenReturnLocalAddress() throws UnknownHostException {
+  public void givenChannel_whenGetLocalAddress_thenReturnLocalAddress()
+      throws UnknownHostException {
     // given
     var expectedAddress = InetAddress.getByName("192.168.1.50");
     var socketAddress = new InetSocketAddress(expectedAddress, 8080);
@@ -165,7 +170,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenChannelWithIPv6_whenGetLocalAddress_thenReturnIPv6Address()
+  public void givenChannelWithIPv6_whenGetLocalAddress_thenReturnIPv6Address()
       throws UnknownHostException {
     // given
     var expectedAddress = InetAddress.getByName("::1");
@@ -181,7 +186,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenChannelWithLoopback_whenGetLocalAddress_thenReturnLoopbackAddress()
+  public void givenChannelWithLoopback_whenGetLocalAddress_thenReturnLoopbackAddress()
       throws UnknownHostException {
     // given
     var expectedAddress = InetAddress.getByName("127.0.0.1");
@@ -197,7 +202,7 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenConversionRoundTrip_whenIpToIntAndBack_thenReturnOriginalIP()
+  public void givenConversionRoundTrip_whenIpToIntAndBack_thenReturnOriginalIP()
       throws UnknownHostException {
     // given
     var originalIp = InetAddress.getByName("10.20.30.40");
@@ -212,7 +217,8 @@ public class NetworkUtilsTest {
   }
 
   @Test
-  void givenMultipleAddresses_whenIpToInt_thenEachHasUniqueValue() throws UnknownHostException {
+  public void givenMultipleAddresses_whenIpToInt_thenEachHasUniqueValue()
+      throws UnknownHostException {
     // given
     var ip1 = InetAddress.getByName("192.168.1.1");
     var ip2 = InetAddress.getByName("192.168.1.2");

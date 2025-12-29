@@ -2,7 +2,7 @@ package com.blaj.openmetin.game.application.features.selectempire;
 
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
 import com.blaj.openmetin.game.application.common.empire.SelectEmpireService;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.infrastructure.cqrs.RequestHandler;
 import jakarta.persistence.EntityNotFoundException;

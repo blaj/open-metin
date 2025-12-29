@@ -3,7 +3,7 @@ package com.blaj.openmetin.game.application.features.deletecharacter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.then;
 
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.infrastructure.cqrs.Mediator;
 import io.netty.channel.Channel;
 import org.junit.jupiter.api.BeforeEach;

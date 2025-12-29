@@ -6,7 +6,7 @@ import com.blaj.openmetin.game.domain.config.EmpireSpawnConfigs;
 import com.blaj.openmetin.game.domain.entity.Character;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.game.domain.repository.CharacterRepository;
 import com.blaj.openmetin.shared.domain.entity.IdEntity;
 import java.util.List;

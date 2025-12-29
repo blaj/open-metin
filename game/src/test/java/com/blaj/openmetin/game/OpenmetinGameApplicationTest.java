@@ -7,5 +7,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class OpenmetinGameApplicationTest {
 
   @Test
-  void contextLoads() {}
+  public void contextLoads() {}
 }

@@ -1,7 +1,7 @@
 package com.blaj.openmetin.game.domain.entity;
 
 import com.blaj.openmetin.contracts.enums.ByteEnum;
-import com.blaj.openmetin.game.domain.enums.JobType;
+import com.blaj.openmetin.game.domain.enums.character.JobType;
 import com.blaj.openmetin.shared.domain.entity.AuditingEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -124,6 +124,7 @@ public class Character extends AuditingEntity {
   @Column(nullable = false, columnDefinition = "BIGINT")
   private Long accountId;
 
+  @Getter
   public enum Empire implements ByteEnum {
     NEUTRAL((byte) 0),
     SHINSOO((byte) 1),
@@ -134,11 +135,6 @@ public class Character extends AuditingEntity {
 
     Empire(byte value) {
       this.value = value;
-    }
-
-    @Override
-    public byte getValue() {
-      return value;
     }
   }
 

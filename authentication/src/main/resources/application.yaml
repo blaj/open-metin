@@ -1,4 +1,6 @@
 server:
+  port: 8080
+
   ssl:
     enabled: true
     key-store-type: PKCS12
@@ -71,6 +73,28 @@ spring:
       trust-store: classpath:truststore.jks
       trust-store-password: strongpassword
       trust-store-type: JKS
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+
+  endpoint:
+    health:
+      show-details: always
+
+    prometheus:
+      enabled: true
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+    tags:
+      application: openmetin-authentication
+      environment: dev
 
 logging:
   level:

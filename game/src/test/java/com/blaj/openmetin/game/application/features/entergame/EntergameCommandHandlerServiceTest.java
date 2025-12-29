@@ -7,14 +7,14 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import com.blaj.openmetin.game.application.common.character.dto.CharacterAdditionalDataPacket;
-import com.blaj.openmetin.game.application.common.character.dto.SpawnCharacterPacket;
 import com.blaj.openmetin.game.application.common.config.ChannelPropertiesConfig;
+import com.blaj.openmetin.game.application.common.entity.EntityVisibilityService;
+import com.blaj.openmetin.game.application.common.game.GameWorldSpawnEntityService;
 import com.blaj.openmetin.game.domain.entity.Character.ClassType;
 import com.blaj.openmetin.game.domain.entity.Character.Empire;
-import com.blaj.openmetin.game.domain.model.CharacterDto;
-import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.character.CharacterDto;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;
@@ -36,14 +36,21 @@ public class EntergameCommandHandlerServiceTest {
 
   @Mock private SessionManagerService<GameSession> sessionManagerService;
   @Mock private SessionService sessionService;
+  @Mock private EntityVisibilityService entityVisibilityService;
+  @Mock private GameWorldSpawnEntityService gameWorldSpawnEntityService;
   @Mock private ChannelPropertiesConfig channelPropertiesConfig;
+
   @Mock private Channel channel;
 
   @BeforeEach
   public void beforeEach() {
     entergameCommandHandlerService =
         new EntergameCommandHandlerService(
-            sessionManagerService, sessionService, channelPropertiesConfig);
+            sessionManagerService,
+            sessionService,
+            entityVisibilityService,
+            gameWorldSpawnEntityService,
+            channelPropertiesConfig);
 
     DateTimeUtils.initialize();
   }
@@ -120,35 +127,7 @@ public class EntergameCommandHandlerServiceTest {
     then(sessionService)
         .should()
         .sendPacketAsync(sessionId, new ChannelPacket().setChannelNo((short) 3));
-    then(sessionService)
-        .should()
-        .sendPacketAsync(
-            sessionId,
-            new SpawnCharacterPacket()
-                .setVid(gameCharacterEntity.getVid())
-                .setAngle(0)
-                .setPositionX(gameCharacterEntity.getPositionX())
-                .setPositionY(gameCharacterEntity.getPositionY())
-                .setPositionZ(0)
-                .setCharacterType((short) gameCharacterEntity.getType().ordinal())
-                .setClassType(gameCharacterEntity.getCharacterDto().getClassType().getValue())
-                .setMoveSpeed(gameCharacterEntity.getMovementSpeed())
-                .setAttackSpeed(gameCharacterEntity.getAttackSpeed())
-                .setState((short) 0)
-                .setAffects(new long[2]));
-    then(sessionService)
-        .should()
-        .sendPacketAsync(
-            sessionId,
-            new CharacterAdditionalDataPacket()
-                .setVid(gameCharacterEntity.getVid())
-                .setName(gameCharacterEntity.getCharacterDto().getName())
-                .setParts(new int[] {0, 0, 1001, 1001})
-                .setEmpire(gameCharacterEntity.getEmpire())
-                .setGuildId(0)
-                .setLevel(gameCharacterEntity.getCharacterDto().getLevel())
-                .setRankPoints((short) 0)
-                .setPkMode((short) 0)
-                .setMountVnum(0));
+    then(entityVisibilityService).should().showEntityToPlayer(gameCharacterEntity, sessionId);
+    then(gameWorldSpawnEntityService).should().spawnEntity(gameCharacterEntity);
   }
 }

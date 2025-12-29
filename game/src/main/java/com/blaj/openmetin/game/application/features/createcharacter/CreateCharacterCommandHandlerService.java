@@ -3,7 +3,7 @@ package com.blaj.openmetin.game.application.features.createcharacter;
 import com.blaj.openmetin.game.application.common.character.mapper.SimpleCharacterPacketMapper;
 import com.blaj.openmetin.game.application.common.character.service.CharacterCreationTimeService;
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
-import com.blaj.openmetin.game.domain.model.GameSession;
+import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.game.domain.repository.BannedWordRepository;
 import com.blaj.openmetin.game.domain.repository.CharacterRepository;
 import com.blaj.openmetin.game.shared.constants.CharacterConstants;

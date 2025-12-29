@@ -1,7 +1,7 @@
 package com.blaj.openmetin.game.application.common.character.utils;
 
-import com.blaj.openmetin.game.domain.enums.PointType;
-import com.blaj.openmetin.game.domain.model.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.enums.character.PointType;
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 

@@ -19,10 +19,19 @@ spring:
 
 open-metin:
   channel-index: 1
+
   tcp:
     host: 0.0.0.0
     port: 13001
     idle-seconds: 60
+
+  game-loop:
+    enabled: true
+    target-tps: 60
+    fixed-timestep-ms: 16
+
+  data:
+    base-directory: ./data
 
   rest-client:
     authentication-url: https://localhost:8080/api/v1

@@ -1,6 +1,20 @@
+server:
+  port: 8081
+
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:keystore.p12
+    key-store-password: strongpassword
+    key-alias: openmetin-authentication-dev
+
 spring:
   application:
     name: openmetin-game
+
+  threads:
+    virtual:
+      enabled: true
 
   jpa:
     hibernate:
@@ -49,6 +63,28 @@ spring:
             password: strongpassword
             type: JKS
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+
+  endpoint:
+    health:
+      show-details: always
+
+    prometheus:
+      enabled: true
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+    tags:
+      application: openmetin-game
+      environment: dev
+
 logging:
   level:
     org.springframework.data.redis: INFO
@@ -60,10 +96,19 @@ logging:
 
 open-metin:
   channel-index: 1
+
   tcp:
     host: 0.0.0.0
     port: 13000
     idle-seconds: 60
+
+  game-loop:
+    enabled: true
+    target-tps: 60
+    fixed-timestep-ms: 16
+
+  data:
+    base-directory: ./data
 
   rest-client:
     authentication-url: https://localhost:8080/api/v1

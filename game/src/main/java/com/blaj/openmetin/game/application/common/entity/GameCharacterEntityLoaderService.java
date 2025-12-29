@@ -1,0 +1,12 @@
+package com.blaj.openmetin.game.application.common.entity;
+
+import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+public class GameCharacterEntityLoaderService {
+
+  public void load(GameCharacterEntity gameCharacterEntity) {
+    // TODO: load inventory, quick slots, etc...
+  }
+}
