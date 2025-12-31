@@ -67,20 +67,20 @@ public class SpawnPointFileLoaderService {
     var spawnPointTypeWrapper = parseTypeAndAggressive(parts[0]);
 
     var spawnPoint =
-        new SpawnPoint(
-            spawnPointTypeWrapper.spawnPointType(),
-            spawnPointTypeWrapper.isAggressive(),
-            Integer.parseInt(parts[1]),
-            Integer.parseInt(parts[2]),
-            Integer.parseInt(parts[3]),
-            Integer.parseInt(parts[4]),
-            SpawnPointDirection.fromValue(Integer.parseInt(parts[6])),
-            0,
-            Collections.emptyList(),
-            Long.parseLong(parts[10]),
-            null,
-            Short.parseShort(parts[8]),
-            Short.parseShort(parts[9]));
+        SpawnPoint.builder()
+            .type(spawnPointTypeWrapper.spawnPointType())
+            .isAggressive(spawnPointTypeWrapper.isAggressive())
+            .x(Integer.parseInt(parts[1]))
+            .y(Integer.parseInt(parts[2]))
+            .rangeX(Integer.parseInt(parts[3]))
+            .rangeY(Integer.parseInt(parts[4]))
+            .spawnPointDirection(SpawnPointDirection.fromValue(Integer.parseInt(parts[6])))
+            .respawnTime(parseRespawnTime(parts[7]))
+            .groups(Collections.emptyList())
+            .monsterId(Long.parseLong(parts[10]))
+            .chance(Short.parseShort(parts[8]))
+            .maxAmount(Short.parseShort(parts[9]))
+            .build();
 
     return Optional.of(spawnPoint);
   }
@@ -100,7 +100,28 @@ public class SpawnPointFileLoaderService {
   }
 
   private int parseRespawnTime(String field) {
-    return -1; // TODO
+    if (field == null || field.length() < 2) {
+      throw new IllegalArgumentException("Invalid timespan format: " + field);
+    }
+
+    var unit = Character.toLowerCase(field.charAt(field.length() - 1));
+    var valueStr = field.substring(0, field.length() - 1);
+
+    int value;
+    try {
+      value = Integer.parseInt(valueStr);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("Invalid number in timespan: " + field, e);
+    }
+
+    return switch (unit) {
+      case 's' -> value;
+      case 'm' -> value * 60;
+      case 'h' -> value * 3600;
+      default ->
+          throw new IllegalArgumentException(
+              "Unknown time unit '%c' in timespan: %s".formatted(unit, field));
+    };
   }
 
   private record SpawnPointTypeWrapper(SpawnPointType spawnPointType, boolean isAggressive) {}
