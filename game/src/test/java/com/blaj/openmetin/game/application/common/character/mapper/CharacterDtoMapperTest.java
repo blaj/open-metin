@@ -3,8 +3,8 @@ package com.blaj.openmetin.game.application.common.character.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.blaj.openmetin.game.domain.entity.Character;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import org.junit.jupiter.api.Test;
 
 public class CharacterDtoMapperTest {

@@ -1,6 +1,7 @@
 package com.blaj.openmetin.game.infrastructure.config;
 
 import com.blaj.openmetin.game.application.common.account.AccountDto;
+import com.blaj.openmetin.game.domain.entity.MonsterDefinition;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import java.time.Duration;
 import java.util.List;
@@ -65,10 +66,20 @@ public class CacheConfig {
                 RedisSerializationContext.SerializationPair.fromSerializer(
                     new JacksonJsonRedisSerializer<>(jsonMapper, accountDtoType)));
 
+    var monsterDefinitionsListType =
+        jsonMapper.getTypeFactory().constructCollectionType(List.class, MonsterDefinition.class);
+    var monsterDefinitionsConfig =
+        config
+            .entryTtl(Duration.ofDays(7))
+            .serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(
+                    new JacksonJsonRedisSerializer<>(jsonMapper, monsterDefinitionsListType)));
+
     return RedisCacheManager.builder(connectionFactory)
         .cacheDefaults(config)
         .withCacheConfiguration("characters", charactersConfig)
         .withCacheConfiguration("accounts", accountsConfig)
+        .withCacheConfiguration("monster_definitions", monsterDefinitionsConfig)
         .build();
   }
 }

@@ -11,7 +11,8 @@ public enum MapAttribute {
   SAFE(1 << 3),
   EMPIRE(1 << 4),
   MONSTERAREA(1 << 5),
-  NO_MOUNT(1 << 6);
+  NO_MOUNT(1 << 6),
+  OBJECT(1 << 7);
 
   private final int value;
 

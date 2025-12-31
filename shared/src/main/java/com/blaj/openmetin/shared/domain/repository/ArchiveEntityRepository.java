@@ -3,12 +3,12 @@ package com.blaj.openmetin.shared.domain.repository;
 import com.blaj.openmetin.shared.domain.entity.ArchiveEntity;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.lang.NonNull;
 
 @NoRepositoryBean
-public interface ArchiveEntityRepository<T extends ArchiveEntity> extends CrudRepository<T, Long> {
+public interface ArchiveEntityRepository<T extends ArchiveEntity> extends JpaRepository<T, Long> {
 
   @Override
   @Transactional

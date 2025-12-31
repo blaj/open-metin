@@ -305,4 +305,207 @@
       <dropColumn columnName="skill_group" schemaName="character" tableName="character"/>
     </rollback>
   </changeSet>
+
+  <changeSet author="AM" id="0.6.0.create-monster-definition-table">
+    <comment>Create monster_definition table</comment>
+
+    <createTable schemaName="dictionary" tableName="monster_definition">
+      <column autoIncrement="true" name="id" type="BIGINT">
+        <constraints primaryKey="true"/>
+      </column>
+
+      <column name="name" type="VARCHAR(25)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="translated_name" type="VARCHAR(25)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="type" type="VARCHAR(25)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="rank_type" type="VARCHAR(25)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="battle_type" type="VARCHAR(25)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="1" name="level" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="size" type="VARCHAR(25)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="min_gold" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="max_gold" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="experience" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="1" name="health" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="regen_delay" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="regen_percentage" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="defence" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueComputed="'[]'::jsonb" name="ai_flags" type="JSONB">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueComputed="'[]'::jsonb" name="race_types" type="JSONB">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueComputed="'[]'::jsonb" name="immune_types" type="JSONB">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="st" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="ht" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="dx" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="iq" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="min_damage" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="max_damage" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="attack_speed" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="movement_speed" type="INTEGER">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="aggressive_point" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="aggressive_sight" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="attack_range" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueComputed="'[]'::jsonb" name="enchant_types" type="JSONB">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueComputed="'[]'::jsonb" name="resist_types" type="JSONB">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="resurrection_id" type="BIGINT"/>
+
+      <column name="drop_item_id" type="BIGINT"/>
+
+      <column defaultValueNumeric="0" name="mount_capacity" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="NONE" name="on_click_type" type="VARCHAR(16)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValue="NEUTRAL" name="empire" type="VARCHAR(8)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="folder" type="VARCHAR(65)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="1.0" name="damage_multiply" type="DOUBLE PRECISION">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="summon_id" type="BIGINT"/>
+
+      <column defaultValueNumeric="0" name="drain_sp" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="monster_color" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="polymorph_item_id" type="BIGINT"/>
+
+      <column name="skill_datas" type="JSONB"/>
+
+      <column defaultValueNumeric="0" name="berserk_point" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="stone_skin_point" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="god_speed_point" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="death_blow_point" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column defaultValueNumeric="0" name="revive_point" type="SMALLINT">
+        <constraints nullable="false"/>
+      </column>
+
+      &archiveColumns;
+    </createTable>
+
+    <rollback>
+      REVOKE USAGE, SELECT ON ALL SEQUENCES IN SCHEMA dictionary FROM openmetin_game_user;
+      REVOKE INSERT, SELECT, UPDATE ON dictionary.monster_definition FROM openmetin_game_user;
+      REVOKE USAGE ON SCHEMA character FROM openmetin_game_user;
+      DROP TABLE IF EXISTS dictionary.monster_definition;
+    </rollback>
+
+    <sql>
+      GRANT USAGE ON SCHEMA dictionary TO openmetin_game_user;
+      GRANT INSERT, SELECT, UPDATE ON dictionary.monster_definition TO openmetin_game_user;
+      GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA dictionary TO openmetin_game_user;
+    </sql>
+  </changeSet>
 </databaseChangeLog>

@@ -1,6 +1,8 @@
 package com.blaj.openmetin.game.domain.model.map;
 
 import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
+import java.util.EnumSet;
+import java.util.Optional;
 
 public record MapAttributeSet(
     int sectreesWidth,
@@ -26,6 +28,17 @@ public record MapAttributeSet(
   public boolean hasAttribute(Coordinates coordinates, MapAttribute mapAttribute) {
     var attrs = getAttributesAt(coordinates);
     return MapAttribute.hasFlag(attrs, mapAttribute);
+  }
+
+  public boolean hasAnyAttribute(Coordinates coordinates, EnumSet<MapAttribute> mapAttributes) {
+    return Optional.ofNullable(tryLocate(coordinates))
+        .map(
+            sectreeLocation ->
+                sectreeLocation
+                    .mapAttributeSectree()
+                    .hasAnyAttribute(
+                        sectreeLocation.cellX(), sectreeLocation.cellY(), mapAttributes))
+        .orElse(false);
   }
 
   private SectreeLocation tryLocate(Coordinates coordinates) {

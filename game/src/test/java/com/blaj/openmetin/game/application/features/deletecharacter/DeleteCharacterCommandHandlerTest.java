@@ -8,7 +8,7 @@ import static org.mockito.BDDMockito.then;
 import com.blaj.openmetin.game.application.common.account.AccountDto;
 import com.blaj.openmetin.game.application.common.account.AccountRestClientService;
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.game.shared.constants.CharacterConstants;

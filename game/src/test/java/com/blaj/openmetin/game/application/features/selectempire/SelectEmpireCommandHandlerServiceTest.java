@@ -7,8 +7,8 @@ import static org.mockito.BDDMockito.then;
 
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
 import com.blaj.openmetin.game.application.common.empire.SelectEmpireService;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.common.abstractions.SessionManagerService;

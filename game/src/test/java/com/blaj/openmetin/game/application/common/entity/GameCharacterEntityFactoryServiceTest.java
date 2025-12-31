@@ -3,7 +3,7 @@ package com.blaj.openmetin.game.application.common.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.blaj.openmetin.game.application.common.game.GameEntityVidAllocator;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import io.netty.channel.Channel;

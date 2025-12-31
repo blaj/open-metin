@@ -2,7 +2,7 @@ package com.blaj.openmetin.game.application.common.empire;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import com.redis.testcontainers.RedisContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;

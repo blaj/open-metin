@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.application.features.createcharacter;
 
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
 import com.blaj.openmetin.shared.common.abstractions.PacketHandlerService;
 import com.blaj.openmetin.shared.common.model.Session;
 import com.blaj.openmetin.shared.infrastructure.cqrs.Mediator;

@@ -14,7 +14,7 @@ public record DataPathProperties(Path baseDirectory) {
     return baseDirectory.resolve("maps");
   }
 
-  public Path serverAttrFile(String mapName){
+  public Path serverAttrFile(String mapName) {
     return mapsDirectory().resolve(mapName).resolve("server_attr");
   }
 
@@ -36,5 +36,13 @@ public record DataPathProperties(Path baseDirectory) {
 
   public Path spawnBossFile(String mapName) {
     return mapsDirectory().resolve(mapName).resolve("boss.txt");
+  }
+
+  public Path groupFile() {
+    return baseDirectory.resolve("group.txt");
+  }
+
+  public Path groupCollectionFile() {
+    return baseDirectory.resolve("group_group.txt");
   }
 }

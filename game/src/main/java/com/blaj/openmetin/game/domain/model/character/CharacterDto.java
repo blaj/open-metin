@@ -1,7 +1,7 @@
 package com.blaj.openmetin.game.domain.model.character;
 
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

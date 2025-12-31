@@ -20,6 +20,11 @@ spring:
     hibernate:
       ddl-auto: none
 
+    properties:
+      hibernate:
+        type:
+          json_format_mapper: com.blaj.openmetin.game.infrastructure.mapper.CustomHibernateJsonFormatter
+
   datasource:
     url: jdbc:postgresql://localhost:10000/openmetin_game?sslmode=verify-full&sslrootcert=docker/conf/postgres/certs/ca.crt
     username: openmetin_game_user

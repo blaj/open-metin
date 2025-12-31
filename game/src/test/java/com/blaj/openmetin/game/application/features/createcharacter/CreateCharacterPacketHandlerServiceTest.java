@@ -3,7 +3,7 @@ package com.blaj.openmetin.game.application.features.createcharacter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.then;
 
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.infrastructure.cqrs.Mediator;
 import io.netty.channel.Channel;

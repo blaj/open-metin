@@ -1,5 +1,6 @@
 package com.blaj.openmetin.game.infrastructure.service.map;
 
+import com.blaj.openmetin.game.domain.enums.spawn.SpawnPointDirection;
 import com.blaj.openmetin.game.domain.enums.spawn.SpawnPointType;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
 import com.blaj.openmetin.game.infrastructure.properties.DataPathProperties;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -62,30 +64,44 @@ public class SpawnPointFileLoaderService {
       return Optional.empty();
     }
 
-    var spawnPoint = new SpawnPoint();
-    parseTypeAndAggressive(spawnPoint, parts[0]);
+    var spawnPointTypeWrapper = parseTypeAndAggressive(parts[0]);
 
-    spawnPoint.setX(Integer.parseInt(parts[1]));
-    spawnPoint.setY(Integer.parseInt(parts[2]));
-    spawnPoint.setRangeX(Integer.parseInt(parts[3]));
-    spawnPoint.setRangeY(Integer.parseInt(parts[4]));
+    var spawnPoint =
+        new SpawnPoint(
+            spawnPointTypeWrapper.spawnPointType(),
+            spawnPointTypeWrapper.isAggressive(),
+            Integer.parseInt(parts[1]),
+            Integer.parseInt(parts[2]),
+            Integer.parseInt(parts[3]),
+            Integer.parseInt(parts[4]),
+            SpawnPointDirection.fromValue(Integer.parseInt(parts[6])),
+            0,
+            Collections.emptyList(),
+            Long.parseLong(parts[10]),
+            null,
+            Short.parseShort(parts[8]),
+            Short.parseShort(parts[9]));
 
     return Optional.of(spawnPoint);
   }
 
-  private void parseTypeAndAggressive(SpawnPoint spawnPoint, String typeField){
+  private SpawnPointTypeWrapper parseTypeAndAggressive(String typeField) {
     if (typeField.isEmpty()) {
       throw new IllegalArgumentException("Empty type field");
     }
 
-    var typeChar = typeField.charAt(0);
-    spawnPoint.setType(SpawnPointType.fromCode(typeChar));
-
+    var isAggressive = false;
     if (typeField.length() > 1) {
       var secondChar = typeField.charAt(1);
-      spawnPoint.setAggressive(secondChar == 'a' || secondChar == 'A');
-    } else {
-      spawnPoint.setAggressive(false);
+      isAggressive = secondChar == 'a' || secondChar == 'A';
     }
+
+    return new SpawnPointTypeWrapper(SpawnPointType.fromCode(typeField.charAt(0)), isAggressive);
   }
+
+  private int parseRespawnTime(String field) {
+    return -1; // TODO
+  }
+
+  private record SpawnPointTypeWrapper(SpawnPointType spawnPointType, boolean isAggressive) {}
 }
