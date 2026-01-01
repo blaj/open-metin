@@ -88,8 +88,6 @@ public class GameWorldService implements GameWorldSpawnEntityService {
         (mapName, map) -> {
           processMapSpawnPointsService.process(map, this);
         });
-
-    var test = 123;
   }
 
   public Optional<Map> getMap(int x, int y) {
