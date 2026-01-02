@@ -9,6 +9,7 @@ import com.blaj.openmetin.shared.infrastructure.network.handler.GlobalExceptionH
 import com.blaj.openmetin.shared.infrastructure.network.handler.HandshakeChannelInboundHandlerService;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
+import io.opentelemetry.instrumentation.netty.v4_1.NettyServerTelemetry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,13 @@ public class GameChannelInitializerService extends ChannelInitializer<SocketChan
   private final SessionManagerService sessionManagerService;
   private final PacketCodecFactoryService packetCodecFactoryService;
   private final GlobalExceptionHandlerService globalExceptionHandlerService;
+  private final NettyServerTelemetry nettyServerTelemetry;
 
   @Override
   protected void initChannel(SocketChannel socketChannel) throws Exception {
     socketChannel
         .pipeline()
+        .addLast(nettyServerTelemetry.createCombinedHandler())
         .addLast("encoder", new MainMessageToByteEncoderService(packetCodecFactoryService))
         .addLast("decoder", new MainByteToMessageDecoderService(packetCodecFactoryService))
         .addLast("handshakeHandler", handshakeChannelInboundHandlerService)

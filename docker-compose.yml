@@ -11,8 +11,8 @@
       - ./database-init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./docker/data/database:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: postgres
-      PGDATA: /var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
 
   redis:
     image: redis:8.2.2-alpine
@@ -38,25 +38,95 @@
       - RABBITMQ_PROMETHEUS_RETURN_PER_OBJECT_METRICS=true
       - RABBITMQ_PROMETHEUS_EXPORTER=true
 
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:v0.17.1
+    restart: unless-stopped
+    environment:
+      - DATA_SOURCE_URI=database:5432/postgres?sslmode=disable
+      - DATA_SOURCE_USER=postgres_exporter
+      - DATA_SOURCE_PASS=strongpassword
+    depends_on:
+      - database
+
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.80.1-alpine
+    restart: unless-stopped
+    volumes:
+      - ./docker/conf/redis/certs:/certs:ro
+    environment:
+      - REDIS_ADDR=rediss://strongpassword@redis:6379
+      - REDIS_EXPORTER_TLS_CLIENT_KEY_FILE=/certs/redis.key
+      - REDIS_EXPORTER_TLS_CLIENT_CERT_FILE=/certs/redis.crt
+      - REDIS_EXPORTER_SKIP_TLS_VERIFICATION=true
+    depends_on:
+      - redis
+
   prometheus:
     image: prom/prometheus:v3.8.1
     restart: unless-stopped
-    ports:
-      - "10004:9090"
+#    ports:
+#      - "10004:9090"
     volumes:
       - ./docker/conf/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--web.enable-remote-write-receiver'
+      - '--web.enable-otlp-receiver'
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  loki:
+    image: grafana/loki:3.5.9
+    restart: unless-stopped
+#    ports:
+#      - "10005:3100"
+#      - "10006:9096"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./docker/conf/loki/loki.yaml:/etc/loki/local-config.yaml
+
+  tempo:
+    image: grafana/tempo:2.9.0
+    restart: unless-stopped
+#    ports:
+#      - "10007:3200"   # tempo
+#      - "10008:4317"   # otlp grpc
+#      - "10009:4318"   # otlp http
+    volumes:
+      - ./docker/conf/tempo/tempo.yaml:/etc/tempo/tempo.yaml
+    command:
+      - "-config.file=/etc/tempo/tempo.yaml"
+
+  pyroscope:
+    image: grafana/pyroscope:1.17.0
+    restart: unless-stopped
+#    ports:
+#      - "10010:4040"
+#      - "10010:4317"
+    volumes:
+      - ./docker/conf/pyroscope/pyroscope.yaml:/etc/pyroscope/config.yaml
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.115.1
+    restart: unless-stopped
+    ports:
+      - "10004:4317"   # OTLP gRPC
+      - "10005:4318"   # OTLP HTTP
+      - "10006:8888"   # Prometheus metrics (self-monitoring)
+    volumes:
+      - ./docker/conf/otel-collector/otel-collector.yaml:/etc/otel-collector-config.yaml
+    command: ["--config=/etc/otel-collector-config.yaml", "--feature-gates=service.profilesSupport"]
+    depends_on:
+      - tempo
+      - loki
+      - prometheus
 
   grafana:
     image: grafana/grafana:12.3.1
     restart: unless-stopped
     ports:
-      - "10009:3000"
+      - "10007:3000"
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
@@ -64,7 +134,11 @@
       - GF_INSTALL_PLUGINS=volkovlabs-echarts-panel,marcusolsson-json-datasource
     volumes:
       - ./docker/conf/grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+#      - ./docker/conf/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
       - ./docker/conf/grafana/dashboards:/grafana-dashboard-definitions
       - ./docker/data/grafana:/var/lib/grafana
     depends_on:
       - prometheus
+      - loki
+      - tempo
+      - otel-collector

@@ -74,28 +74,6 @@ spring:
       trust-store-password: strongpassword
       trust-store-type: JKS
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus,metrics
-
-  endpoint:
-    health:
-      show-details: always
-
-    prometheus:
-      enabled: true
-
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-
-    tags:
-      application: openmetin-authentication
-      environment: dev
-
 logging:
   level:
     org.springframework.data.redis: INFO
@@ -104,6 +82,28 @@ logging:
     liquibase.changelog: INFO
     liquibase.lockservice: WARN
     org.springframework.boot.autoconfigure.liquibase: INFO
+
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+
+  otlp:
+    metrics:
+      export:
+        url: http://localhost:10005/v1/metrics
+
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: http://localhost:10005/v1/traces
+
+    logging:
+      export:
+        otlp:
+          endpoint: http://localhost:10005/v1/logs
 
 open-metin:
   tcp:

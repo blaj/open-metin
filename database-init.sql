@@ -40,3 +40,12 @@ CREATE SCHEMA liquibase;
 
 GRANT USAGE, CREATE ON SCHEMA liquibase TO openmetin_game_liquibase_user;
 GRANT USAGE, CREATE ON SCHEMA public TO openmetin_game_liquibase_user;
+
+-- 4. Create user for postgres metrics
+\c postgres;
+
+CREATE USER postgres_exporter WITH password 'strongpassword' noinherit;
+comment ON ROLE postgres_exporter IS 'metrics export';
+
+GRANT pg_monitor to postgres_exporter;
+GRANT ALL ON FUNCTION pg_catalog.pg_ls_waldir() TO postgres_exporter;
