@@ -311,6 +311,7 @@ public class MonsterDefinition extends ArchiveEntity {
 
   @Getter
   @Setter
+  @Builder
   @NoArgsConstructor
   @AllArgsConstructor
   public static class SkillData {

@@ -8,8 +8,10 @@ import com.blaj.openmetin.game.domain.enums.character.Empire;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 
 @DataJpaTest
+@AutoConfigureJson
 public class CharacterRepositoryTest {
 
   @Autowired private CharacterRepository characterRepository;

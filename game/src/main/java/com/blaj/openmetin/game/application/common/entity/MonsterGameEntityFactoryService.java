@@ -82,7 +82,7 @@ public class MonsterGameEntityFactoryService {
     }
 
     if (monsterDefinition.getAiFlags().contains(AiFlag.NO_MOVE)) {
-      var compassDirection = spawnPoint.getDirection().ordinal();
+      var compassDirection = spawnPoint.getSpawnPointDirection().ordinal();
 
       if (compassDirection >= SpawnPointDirection.values().length) {
         compassDirection = SpawnPointDirection.RANDOM.ordinal();

@@ -86,14 +86,9 @@ public class SpawnPointFileLoaderService {
   }
 
   private SpawnPointTypeWrapper parseTypeAndAggressive(String typeField) {
-    if (typeField.isEmpty()) {
-      throw new IllegalArgumentException("Empty type field");
-    }
-
     var isAggressive = false;
     if (typeField.length() > 1) {
-      var secondChar = typeField.charAt(1);
-      isAggressive = secondChar == 'a' || secondChar == 'A';
+      isAggressive = Character.toLowerCase(typeField.charAt(1)) == 'a';
     }
 
     return new SpawnPointTypeWrapper(SpawnPointType.fromCode(typeField.charAt(0)), isAggressive);

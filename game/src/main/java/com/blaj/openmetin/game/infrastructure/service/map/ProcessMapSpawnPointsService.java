@@ -7,12 +7,11 @@ import com.blaj.openmetin.game.domain.model.spawn.MonsterGroup;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnGroup;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
 import com.blaj.openmetin.game.infrastructure.service.world.GameWorldService;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.BiConsumer;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.TriConsumer;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -21,8 +20,7 @@ public class ProcessMapSpawnPointsService {
 
   private final MonsterGameEntityFactoryService monsterGameEntityFactoryService;
 
-  private final java.util.Map<SpawnPointType, TriConsumer<MonsterGroup, Map, GameWorldService>>
-      spawnPointConsumerStrategyMap;
+  private final java.util.Map<SpawnPointType, SpawnPointTypeHandler> spawnPointConsumerStrategyMap;
 
   public ProcessMapSpawnPointsService(
       MonsterGameEntityFactoryService monsterGameEntityFactoryService) {
@@ -34,7 +32,11 @@ public class ProcessMapSpawnPointsService {
     map.getSpawnPoints()
         .forEach(
             spawnPoint -> {
-              var monsterGroup = MonsterGroup.builder().spawnPoint(spawnPoint).build();
+              var monsterGroup =
+                  MonsterGroup.builder()
+                      .monsterEntities(new ArrayList<>())
+                      .spawnPoint(spawnPoint)
+                      .build();
 
               spawnGroup(monsterGroup, map, gameWorldService);
             });
@@ -50,7 +52,7 @@ public class ProcessMapSpawnPointsService {
     Optional.ofNullable(spawnPointConsumerStrategyMap.get(spawnPoint.getType()))
         .ifPresentOrElse(
             spawnPointStrategy -> {
-              spawnPointStrategy.accept(monsterGroup, map, gameWorldService);
+              spawnPointStrategy.handle(monsterGroup, map, gameWorldService);
             },
             () -> log.warn("Unknown spawn point type: {}", spawnPoint.getType()));
   }
@@ -197,16 +199,20 @@ public class ProcessMapSpawnPointsService {
     return ThreadLocalRandom.current().nextFloat() <= probability;
   }
 
-  private java.util.Map<SpawnPointType, TriConsumer<MonsterGroup, Map, GameWorldService>>
+  private java.util.Map<SpawnPointType, SpawnPointTypeHandler>
       initializeSpawnPointConsumerStrategyMap() {
-    var map =
-        new EnumMap<SpawnPointType, TriConsumer<MonsterGroup, Map, GameWorldService>>(
-            SpawnPointType.class);
+    var map = new EnumMap<SpawnPointType, SpawnPointTypeHandler>(SpawnPointType.class);
 
     map.put(SpawnPointType.MONSTER, this::processSpawnPointTypeMonster);
     map.put(SpawnPointType.GROUP, this::processSpawnPointTypeGroup);
     map.put(SpawnPointType.GROUP_COLLECTION, this::processSpawnPointTypeGroupCollection);
 
     return map;
+  }
+
+  @FunctionalInterface
+  private interface SpawnPointTypeHandler {
+
+    void handle(MonsterGroup monsterGroup, Map map, GameWorldService gameWorldService);
   }
 }
