@@ -3,6 +3,7 @@ package com.blaj.openmetin.game.infrastructure.service.map;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnGroup;
 import com.blaj.openmetin.game.infrastructure.properties.DataPathProperties;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class GroupFileLoaderService {
       log.info("Successfully loaded {} groups from file", spawnGroups.size());
 
       return spawnGroups;
-    } catch (IOException e) {
+    } catch (IOException | UncheckedIOException e) {
       log.error("Failed to load group.txt file", e);
     }
 

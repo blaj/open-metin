@@ -5,6 +5,7 @@ import com.blaj.openmetin.game.domain.enums.spawn.SpawnPointType;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
 import com.blaj.openmetin.game.infrastructure.properties.DataPathProperties;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class SpawnPointFileLoaderService {
           .map(this::parseLine)
           .flatMap(Optional::stream)
           .forEach(spawnPoints::add);
-    } catch (IOException e) {
+    } catch (IOException | UncheckedIOException e) {
       log.error("Failed to load spawn points from {}", filePath, e);
     }
   }
