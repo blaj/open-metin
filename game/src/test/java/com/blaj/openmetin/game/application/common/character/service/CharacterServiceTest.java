@@ -10,8 +10,8 @@ import com.blaj.openmetin.game.application.common.character.mapper.CharacterDtoM
 import com.blaj.openmetin.game.application.common.empire.SelectEmpireService;
 import com.blaj.openmetin.game.domain.config.EmpireSpawnConfigs;
 import com.blaj.openmetin.game.domain.entity.Character;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import com.blaj.openmetin.game.domain.repository.CharacterRepository;
 import java.util.Collections;
 import java.util.List;

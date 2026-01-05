@@ -12,7 +12,7 @@ import com.blaj.openmetin.game.application.common.character.utils.CharacterPoint
 import com.blaj.openmetin.game.application.common.entity.GameCharacterEntityCalculationService;
 import com.blaj.openmetin.game.application.common.entity.GameCharacterEntityFactoryService;
 import com.blaj.openmetin.game.application.common.entity.GameCharacterEntityLoaderService;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
 import com.blaj.openmetin.game.domain.enums.character.PointType;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;

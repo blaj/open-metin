@@ -2,7 +2,7 @@ package com.blaj.openmetin.game.application.common.character.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import org.junit.jupiter.api.Test;
 

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.never;
 import com.blaj.openmetin.game.application.common.character.dto.CharacterListPacket;
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
 import com.blaj.openmetin.game.application.common.empire.EmpirePacket;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.common.config.TcpConfig;

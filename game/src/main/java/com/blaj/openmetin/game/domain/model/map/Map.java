@@ -1,9 +1,11 @@
 package com.blaj.openmetin.game.domain.model.map;
 
+import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
+import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import com.blaj.openmetin.game.domain.model.spatial.QuadTree;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
-import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
@@ -17,9 +19,8 @@ public class Map {
 
   public static final int MAP_UNIT = 25600;
   public static final int SPAWN_POSITION_MULTIPLIER = 100;
-
-  private static final int SPAWN_BASE_OFFSET = 5;
-  private static final int SPAWN_ROTATION_SLICE_DEGREES = 45;
+  public static final int SPAWN_BASE_OFFSET = 5;
+  public static final int SPAWN_ROTATION_SLICE_DEGREES = 45;
 
   private String name;
   private Coordinates coordinates;
@@ -73,5 +74,12 @@ public class Map {
 
   public int getUnitY() {
     return coordinates.y() / MAP_UNIT;
+  }
+
+  public boolean hasAnyMapAttributeOnCoordinates(
+      Coordinates coordinates, EnumSet<MapAttribute> mapAttributes) {
+    return Optional.ofNullable(mapAttributeSet)
+        .map(mas -> mas.hasAnyAttribute(coordinates, mapAttributes))
+        .orElse(false);
   }
 }

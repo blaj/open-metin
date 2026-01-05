@@ -16,7 +16,10 @@ import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.map.MapAttributeSet;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
 import com.blaj.openmetin.game.infrastructure.service.map.AtlasMapProviderService;
+import com.blaj.openmetin.game.infrastructure.service.map.GroupCollectionFileLoaderService;
+import com.blaj.openmetin.game.infrastructure.service.map.GroupFileLoaderService;
 import com.blaj.openmetin.game.infrastructure.service.map.MapAttributeProviderService;
+import com.blaj.openmetin.game.infrastructure.service.map.ProcessMapSpawnPointsService;
 import com.blaj.openmetin.game.infrastructure.service.map.SpawnPointFileLoaderService;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +37,9 @@ public class GameWorldServiceTest {
   @Mock private AtlasMapProviderService atlasMapProviderService;
   @Mock private MapAttributeProviderService attributeProviderService;
   @Mock private SpawnPointFileLoaderService spawnPointFileLoaderService;
+  @Mock private GroupFileLoaderService groupFileLoaderService;
+  @Mock private GroupCollectionFileLoaderService groupCollectionFileLoaderService;
+  @Mock private ProcessMapSpawnPointsService processMapSpawnPointsService;
 
   @Mock private MapAttributeSet mapAttributeSet;
   @Mock private SpawnPoint spawnPoint;
@@ -47,7 +53,12 @@ public class GameWorldServiceTest {
   public void beforeEach() {
     gameWorldService =
         new GameWorldService(
-            atlasMapProviderService, attributeProviderService, spawnPointFileLoaderService);
+            atlasMapProviderService,
+            attributeProviderService,
+            spawnPointFileLoaderService,
+            groupFileLoaderService,
+            groupCollectionFileLoaderService,
+            processMapSpawnPointsService);
   }
 
   @Test

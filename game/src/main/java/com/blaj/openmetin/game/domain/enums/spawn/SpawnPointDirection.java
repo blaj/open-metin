@@ -1,6 +1,7 @@
 package com.blaj.openmetin.game.domain.enums.spawn;
 
 import com.blaj.openmetin.contracts.enums.ByteEnum;
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
@@ -19,5 +20,13 @@ public enum SpawnPointDirection implements ByteEnum {
 
   SpawnPointDirection(byte value) {
     this.value = value;
+  }
+
+  public static SpawnPointDirection fromValue(int value) {
+    return Arrays.stream(values())
+        .filter(spawnPointDirection -> spawnPointDirection.value == value)
+        .findFirst()
+        .orElseThrow(
+            () -> new IllegalArgumentException("Unknown spawn point direction value: " + value));
   }
 }

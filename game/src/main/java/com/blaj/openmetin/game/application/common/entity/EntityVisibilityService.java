@@ -6,7 +6,9 @@ import com.blaj.openmetin.game.application.common.character.dto.SpawnCharacterPa
 import com.blaj.openmetin.game.domain.enums.entity.EntityType;
 import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
+import com.blaj.openmetin.game.domain.model.entity.MonsterGameEntity;
 import com.blaj.openmetin.shared.common.abstractions.SessionService;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +16,36 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EntityVisibilityService {
 
+  private final Map<EntityType, EntityVisibilityHandler> showHandlers =
+      Map.of(
+          EntityType.PLAYER, this::showPlayer,
+          EntityType.MONSTER, this::showMonster);
+
+  private final Map<EntityType, EntityVisibilityHandler> hideHandlers =
+      Map.of(
+          EntityType.PLAYER, this::hidePlayer,
+          EntityType.MONSTER, this::hideMonster);
+
   private final SessionService sessionService;
 
   public void showEntityToPlayer(BaseGameEntity entityToShow, long sessionId) {
-    if (entityToShow.getType() != EntityType.PLAYER) {
-      return;
-    }
+    var handler = showHandlers.get(entityToShow.getType());
 
-    var gameCharacterEntity = (GameCharacterEntity) entityToShow;
+    if (handler != null) {
+      handler.handle(entityToShow, sessionId);
+    }
+  }
+
+  public void hideEntityFromPlayer(BaseGameEntity entityToHide, long sessionId) {
+    var handler = hideHandlers.get(entityToHide.getType());
+
+    if (handler != null) {
+      handler.handle(entityToHide, sessionId);
+    }
+  }
+
+  private void showPlayer(BaseGameEntity baseGameEntity, long sessionId) {
+    var gameCharacterEntity = (GameCharacterEntity) baseGameEntity;
 
     sessionService.sendPacketAsync(
         sessionId,
@@ -52,12 +76,36 @@ public class EntityVisibilityService {
             .setMountVnum(0));
   }
 
-  public void hideEntityFromPlayer(BaseGameEntity entityToHide, long sessionId) {
-    if (entityToHide.getType() != EntityType.PLAYER) {
-      return;
-    }
+  private void showMonster(BaseGameEntity baseGameEntity, long sessionId) {
+    var monsterGameEntity = (MonsterGameEntity) baseGameEntity;
 
     sessionService.sendPacketAsync(
-        sessionId, new RemoveCharacterPacket().setVid(entityToHide.getVid()));
+        sessionId,
+        new SpawnCharacterPacket()
+            .setVid(monsterGameEntity.getVid())
+            .setAngle(0)
+            .setPositionX(monsterGameEntity.getPositionX())
+            .setPositionY(monsterGameEntity.getPositionY())
+            .setPositionZ(0)
+            .setCharacterType((short) monsterGameEntity.getMonsterDefinition().getType().ordinal())
+            .setClassType(monsterGameEntity.getMonsterDefinition().getId().intValue())
+            .setMoveSpeed(monsterGameEntity.getMovementSpeed())
+            .setAttackSpeed(monsterGameEntity.getAttackSpeed())
+            .setState((short) 0)
+            .setAffects(new long[2]));
+  }
+
+  private void hidePlayer(BaseGameEntity entity, long sessionId) {
+    sessionService.sendPacketAsync(sessionId, new RemoveCharacterPacket().setVid(entity.getVid()));
+  }
+
+  private void hideMonster(BaseGameEntity entity, long sessionId) {
+    sessionService.sendPacketAsync(sessionId, new RemoveCharacterPacket().setVid(entity.getVid()));
+  }
+
+  @FunctionalInterface
+  private interface EntityVisibilityHandler {
+
+    void handle(BaseGameEntity baseGameEntity, long sessionId);
   }
 }

@@ -4,7 +4,7 @@ import com.blaj.openmetin.game.application.common.character.dto.CharacterListPac
 import com.blaj.openmetin.game.application.common.character.mapper.SimpleCharacterPacketMapper;
 import com.blaj.openmetin.game.application.common.character.service.CharacterService;
 import com.blaj.openmetin.game.application.common.empire.EmpirePacket;
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.shared.application.common.config.TcpConfig;
 import com.blaj.openmetin.shared.application.features.phase.PhasePacket;

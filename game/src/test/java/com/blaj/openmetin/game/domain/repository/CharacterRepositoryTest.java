@@ -3,13 +3,15 @@ package com.blaj.openmetin.game.domain.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.blaj.openmetin.game.domain.entity.Character;
-import com.blaj.openmetin.game.domain.entity.Character.ClassType;
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 
 @DataJpaTest
+@AutoConfigureJson
 public class CharacterRepositoryTest {
 
   @Autowired private CharacterRepository characterRepository;

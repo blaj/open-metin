@@ -1,6 +1,7 @@
 package com.blaj.openmetin.game.domain.model.map;
 
 import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
+import java.util.EnumSet;
 
 public record MapAttributeSectree(int[] cellAttributes) {
 
@@ -29,5 +30,16 @@ public record MapAttributeSectree(int[] cellAttributes) {
   public boolean hasAttribute(int x, int y, MapAttribute attribute) {
     var attrs = get(x, y);
     return MapAttribute.hasFlag(attrs, attribute);
+  }
+
+  public boolean hasAnyAttribute(int x, int y, EnumSet<MapAttribute> attributes) {
+    var attrs = get(x, y);
+
+    for (MapAttribute attr : attributes) {
+      if (MapAttribute.hasFlag(attrs, attr)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

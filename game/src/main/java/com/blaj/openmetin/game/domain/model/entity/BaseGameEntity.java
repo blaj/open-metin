@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.domain.model.entity;
 
-import com.blaj.openmetin.game.domain.entity.Character.Empire;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import com.blaj.openmetin.game.domain.enums.entity.EntityState;
 import com.blaj.openmetin.game.domain.enums.entity.EntityType;
 import com.blaj.openmetin.game.domain.model.map.Map;

@@ -1,14 +1,13 @@
 package com.blaj.openmetin.game.domain.entity;
 
-import com.blaj.openmetin.contracts.enums.ByteEnum;
-import com.blaj.openmetin.game.domain.enums.character.JobType;
+import com.blaj.openmetin.game.domain.enums.character.ClassType;
+import com.blaj.openmetin.game.domain.enums.character.Empire;
 import com.blaj.openmetin.shared.domain.entity.AuditingEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -123,45 +122,4 @@ public class Character extends AuditingEntity {
 
   @Column(nullable = false, columnDefinition = "BIGINT")
   private Long accountId;
-
-  @Getter
-  public enum Empire implements ByteEnum {
-    NEUTRAL((byte) 0),
-    SHINSOO((byte) 1),
-    CHUNJO((byte) 2),
-    JINNO((byte) 3);
-
-    private final byte value;
-
-    Empire(byte value) {
-      this.value = value;
-    }
-  }
-
-  @Getter
-  public enum ClassType implements ByteEnum {
-    WARRIOR_MALE((byte) 0, JobType.WARRIOR),
-    NINJA_FEMALE((byte) 1, JobType.NINJA),
-    SURA_MALE((byte) 2, JobType.SURA),
-    SHAMAN_FEMALE((byte) 3, JobType.SHAMAN),
-    WARRIOR_FEMALE((byte) 4, JobType.WARRIOR),
-    NINJA_MALE((byte) 5, JobType.NINJA),
-    SURA_FEMALE((byte) 6, JobType.SURA),
-    SHAMAN_MALE((byte) 7, JobType.SHAMAN);
-
-    private final byte value;
-    private final JobType jobType;
-
-    ClassType(byte value, JobType jobType) {
-      this.value = value;
-      this.jobType = jobType;
-    }
-
-    public static ClassType fromValue(int value) {
-      return Arrays.stream(values())
-          .filter(empire -> empire.value == value)
-          .findFirst()
-          .orElseThrow(() -> new IllegalArgumentException("Invalid empire value: " + value));
-    }
-  }
 }
