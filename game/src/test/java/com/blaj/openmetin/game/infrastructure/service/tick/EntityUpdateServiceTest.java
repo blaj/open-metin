@@ -17,6 +17,7 @@ import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
 import com.blaj.openmetin.game.domain.model.spatial.QuadTree;
+import com.blaj.openmetin.game.infrastructure.service.entity.GameEntityBehaviourService;
 import com.blaj.openmetin.shared.common.utils.DateTimeUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,6 +34,7 @@ public class EntityUpdateServiceTest {
   private EntityUpdateService entityUpdateService;
 
   @Mock private EntityVisibilityService entityVisibilityService;
+  @Mock private GameEntityBehaviourService<?> gameEntityBehaviourService;
 
   @Mock private Map map;
   @Mock private QuadTree quadTree;
@@ -50,7 +52,8 @@ public class EntityUpdateServiceTest {
   public void beforeEach() {
     DateTimeUtils.initialize();
 
-    entityUpdateService = new EntityUpdateService(entityVisibilityService);
+    entityUpdateService =
+        new EntityUpdateService(entityVisibilityService, List.of(gameEntityBehaviourService));
     entities = new ArrayList<>();
     nearbyEntities = new HashSet<>();
 

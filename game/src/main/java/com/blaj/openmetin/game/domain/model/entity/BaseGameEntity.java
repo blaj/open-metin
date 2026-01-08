@@ -5,6 +5,7 @@ import com.blaj.openmetin.game.domain.enums.entity.EntityState;
 import com.blaj.openmetin.game.domain.enums.entity.EntityType;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.spatial.QuadTree;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.AccessLevel;
@@ -71,5 +72,9 @@ public abstract class BaseGameEntity {
 
   public void removeNearbyEntity(BaseGameEntity entity) {
     nearbyEntities.remove(entity);
+  }
+
+  public Coordinates getCoordinates() {
+    return new Coordinates(positionX, positionY);
   }
 }

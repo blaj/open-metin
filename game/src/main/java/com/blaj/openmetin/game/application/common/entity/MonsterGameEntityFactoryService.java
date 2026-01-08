@@ -3,13 +3,16 @@ package com.blaj.openmetin.game.application.common.entity;
 import com.blaj.openmetin.game.application.common.game.GameEntityVidAllocator;
 import com.blaj.openmetin.game.application.common.monster.MonsterDefinitionService;
 import com.blaj.openmetin.game.domain.enums.entity.AiFlag;
+import com.blaj.openmetin.game.domain.enums.entity.EntityState;
 import com.blaj.openmetin.game.domain.enums.entity.EntityType;
 import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
 import com.blaj.openmetin.game.domain.enums.spawn.SpawnPointDirection;
 import com.blaj.openmetin.game.domain.model.entity.MonsterGameEntity;
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
+import com.blaj.openmetin.game.domain.model.entity.MonsterGameEntity.BehaviourState;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
+import com.blaj.openmetin.shared.common.utils.DateTimeUtils;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.EnumSet;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +42,14 @@ public class MonsterGameEntityFactoryService {
         .monsterDefinition(monsterDefinition)
         .health(monsterDefinition.getHealth())
         .movementSpeed((short) monsterDefinition.getMovementSpeed())
+        .attackSpeed((short) monsterDefinition.getAttackSpeed())
+        .state(EntityState.IDLE)
+        .behaviourState(
+            BehaviourState.builder()
+                .nextMovementTime(
+                    DateTimeUtils.getUnixTime()
+                        + ThreadLocalRandom.current().nextLong(10000, 20000))
+                .build())
         .build();
   }
 

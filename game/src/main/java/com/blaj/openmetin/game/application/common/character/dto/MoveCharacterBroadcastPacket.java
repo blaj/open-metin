@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.application.features.movecharacter;
+package com.blaj.openmetin.game.application.common.character.dto;
 
 import com.blaj.openmetin.contracts.annotation.GeneratePacketCodec;
 import com.blaj.openmetin.contracts.annotation.PacketField;

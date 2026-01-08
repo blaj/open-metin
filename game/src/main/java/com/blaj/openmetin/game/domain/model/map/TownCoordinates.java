@@ -1,5 +1,7 @@
 package com.blaj.openmetin.game.domain.model.map;
 
+import com.blaj.openmetin.shared.domain.model.Coordinates;
+
 public record TownCoordinates(
     Coordinates jinno, Coordinates shinsoo, Coordinates chunjo, Coordinates common) {
 

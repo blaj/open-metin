@@ -1,10 +1,10 @@
 package com.blaj.openmetin.game.infrastructure.service.map;
 
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.map.MapAttributeSectree;
 import com.blaj.openmetin.game.domain.model.map.MapAttributeSet;
 import com.blaj.openmetin.game.infrastructure.service.compression.LzoDecompressorService;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;

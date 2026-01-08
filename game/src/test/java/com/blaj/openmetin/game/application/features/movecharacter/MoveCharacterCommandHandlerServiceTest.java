@@ -8,6 +8,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
+import com.blaj.openmetin.game.application.common.character.dto.MoveCharacterBroadcastPacket;
 import com.blaj.openmetin.game.application.common.entity.GameEntityMovementService;
 import com.blaj.openmetin.game.domain.enums.character.CharacterMovementType;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;

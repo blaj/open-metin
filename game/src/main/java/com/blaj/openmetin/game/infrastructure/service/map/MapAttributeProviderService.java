@@ -1,8 +1,8 @@
 package com.blaj.openmetin.game.infrastructure.service.map;
 
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import com.blaj.openmetin.game.domain.model.map.MapAttributeSet;
 import com.blaj.openmetin.game.infrastructure.properties.DataPathProperties;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

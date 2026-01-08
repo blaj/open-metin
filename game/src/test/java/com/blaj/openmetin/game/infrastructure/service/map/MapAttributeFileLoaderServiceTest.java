@@ -6,10 +6,10 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.map.MapAttributeSet;
 import com.blaj.openmetin.game.infrastructure.service.compression.LzoDecompressorService;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

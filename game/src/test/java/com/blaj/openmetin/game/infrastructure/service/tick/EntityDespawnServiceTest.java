@@ -11,9 +11,9 @@ import com.blaj.openmetin.game.application.common.entity.EntityVisibilityService
 import com.blaj.openmetin.game.domain.enums.entity.EntityType;
 import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.session.GameSession;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.HashSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
