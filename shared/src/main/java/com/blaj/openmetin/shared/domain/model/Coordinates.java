@@ -1,4 +1,4 @@
-package com.blaj.openmetin.game.domain.model.map;
+package com.blaj.openmetin.shared.domain.model;
 
 public record Coordinates(int x, int y) {
 
@@ -22,6 +22,13 @@ public record Coordinates(int x, int y) {
   }
 
   public Coordinates add(int deltaX, int deltaY) {
+    return new Coordinates(Math.addExact(x, deltaX), Math.addExact(y, deltaY));
+  }
+
+  public Coordinates add(Vector2 vector) {
+    int deltaX = (int) Math.round(vector.x());
+    int deltaY = (int) Math.round(vector.y());
+
     return new Coordinates(Math.addExact(x, deltaX), Math.addExact(y, deltaY));
   }
 

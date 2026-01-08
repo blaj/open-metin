@@ -7,18 +7,19 @@ import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.spatial.QuadTree;
+import com.blaj.openmetin.game.infrastructure.service.entity.GameEntityBehaviourService;
 import com.blaj.openmetin.shared.common.utils.DateTimeUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-import lombok.RequiredArgsConstructor;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class EntityUpdateService {
 
   private static final int VIEW_DISTANCE = 10000;
@@ -29,13 +30,28 @@ public class EntityUpdateService {
       ThreadLocal.withInitial(HashSet::new);
 
   private final EntityVisibilityService entityVisibilityService;
+  private final java.util.Map<
+          Class<? extends BaseGameEntity>, GameEntityBehaviourService<BaseGameEntity>>
+      gameEntityBehaviourServiceStrategyMap;
+
+  public EntityUpdateService(
+      EntityVisibilityService entityVisibilityService,
+      List<GameEntityBehaviourService<? extends BaseGameEntity>> gameEntityBehaviourServices) {
+    this.entityVisibilityService = entityVisibilityService;
+    this.gameEntityBehaviourServiceStrategyMap =
+        initializeGameEntityBehaviourServiceStrategyMap(gameEntityBehaviourServices);
+  }
 
   public void update(Map map) {
     var entities = map.getEntities();
     var quadTree = map.getQuadTree();
-    var currentServerTime = DateTimeUtils.getUnixTime();
 
     for (var entity : entities) {
+      var currentServerTime = DateTimeUtils.getUnixTime();
+
+      Optional.ofNullable(gameEntityBehaviourServiceStrategyMap.get(entity.getClass()))
+          .ifPresent(gameEntityBehaviourService -> gameEntityBehaviourService.update(entity));
+
       updateEntityMovement(entity, currentServerTime);
       updatePositionInQuadTree(entity, quadTree);
     }
@@ -141,5 +157,16 @@ public class EntityUpdateService {
 
   private int interpolatePosition(int start, int target, float rate) {
     return (int) ((target - start) * rate + start);
+  }
+
+  @SuppressWarnings("unchecked")
+  private java.util.Map<Class<? extends BaseGameEntity>, GameEntityBehaviourService<BaseGameEntity>>
+      initializeGameEntityBehaviourServiceStrategyMap(
+          List<GameEntityBehaviourService<? extends BaseGameEntity>> gameEntityBehaviourServices) {
+    return gameEntityBehaviourServices.stream()
+        .collect(
+            Collectors.toMap(
+                GameEntityBehaviourService::getSupportedEntityClass,
+                service -> (GameEntityBehaviourService<BaseGameEntity>) service));
   }
 }

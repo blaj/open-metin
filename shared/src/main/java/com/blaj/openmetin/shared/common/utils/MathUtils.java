@@ -1,5 +1,6 @@
 package com.blaj.openmetin.shared.common.utils;
 
+import com.blaj.openmetin.shared.domain.model.Vector2;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -33,5 +34,13 @@ public class MathUtils {
     }
 
     return rotationDegrees;
+  }
+
+  public static Vector2 getDirectionVector(double degree) {
+    var radians = Math.toRadians(degree);
+    var x = Math.sin(radians);
+    var y = Math.cos(radians);
+
+    return new Vector2(x, y);
   }
 }

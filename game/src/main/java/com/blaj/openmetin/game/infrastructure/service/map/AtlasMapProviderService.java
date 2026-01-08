@@ -1,11 +1,11 @@
 package com.blaj.openmetin.game.infrastructure.service.map;
 
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.map.TownCoordinates;
 import com.blaj.openmetin.game.infrastructure.exception.AtlasInfoLoadException;
 import com.blaj.openmetin.game.infrastructure.exception.AtlasInfoParseException;
 import com.blaj.openmetin.game.infrastructure.properties.DataPathProperties;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

@@ -1,6 +1,6 @@
 package com.blaj.openmetin.game.domain.model.spatial;
 
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.lang.reflect.Array;
 import java.util.Optional;
 import lombok.Getter;

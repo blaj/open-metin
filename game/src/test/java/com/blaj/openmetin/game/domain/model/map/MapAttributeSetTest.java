@@ -3,6 +3,7 @@ package com.blaj.openmetin.game.domain.model.map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import org.junit.jupiter.api.Test;
 
 public class MapAttributeSetTest {

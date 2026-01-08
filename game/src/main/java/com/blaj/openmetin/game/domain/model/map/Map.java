@@ -4,6 +4,7 @@ import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
 import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import com.blaj.openmetin.game.domain.model.spatial.QuadTree;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -81,5 +82,44 @@ public class Map {
     return Optional.ofNullable(mapAttributeSet)
         .map(mas -> mas.hasAnyAttribute(coordinates, mapAttributes))
         .orElse(false);
+  }
+
+  public boolean isPositionInside(Coordinates coordinates) {
+    return isPositionInside(coordinates.x(), coordinates.y());
+  }
+
+  public boolean isPositionInside(int x, int y) {
+    return x >= coordinates.x()
+        && x < coordinates.x() + width * MAP_UNIT
+        && y >= coordinates.y()
+        && y < coordinates.y() + height * MAP_UNIT;
+  }
+
+  public boolean hasAttributeOnStraightPath(
+      Coordinates startCoordinates, Coordinates endCoordinates, EnumSet<MapAttribute> flags) {
+    int deltaX = endCoordinates.x() - startCoordinates.x();
+    int deltaY = endCoordinates.y() - startCoordinates.y();
+
+    if (deltaX == 0 && deltaY == 0) {
+      return hasAnyMapAttributeOnCoordinates(startCoordinates, flags);
+    }
+
+    final int samples = 100;
+    for (int i = 1; i <= samples; i++) {
+      var progress = (double) i / samples;
+      int sampleX = startCoordinates.x() + (int) Math.round(deltaX * progress);
+      int sampleY = startCoordinates.y() + (int) Math.round(deltaY * progress);
+
+      if (sampleX < 0 || sampleY < 0) {
+        continue;
+      }
+
+      var sampleCoordinates = new Coordinates(sampleX, sampleY);
+      if (hasAnyMapAttributeOnCoordinates(sampleCoordinates, flags)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

@@ -1,7 +1,7 @@
 package com.blaj.openmetin.game.domain.config;
 
 import com.blaj.openmetin.game.domain.enums.character.Empire;
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.Map;
 import lombok.experimental.UtilityClass;
 

@@ -1,6 +1,7 @@
 package com.blaj.openmetin.game.domain.model.map;
 
 import com.blaj.openmetin.game.domain.enums.map.MapAttribute;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.EnumSet;
 import java.util.Optional;
 

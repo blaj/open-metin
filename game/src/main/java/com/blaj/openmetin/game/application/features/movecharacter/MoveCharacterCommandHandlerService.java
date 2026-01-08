@@ -1,5 +1,6 @@
 package com.blaj.openmetin.game.application.features.movecharacter;
 
+import com.blaj.openmetin.game.application.common.character.dto.MoveCharacterBroadcastPacket;
 import com.blaj.openmetin.game.application.common.entity.GameEntityMovementService;
 import com.blaj.openmetin.game.domain.enums.character.CharacterMovementType;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;

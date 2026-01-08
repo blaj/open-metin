@@ -11,7 +11,6 @@ import static org.mockito.Mockito.never;
 import com.blaj.openmetin.game.domain.model.character.CharacterDto;
 import com.blaj.openmetin.game.domain.model.entity.BaseGameEntity;
 import com.blaj.openmetin.game.domain.model.entity.GameCharacterEntity;
-import com.blaj.openmetin.game.domain.model.map.Coordinates;
 import com.blaj.openmetin.game.domain.model.map.Map;
 import com.blaj.openmetin.game.domain.model.map.MapAttributeSet;
 import com.blaj.openmetin.game.domain.model.spawn.SpawnPoint;
@@ -21,6 +20,7 @@ import com.blaj.openmetin.game.infrastructure.service.map.GroupFileLoaderService
 import com.blaj.openmetin.game.infrastructure.service.map.MapAttributeProviderService;
 import com.blaj.openmetin.game.infrastructure.service.map.ProcessMapSpawnPointsService;
 import com.blaj.openmetin.game.infrastructure.service.map.SpawnPointFileLoaderService;
+import com.blaj.openmetin.shared.domain.model.Coordinates;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
